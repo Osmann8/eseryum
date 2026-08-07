@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: eseryum-backend
+
+  profiles:
+    default: local
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/eseryum}
+    username: ${DB_USERNAME:eseryum}
+    password: ${DB_PASSWORD:eseryum}
+
+  jpa:
+    hibernate:
+      # Semayi Flyway yonetir. update asla kullanilmaz: sessizce kolon ekleyip
+      # migration ile gercegi ayirir.
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  jackson:
+    # Hata govdesindeki bos alanlar cevabi sismesin.
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    # Hata govdesini GlobalExceptionHandler uretiyor; Spring'in varsayilan
+    # govdesi hicbir zaman istemciye gitmemeli.
+    whitelabel:
+      enabled: false
+    include-message: never
+    include-stacktrace: never
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    com.eseryum: INFO

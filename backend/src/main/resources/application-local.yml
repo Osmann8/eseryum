@@ -1,1 +1,12 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
 
+logging:
+  level:
+    com.eseryum: DEBUG
+    # Calisan SQL'i ve parametrelerini gormek icin. Prod profilinde acilmaz.
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE

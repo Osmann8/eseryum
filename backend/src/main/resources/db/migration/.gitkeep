@@ -1,0 +1,2 @@
+# Flyway migration dosyalari buraya. Bu klasor bos kalsa bile silinmemeli:
+# Spring Boot, spring.flyway.locations altindaki klasor yoksa uygulamayi baslatmiyor.
