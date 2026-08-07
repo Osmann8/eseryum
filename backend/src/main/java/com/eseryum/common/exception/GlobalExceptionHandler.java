@@ -56,19 +56,28 @@ public class GlobalExceptionHandler {
     }
 
     /** @Validated ile isaretli parametrelerde (path/query) dogrulama hatasi. */
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponse> handleConstraintViolation(
-            ConstraintViolationException ex, HttpServletRequest request) {
-        List<ErrorResponse.FieldError> fieldErrors =
-                ex.getConstraintViolations().stream()
-                        .map(
-                                violation ->
-                                        new ErrorResponse.FieldError(
-                                                violation.getPropertyPath().toString(),
-                                                violation.getMessage()))
-                        .toList();
-        return build(
-                ErrorCode.DOGRULAMA_HATASI, "Gönderilen bilgiler geçerli değil.", request, fieldErrors);
+    @ExceptionHandler({
+        ConstraintViolationException.class,
+        org.springframework.web.method.annotation.HandlerMethodValidationException.class
+    })
+    public ResponseEntity<ErrorResponse> handleConstraintViolation(Exception ex, HttpServletRequest request) {
+        if (ex instanceof ConstraintViolationException cve) {
+            List<ErrorResponse.FieldError> fieldErrors =
+                    cve.getConstraintViolations().stream()
+                            .map(
+                                    violation ->
+                                            new ErrorResponse.FieldError(
+                                                    violation.getPropertyPath().toString(),
+                                                    violation.getMessage()))
+                            .toList();
+            return build(
+                    ErrorCode.DOGRULAMA_HATASI,
+                    "Gönderilen bilgiler geçerli değil.",
+                    request,
+                    fieldErrors);
+        }
+
+        return build(ErrorCode.DOGRULAMA_HATASI, "Gönderilen bilgiler geçerli değil.", request);
     }
 
     /** Govde okunamadi: bozuk JSON, eksik govde, beklenmeyen tip. */
