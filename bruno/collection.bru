@@ -1,0 +1,25 @@
+headers {
+  Accept: application/json
+}
+
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+docs {
+  # eseryum API koleksiyonu
+
+  Token koleksiyon seviyesinde tanimli: `auth/Giris yap` istegi kostuktan sonra
+  `accessToken` ortam degiskenine yazilir, diger istekler onu miras alir
+  (`auth: inherit`). Her istekte tekrar Authorization header'i yazmayin.
+
+  Kimlik gerektirmeyen istekler (kayit, giris, listeleme) `auth: none` ile
+  isaretlidir; token kirliyken de calisirlar.
+
+  Ortam secmeyi unutmayin: sag ust kosede **local**. Secili ortam yoksa
+  `{{baseUrl}}` bos gider ve istek "invalid url" der.
+}

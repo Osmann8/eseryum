@@ -1,0 +1,15 @@
+meta {
+  name: Kitap detayi
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/v1/works/{{bookId}}
+  body: none
+  auth: none
+}
+
+docs {
+  `bookId` ortam degiskeninden gelir; local ortamda varsayilani `3`.
+}

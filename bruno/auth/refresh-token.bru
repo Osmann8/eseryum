@@ -1,0 +1,42 @@
+meta {
+  name: Token yenile
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/v1/auth/refresh
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "refreshToken": "{{refreshToken}}"
+  }
+}
+
+script:post-response {
+  if (res.getStatus() >= 400) {
+    return;
+  }
+
+  const govde = res.getBody() || {};
+
+  if (govde.accessToken) {
+    bru.setEnvVar("accessToken", govde.accessToken);
+  }
+  if (govde.refreshToken) {
+    bru.setEnvVar("refreshToken", govde.refreshToken);
+  }
+}
+
+docs {
+  Suresi dolmus access token'i yeniler. Yanit yeni bir refresh token da
+  donuyorsa (rotasyon) o da ortama yazilir; eski refresh token'i tekrar
+  kullanmayin.
+}

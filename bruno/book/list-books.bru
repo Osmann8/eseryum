@@ -1,0 +1,21 @@
+meta {
+  name: Kitap listesi
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1/works?type=BOOK&page=0&size=20
+  body: none
+  auth: none
+}
+
+params:query {
+  type: BOOK
+  page: 0
+  size: 20
+}
+
+docs {
+  Sayfali kitap listesi.
+}

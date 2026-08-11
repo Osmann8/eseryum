@@ -1,0 +1,21 @@
+meta {
+  name: Film listesi
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1/works?type=FILM&page=0&size=20
+  body: none
+  auth: none
+}
+
+params:query {
+  type: FILM
+  page: 0
+  size: 20
+}
+
+docs {
+  Sayfali film listesi. `page`/`size` Spring `Pageable` varsayilanlaridir.
+}

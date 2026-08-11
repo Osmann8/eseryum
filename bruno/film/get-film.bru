@@ -1,0 +1,16 @@
+meta {
+  name: Film detayi
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/v1/works/{{filmId}}
+  body: none
+  auth: none
+}
+
+docs {
+  `filmId` ortam degiskeninden gelir; local ortamda varsayilani `1`.
+  Olmayan bir id icin `404 KAYIT_BULUNAMADI` beklenir.
+}
