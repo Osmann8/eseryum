@@ -1,0 +1,61 @@
+name: CI
+
+# Branching strategy'deki "CI yesil olmadan merge yok" kurali icin: PR'lar
+# ve korunan dallara giden pushlar burada derlenip test edilir.
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# Ayni dala pes pese push atildiginda eski kosu bosuna calismasin.
+# Devam eden PR'da her push sadece son halin sonucunu gosterir.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend build + test
+    runs-on: ubuntu-latest
+    # Testcontainers imaj indirir; varsayilan 360 dk'lik limit, takilan bir
+    # kosuyu saatlerce ayakta tutar.
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: temurin
+          # ~/.m2 cache'i: her kosuda bagimliliklarin tamami yeniden inmesin.
+          cache: maven
+
+      - name: Build + test
+        # verify, package'in aksine testleri de calistirir. Testler gercek bir
+        # Postgres'e karsi kosuyor (Testcontainers); ubuntu-latest uzerinde
+        # Docker hazir geldigi icin ek kurulum gerekmiyor.
+        run: mvn -B --no-transfer-progress verify
+
+      - name: Upload test reports
+        # Kirmizi kosuda logdan hangi assertion'in patladigini okumak zor;
+        # surefire raporlari indirilebilir kalsin.
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: backend/target/surefire-reports/
+          retention-days: 7
+
+# NOT: frontend/package.json su an bos oldugu icin frontend job'i yok.
+# Next.js projesi kurulunca buraya lint + build + test adimlariyla ikinci
+# bir job eklenecek.
