@@ -5,14 +5,18 @@ name: CI
 on:
   push:
     branches: [main, develop]
+  # Hedef dal filtresi yok: hangi dala acilirsa acilsin her PR'da check
+  # gorunsun. Filtre varken main/develop disina acilan bir PR sessizce
+  # kontrolsuz kaliyordu - "check yok" ile "check yesil" ayirt edilemiyor.
   pull_request:
-    branches: [main, develop]
 
 # Ayni dala pes pese push atildiginda eski kosu bosuna calismasin.
-# Devam eden PR'da her push sadece son halin sonucunu gosterir.
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  # Iptal sadece PR'lar icin. main/develop'a arka arkaya merge edildiginde
+  # onceki merge commit'i "cancelled" check ile kalir; required check
+  # acilinca bu, yesil olmasi gereken bir commit'i kirmizi gosterir.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
