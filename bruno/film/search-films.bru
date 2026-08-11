@@ -1,0 +1,21 @@
+meta {
+  name: Film ara
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/v1/works/search
+  body: none
+  auth: none
+}
+
+params:query {
+  q: inception
+  type: FILM
+}
+
+docs {
+  Baslik uzerinden arama. Saglayici (TMDB) entegrasyonu geldiginde bu istek
+  yerel kayitlarla saglayici sonuclarini birlikte donecek.
+}

@@ -1,0 +1,25 @@
+meta {
+  name: Cikis yap
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/v1/auth/logout
+  body: none
+  auth: inherit
+}
+
+script:post-response {
+  // Sunucu token'i gecersiz kildiysa ortamda tutmanin anlami yok; kalirsa
+  // sonraki istek "neden 401 aliyorum" diye vakit yedirir.
+  if (res.getStatus() < 400) {
+    bru.setEnvVar("accessToken", "");
+    bru.setEnvVar("refreshToken", "");
+  }
+}
+
+docs {
+  Refresh token'i sunucu tarafinda gecersiz kilar ve ortamdaki token'lari
+  temizler.
+}

@@ -1,0 +1,35 @@
+meta {
+  name: Kitap ekle
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/v1/works
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "type": "BOOK",
+    "title": "Tutunamayanlar",
+    "year": 1972,
+    "author": "Oguz Atay",
+    "pageCount": 724
+  }
+}
+
+script:post-response {
+  if (res.getStatus() < 400 && res.getBody() && res.getBody().id) {
+    bru.setEnvVar("bookId", res.getBody().id);
+  }
+}
+
+docs {
+  Korumali istek. `pageCount` kitapta ilerleme yuzdesinin paydasidir.
+}

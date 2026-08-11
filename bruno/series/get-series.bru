@@ -1,0 +1,15 @@
+meta {
+  name: Dizi detayi
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/v1/works/{{seriesId}}
+  body: none
+  auth: none
+}
+
+docs {
+  `seriesId` ortam degiskeninden gelir; local ortamda varsayilani `2`.
+}

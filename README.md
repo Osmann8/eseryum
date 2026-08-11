@@ -8,6 +8,7 @@ Film, dizi ve kitap için tek platform. İzlediğini/okuduğunu kaydet, puan ver
 | Veritabanı| PostgreSQL 16                                             |
 | Frontend  | Next.js (henüz kurulmadı, iskelet halinde)                |
 | Ortam     | Docker Compose                                            |
+| API testi | Bruno (koleksiyon repo'da: [`bruno/`](bruno/))            |
 
 ---
 
@@ -76,6 +77,27 @@ Aynı komut her PR'da CI'da da koşuyor.
 
 ---
 
+## API'yi elle denemek: Bruno
+
+İstek koleksiyonu repo'da duruyor, yani `git pull` yapan herkeste aynı istekler
+açılır — kimse Postman ekranından ekran görüntüsü göndermez.
+
+1. [Bruno](https://www.usebruno.com/downloads)'yu kurun.
+2. **Open Collection** → repo içindeki [`bruno/`](bruno/) klasörünü seçin.
+3. Sağ üstten **local** ortamını seçin (`baseUrl = http://localhost:8080`).
+
+Klasörler medya türüne göre ayrılmıştır: `auth/`, `film/`, `series/`, `book/`.
+`auth/Giriş yap` isteği başarılı olduğunda token'ı ortam değişkenine yazar;
+korumalı isteklere elle `Authorization` header'ı eklemeniz gerekmez.
+
+> Controller'lar henüz yazılmadı. Koleksiyon **planlanan** sözleşmeyi taşıyor,
+> şu an istekler 401/404 döner. Endpoint'i değiştiren PR koleksiyonu da aynı
+> PR'da günceller — ayrıntı: [bruno/README.md](bruno/README.md).
+
+Swagger UI de ayakta: http://localhost:8080/swagger-ui.html
+
+---
+
 ## Ortam değişkenleri
 
 Hepsinin `.env.example` içinde makul bir varsayılanı var; `.env` yoksa da compose çalışır.
@@ -107,6 +129,7 @@ eseryum/
 │   │   └── provider/        # TMDB, Google Books, OpenLibrary entegrasyonları
 │   └── src/main/resources/db/migration/   # Flyway migration'ları
 ├── frontend/                # Next.js (iskelet)
+├── bruno/                   # API istek koleksiyonu (auth, film, series, book)
 ├── docs/                    # Ekip dokümanları
 └── docker-compose.yml
 ```

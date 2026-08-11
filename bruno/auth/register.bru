@@ -1,0 +1,30 @@
+meta {
+  name: Kayit ol
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/v1/auth/register
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "username": "demo",
+    "email": "demo@eseryum.dev",
+    "password": "Demo1234!"
+  }
+}
+
+docs {
+  Yeni uye olusturur.
+
+  Ayni e-posta/kullanici adi ikinci kez gonderilirse `409 KAYIT_ZATEN_VAR`
+  beklenir — hata govdesinin sekli icin `common/response/ErrorResponse`.
+}

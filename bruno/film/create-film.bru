@@ -1,0 +1,38 @@
+meta {
+  name: Film ekle
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/v1/works
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "type": "FILM",
+    "title": "Inception",
+    "year": 2010,
+    "overview": "Ruya icinde ruya kurgusuyla ilerleyen bilim kurgu."
+  }
+}
+
+script:post-response {
+  // Detay/guncelleme isteklerini elle id yazmadan kosabilmek icin.
+  if (res.getStatus() < 400 && res.getBody() && res.getBody().id) {
+    bru.setEnvVar("filmId", res.getBody().id);
+  }
+}
+
+docs {
+  Korumali istek: once `auth/Giris yap` kosulmali, yoksa
+  `401 YETKISIZ_ERISIM` doner.
+
+  Basarili yanittaki id `filmId` ortam degiskenine yazilir.
+}

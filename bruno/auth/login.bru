@@ -1,0 +1,46 @@
+meta {
+  name: Giris yap
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/v1/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "email": "demo@eseryum.dev",
+    "password": "Demo1234!"
+  }
+}
+
+script:post-response {
+  // Token'lari elle kopyalamak, koleksiyonun her kullanimda bir kez daha
+  // yanlis yapistirilmasi demek. Basarili girise otomatik yazilsin.
+  if (res.getStatus() >= 400) {
+    return;
+  }
+
+  const govde = res.getBody() || {};
+
+  if (govde.accessToken) {
+    bru.setEnvVar("accessToken", govde.accessToken);
+  }
+  if (govde.refreshToken) {
+    bru.setEnvVar("refreshToken", govde.refreshToken);
+  }
+}
+
+docs {
+  Basarili giriste `accessToken` ve `refreshToken` ortam degiskenlerine yazilir.
+
+  Alan adlari auth ticket'i ile kesinlesecek; script bekledigi alani bulamazsa
+  sessizce gecer, o zaman token'i Vars sekmesinden elle girmeniz gerekir.
+}

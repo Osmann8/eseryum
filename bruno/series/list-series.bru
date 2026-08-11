@@ -1,0 +1,21 @@
+meta {
+  name: Dizi listesi
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/v1/works
+  body: none
+  auth: none
+}
+
+params:query {
+  type: SERIES
+  page: 0
+  size: 20
+}
+
+docs {
+  Sayfali dizi listesi.
+}

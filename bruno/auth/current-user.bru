@@ -1,0 +1,16 @@
+meta {
+  name: Oturumdaki kullanici
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/v1/auth/me
+  body: none
+  auth: inherit
+}
+
+docs {
+  Token'in gecerli olup olmadigini anlamanin en ucuz yolu. `401 YETKISIZ_ERISIM`
+  aliyorsaniz once **Giris yap** istegini kosun.
+}
