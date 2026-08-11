@@ -1,0 +1,23 @@
+# Build context'e girmesi imaji sismekten cok cache'i bozar: target/ her
+# local build'de degisir ve COPY katmanini gereksiz yere gecersiz kilar.
+target/
+*.jar
+*.war
+*.class
+
+.git/
+.gitignore
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+.env
+.env.*
+!.env.example
+
+*.log
+Dockerfile
+.dockerignore
