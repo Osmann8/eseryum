@@ -60,6 +60,40 @@ jobs:
           path: backend/target/surefire-reports/
           retention-days: 7
 
-# NOT: frontend/package.json su an bos oldugu icin frontend job'i yok.
-# Next.js projesi kurulunca buraya lint + build + test adimlariyla ikinci
-# bir job eklenecek.
+  frontend:
+    name: Frontend lint + build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install
+        # ci, install'un aksine lock dosyasina birebir uyar; CI'da calisan
+        # surumler gelistiricinin makinesindekiyle ayni olsun.
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        # next build tip hatalarinda da patlar, ama hatayi burada gormek
+        # build ciktisinin icinde aramaktan daha okunakli.
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+# NOT: Frontend testi (Vitest/Playwright) henuz yok; test ticket'i acildiginda
+# bu job'a "npm test" adimi eklenecek.
