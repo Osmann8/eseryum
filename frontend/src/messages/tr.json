@@ -1,1 +1,85 @@
-
+{
+  "app": {
+    "name": "eseryum",
+    "tagline": "İzlediğin, okuduğun, bitirdiğin her şey tek bir yerde."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "films": "Filmler",
+    "series": "Diziler",
+    "books": "Kitaplar",
+    "discover": "Keşfet",
+    "lists": "Listeler",
+    "diary": "Günlüğüm",
+    "profile": "Profil",
+    "settings": "Ayarlar"
+  },
+  "topbar": {
+    "searchPlaceholder": "Ara: film, dizi, kitap, kullanıcı...",
+    "searchLabel": "Eser veya kullanıcı ara",
+    "notifications": "Bildirimler",
+    "messages": "Mesajlar",
+    "accountMenu": "Hesap menüsü"
+  },
+  "workType": {
+    "FILM": "Film",
+    "SERIES": "Dizi",
+    "BOOK": "Kitap"
+  },
+  "home": {
+    "greeting": "Merhaba, {username}",
+    "stats": {
+      "watched": "İzleme",
+      "read": "Okuma",
+      "lists": "Liste",
+      "reviews": "İnceleme"
+    },
+    "friends": {
+      "title": "Arkadaşların Şunları İzliyor",
+      "seeAll": "Tümünü Gör",
+      "empty": "Takip ettiğin kimse henüz bir şey kaydetmedi."
+    },
+    "trending": {
+      "title": "Bugün En Çok İzlenenler",
+      "seeAll": "Tümünü Gör",
+      "filter": {
+        "ALL": "Tümü",
+        "FILM": "Filmler",
+        "SERIES": "Diziler",
+        "BOOK": "Kitaplar"
+      },
+      "empty": "Bu türde bugün öne çıkan bir eser yok.",
+      "error": "Liste yüklenemedi. Sayfayı yenilemeyi deneyin."
+    },
+    "lists": {
+      "title": "Haftanın Listeleri",
+      "discoverAll": "Tüm Listeleri Keşfet",
+      "byUser": "{username} tarafından",
+      "workCount": "{count, number} eser"
+    },
+    "monthly": {
+      "title": "Bu Ay",
+      "film": "Film",
+      "series": "Dizi",
+      "book": "Kitap",
+      "seeSummary": "Özetini Gör"
+    }
+  },
+  "work": {
+    "ratingCount": "{count, number} değerlendirme",
+    "noCover": "Kapak veya dosya ara",
+    "imdb": "IMDb"
+  },
+  "pages": {
+    "login": "Giriş yap",
+    "register": "Kayıt ol",
+    "search": "Arama",
+    "work": "Eser",
+    "list": "Liste",
+    "profile": "Profil"
+  },
+  "common": {
+    "soon": "Yakında",
+    "soonDescription": "Bu ekran henüz yazılmadı. Çekirdek sürümün kapsamında; sırası geldiğinde açılacak."
+  }
+}
