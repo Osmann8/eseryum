@@ -9,6 +9,8 @@ node_modules/
 .next/
 out/
 *.tsbuildinfo
+# Next kendi uretir, elle duzenlenmez.
+next-env.d.ts
 
 # --- Ortam degiskenleri ---
 # Sizan API anahtari gecmisten silinmez: .env dosyalari asla commit'lenmez.

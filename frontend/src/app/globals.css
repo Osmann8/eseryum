@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/**
+ * Tasarim sistemi kurulmayacak (teknoloji belgesi), ama renkler dosyalara
+ * dagilmasin: tek kaynak burasi. Tailwind v4 bu blogu okuyup `bg-surface`,
+ * `text-ink-muted` gibi siniflari uretir.
+ */
+@theme {
+  --color-canvas: #070b14;
+  --color-surface: #0b1120;
+  --color-surface-2: #111a2c;
+  --color-line: #1b2436;
+  --color-line-strong: #2a3550;
+
+  --color-ink: #e7ecf5;
+  --color-ink-muted: #8e9aaf;
+  --color-ink-faint: #5d6880;
+
+  --color-brand: #4c6fff;
+  --color-brand-strong: #6b87ff;
+  --color-brand-soft: #16204a;
+
+  --color-star: #cbd5f5;
+  --color-imdb: #f5c518;
+
+  --radius-card: 0.75rem;
+}
+
+/**
+ * Google Fonts'a build sirasinda cikmamak icin sistem yigini kullaniliyor;
+ * marka fontu secildiginde next/font ile buraya baglanir.
+ */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Yatay listelerde kaydirma cubugu ince kalsin, kart yuksekligini bozmasin. */
+.scroll-row {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+.scroll-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-row::-webkit-scrollbar-thumb {
+  background-color: var(--color-line-strong);
+  border-radius: 9999px;
+}
