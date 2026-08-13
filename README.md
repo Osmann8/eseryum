@@ -6,7 +6,7 @@ Film, dizi ve kitap için tek platform. İzlediğini/okuduğunu kaydet, puan ver
 | --------- | --------------------------------------------------------- |
 | Backend   | Java 21, Spring Boot 3.3.4, Spring Security, JPA, Flyway   |
 | Veritabanı| PostgreSQL 16                                             |
-| Frontend  | Next.js (henüz kurulmadı, iskelet halinde)                |
+| Frontend  | Next.js 15 (App Router), TypeScript, Tailwind, TanStack Query, next-intl |
 | Ortam     | Docker Compose                                            |
 | API testi | Bruno (koleksiyon repo'da: [`bruno/`](bruno/))            |
 
@@ -17,6 +17,7 @@ Film, dizi ve kitap için tek platform. İzlediğini/okuduğunu kaydet, puan ver
 - **Docker Desktop** — veritabanı ve konteynerli çalıştırma için
 - **JDK 21** (Temurin önerilir) — backend'i IDE'den çalıştırmak ve test koşmak için
 - **Maven 3.9+** — IDE'nizinki de olur
+- **Node.js 22+** — frontend için
 
 Projede `mvnw` wrapper yok; Maven'ı kendiniz kurmalısınız.
 
@@ -128,7 +129,7 @@ eseryum/
 │   │   ├── user/            # Üyelik, auth, tamamlama takibi
 │   │   └── provider/        # TMDB, Google Books, OpenLibrary entegrasyonları
 │   └── src/main/resources/db/migration/   # Flyway migration'ları
-├── frontend/                # Next.js (iskelet)
+├── frontend/                # Next.js (App Router); ayrıntı aşağıda
 ├── bruno/                   # API istek koleksiyonu (auth, film, series, book)
 ├── docs/                    # Ekip dokümanları
 └── docker-compose.yml
@@ -148,9 +149,40 @@ Migration dosyaları `backend/src/main/resources/db/migration/` altına `V1__aci
 
 ## Frontend
 
-`frontend/` şu an boş iskelet — `package.json` ve bileşen dosyaları henüz doldurulmadı. Bu yüzden compose'da `frontend` profili altında duruyor, varsayılan `docker compose up` onu atlıyor.
+Next.js (App Router) + TypeScript. Tailwind CSS, TanStack Query ve next-intl kurulu; şu an yalnızca **ana sayfa** yazıldı, diğer ekranlar "Yakında" yer tutucusu.
 
-Next.js projesi kurulup `next.config.*` içinde `output: "standalone"` açıldıktan sonra:
+```bash
+cd frontend
+npm install
+npm run dev        # http://localhost:3000
+```
+
+| Komut               | Ne yapar                              |
+| ------------------- | ------------------------------------- |
+| `npm run dev`       | Geliştirme sunucusu                   |
+| `npm run build`     | Üretim derlemesi (`output: standalone`)|
+| `npm run lint`      | ESLint                                |
+| `npm run typecheck` | `tsc --noEmit`                        |
+
+Üçü de her PR'da CI'da koşuyor.
+
+### Klasör düzeni
+
+```
+frontend/src/
+├── app/[locale]/     # route'lar; dil öneki as-needed (tr için önek yok)
+├── features/         # alan bazlı: home, works, auth, reviews...
+│   └── <alan>/{api,components,hooks,types.ts}
+├── shared/           # api-client, ortak bileşenler, layout, provider'lar
+├── i18n/             # next-intl yapılandırması
+└── messages/tr.json  # arayüzdeki her metin buradan gelir
+```
+
+> **Ana sayfa şu an mock veriyle çiziliyor.** Backend'de henüz controller yok; veri `features/home/mock/` altında duruyor ve tek giriş noktası `features/home/api/home-api.ts`. Endpoint'ler açıldığında bu dosyadaki fonksiyonların gövdesi `apiFetch`'e çevrilir, bileşenler değişmez.
+
+### Konteynerde çalıştırma
+
+Compose'da `frontend` profili altında duruyor, yani varsayılan `docker compose up` onu atlar (backend üzerinde çalışırken imaj build etmek gereksiz):
 
 ```bash
 docker compose --profile frontend up -d --build
