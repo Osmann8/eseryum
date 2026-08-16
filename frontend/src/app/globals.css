@@ -23,19 +23,25 @@
   --color-star: #cbd5f5;
   --color-imdb: #f5c518;
 
-  /*
-   * Puan dagilimi halkasi. Bes yildiz sirali bir olcek, birbirinden bagimsiz
-   * bes kategori degil: bu yuzden bes ayri renk yerine tek renkten acik-koyu
-   * bes adim. Adimlarin acikligi tek yonlu azalir, dilim sirasi renkten
-   * okunabilsin diye.
-   */
+  --radius-card: 0.75rem;
+}
+
+/**
+ * Puan dagilimi halkasi. Bes yildiz sirali bir olcek, birbirinden bagimsiz bes
+ * kategori degil: bu yuzden bes ayri renk yerine tek renkten acik-koyu bes
+ * adim. Adimlarin acikligi tek yonlu azalir, dilim sirasi renkten okunabilsin
+ * diye.
+ *
+ * `static` gerekli: bu degiskenler Tailwind sinifi olarak degil, SVG'de
+ * dogrudan `var(--color-rating-3)` seklinde kullaniliyor. Static olmadan
+ * Tailwind kullanilmiyor sanip degiskeni ciktiya hic yazmiyor.
+ */
+@theme static {
   --color-rating-5: #b3c0ff;
   --color-rating-4: #8ea3ff;
   --color-rating-3: #6b87ff;
   --color-rating-2: #4c6fff;
   --color-rating-1: #3a51b8;
-
-  --radius-card: 0.75rem;
 }
 
 /**

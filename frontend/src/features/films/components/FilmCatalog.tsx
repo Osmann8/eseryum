@@ -12,8 +12,12 @@ import {
   type FilmQuery,
 } from "@/features/films/types";
 
+/**
+ * Genis ekranda alti sutun: sayfa boyutu 12, yani izgara tam iki sira olarak
+ * kapaniyor - son sirada yarim kalan kart olmuyor.
+ */
 const GRID_CLASSES =
-  "grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6";
+  "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6";
 
 interface FilmCatalogProps {
   query: FilmQuery;
