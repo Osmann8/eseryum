@@ -23,6 +23,9 @@ interface FilmCardProps {
  */
 export function FilmCard({ film, badge }: FilmCardProps) {
   const t = useTranslations("work");
+  // Degerlendirme sayisi bu sayfada parantez icinde yaziliyor, o yuzden
+  // metin ortak "work" anahtarindan degil films'ten geliyor.
+  const tCard = useTranslations("films.card");
   const runtimeLabel = useRuntimeLabel();
 
   return (
@@ -49,10 +52,14 @@ export function FilmCard({ film, badge }: FilmCardProps) {
         {film.year} • {runtimeLabel(film.runtimeMinutes)}
       </p>
 
-      <div className="mt-2 flex items-center gap-2">
+      {/*
+        Dar sutunda "4,7 (6.884 degerlendirme)" tek satira sigmiyor. Kirpmak
+        sayiyi okunmaz yapardi - satir sarilir, kart bir tik uzar.
+      */}
+      <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5">
         <StarRating value={film.rating} className="text-ink" />
-        <span className="truncate text-xs text-ink-muted">
-          {t("ratingCount", { count: film.ratingCount })}
+        <span className="text-xs text-ink-muted">
+          {tCard("ratingCount", { count: film.ratingCount })}
         </span>
       </div>
 

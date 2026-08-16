@@ -115,7 +115,8 @@
       "minutes": "{minutes}dk"
     },
     "card": {
-      "yourRating": "Senin puanın"
+      "rating": "eseryum puanı",
+      "ratingCount": "({count, number} değerlendirme)"
     },
     "recommendations": {
       "title": "Sana Özel Öneriler",

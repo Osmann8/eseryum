@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/shared/components/Button";
 import { FilmCard } from "@/features/films/components/FilmCard";
-import { UserRatingBadge } from "@/features/films/components/UserRatingBadge";
+import { RatingBadge } from "@/features/films/components/RatingBadge";
 import { useFilmCatalog } from "@/features/films/hooks/use-film-catalog";
 import {
   FILM_COLLECTIONS,
@@ -88,16 +88,7 @@ export function FilmCatalog({ query, onCollectionChange }: FilmCatalogProps) {
           <ul className={GRID_CLASSES}>
             {films.map((film) => (
               <li key={film.id}>
-                <FilmCard
-                  film={film}
-                  badge={
-                    // Puanlanmamis filmde rozet yok: izleme listesindekiler
-                    // boyle ayirt ediliyor.
-                    film.userRating !== undefined ? (
-                      <UserRatingBadge rating={film.userRating} />
-                    ) : undefined
-                  }
-                />
+                <FilmCard film={film} badge={<RatingBadge rating={film.rating} />} />
               </li>
             ))}
           </ul>

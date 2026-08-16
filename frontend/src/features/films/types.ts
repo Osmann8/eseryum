@@ -59,7 +59,12 @@ export interface FilmQuery {
 export interface FilmSummary extends FilmDetail {
   /** Tur slug'lari; filtre bunlarla eslesir. */
   genres: string[];
-  /** Kullanicinin kendi puani. Puanlamadiysa yok - sifir degil. */
+  /**
+   * Kullanicinin kendi puani. Puanlamadiysa yok - sifir degil.
+   *
+   * Kartta gosterilmiyor: rozet her kartta ayni seyi (eseryum ortalamasi)
+   * yazsin diye. Eser detayi ve inceleme formu bu alani kullanacak.
+   */
   userRating?: number;
   isWatched: boolean;
   inWatchlist: boolean;

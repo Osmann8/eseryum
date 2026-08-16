@@ -17,7 +17,7 @@ interface FilmListItemProps {
  * yer aciliyor: ayni satira yonetmen ve sure de sigiyor.
  */
 export function FilmListItem({ film, trailing }: FilmListItemProps) {
-  const t = useTranslations("work");
+  const t = useTranslations("films.card");
   const runtimeLabel = useRuntimeLabel();
 
   return (
