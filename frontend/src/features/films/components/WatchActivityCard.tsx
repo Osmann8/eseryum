@@ -6,6 +6,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { cn } from "@/shared/lib/cn";
 import { useRuntimeLabel } from "@/features/films/hooks/use-runtime-label";
 import type { WatchActivity } from "@/features/films/types";
 
@@ -23,16 +24,19 @@ export function WatchActivityCard({ activity }: { activity: WatchActivity }) {
     {
       key: "watched",
       icon: Play,
+      tone: "text-brand-strong",
       value: activity.filmCount.toLocaleString("tr-TR"),
     },
     {
       key: "totalTime",
       icon: CalendarDays,
+      tone: "text-brand-strong",
       value: runtimeLabel(activity.totalMinutes),
     },
     {
       key: "averageRating",
       icon: Star,
+      tone: "text-brand-strong",
       value: t("ratingOutOf", {
         value: activity.averageRating.toLocaleString("tr-TR", {
           minimumFractionDigits: 1,
@@ -43,6 +47,9 @@ export function WatchActivityCard({ activity }: { activity: WatchActivity }) {
     {
       key: "change",
       icon: isUp ? TrendingUp : TrendingDown,
+      // Tek yon bilgisi tasiyan kutu: artis/azalis renkten de okunsun. Ok
+      // isareti tek basina birakilmadi, renk tek tasiyici degil.
+      tone: isUp ? "text-success" : "text-danger",
       // Isaret ceviriye birakiliyor: Turkce'de yuzde isareti sayinin onunde.
       value: t(isUp ? "changeUp" : "changeDown", {
         value: Math.abs(activity.changePercent),
@@ -56,13 +63,13 @@ export function WatchActivityCard({ activity }: { activity: WatchActivity }) {
       <p className="mt-0.5 text-[11px] text-ink-faint">{t("subtitle")}</p>
 
       <dl className="mt-3 grid grid-cols-2 gap-2">
-        {tiles.map(({ key, icon: Icon, value }) => (
+        {tiles.map(({ key, icon: Icon, tone, value }) => (
           <div
             key={key}
             className="rounded-lg border border-line bg-surface-2/60 px-3 py-3"
           >
             <Icon
-              className="size-4 text-brand-strong"
+              className={cn("size-4", tone)}
               strokeWidth={1.75}
               aria-hidden="true"
             />

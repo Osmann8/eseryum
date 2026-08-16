@@ -6,22 +6,44 @@
  * `text-ink-muted` gibi siniflari uretir.
  */
 @theme {
-  --color-canvas: #070b14;
-  --color-surface: #0b1120;
-  --color-surface-2: #111a2c;
-  --color-line: #1b2436;
-  --color-line-strong: #2a3550;
+  /* Zeminler. Yuzeylerin %90'i bu dort renkten biri. */
+  --color-canvas: #060b12; /* sayfa zemini */
+  --color-shell: #081019; /* ust cubuk ve kenar cubugu */
+  --color-surface: #0c141e; /* kart */
+  --color-surface-2: #101a26; /* acik kart, hover, girdi alani */
 
-  --color-ink: #e7ecf5;
-  --color-ink-muted: #8e9aaf;
-  --color-ink-faint: #5d6880;
+  --color-line: #1a2735;
+  --color-line-strong: #263a50;
 
-  --color-brand: #4c6fff;
-  --color-brand-strong: #6b87ff;
-  --color-brand-soft: #16204a;
+  --color-ink: #f1f5f9;
+  --color-ink-muted: #a8b3c2;
+  --color-ink-faint: #718096;
 
-  --color-star: #cbd5f5;
+  /*
+   * Mavi olcusuyle kullanilir: aktif menu, dugme, baglanti, secili filtre ve
+   * one cikan sayilar. Bir yuzeyi doldurmak ya da "biraz renk olsun" demek
+   * icin degil - o isi ink tonlari yapiyor.
+   */
+  --color-brand: #3b82f6;
+  --color-brand-hover: #2563eb;
+  --color-brand-strong: #60a5fa; /* baglanti ve ikon: zemine karsi daha okunakli */
+  --color-brand-soft: #0f2038; /* aktif menu satirinin zemini */
+
+  /*
+   * Yildiz ikonu bilerek notr: her kartta iki kez gorunuyor, mavi olsaydi
+   * accent butcesini tek basina yerdi.
+   */
+  --color-star: #cbd5e1;
   --color-imdb: #f5c518;
+
+  /*
+   * Durum renkleri. Su an yalnizca aylik degisim okunda kullaniliyor; form
+   * hatalari ve bildirimler icin de burada duruyor ki ikinci bir yesil/kirmizi
+   * turemesin.
+   */
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
 
   --radius-card: 0.75rem;
 }
@@ -37,11 +59,11 @@
  * Tailwind kullanilmiyor sanip degiskeni ciktiya hic yazmiyor.
  */
 @theme static {
-  --color-rating-5: #b3c0ff;
-  --color-rating-4: #8ea3ff;
-  --color-rating-3: #6b87ff;
-  --color-rating-2: #4c6fff;
-  --color-rating-1: #3a51b8;
+  --color-rating-5: #93c5fd;
+  --color-rating-4: #60a5fa;
+  --color-rating-3: #3b82f6;
+  --color-rating-2: #2563eb;
+  --color-rating-1: #1d4ed8;
 }
 
 /**

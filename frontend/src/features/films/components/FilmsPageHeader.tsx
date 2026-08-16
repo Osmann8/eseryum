@@ -22,7 +22,8 @@ export function FilmsPageHeader({ counts }: { counts: FilmCounts }) {
     <header className="mb-8">
       <h1 className="flex items-center gap-2 text-xl font-semibold text-ink">
         {t("title")}
-        <Clapperboard className="size-5 text-brand-strong" strokeWidth={1.75} />
+        {/* Sussuz kalmasin diye duran bir ikon; mavi butcesi buraya harcanmaz. */}
+        <Clapperboard className="size-5 text-ink-faint" strokeWidth={1.75} />
       </h1>
       <p className="mt-1 text-sm text-ink-muted">{t("subtitle")}</p>
 

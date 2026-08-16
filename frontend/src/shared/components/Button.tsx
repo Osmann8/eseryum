@@ -10,7 +10,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<Variant, string> = {
-  primary: "bg-brand text-white hover:bg-brand-strong",
+  // Hover koyulasir, acilmaz: acik mavi baglanti rengi, dugme zemini degil.
+  primary: "bg-brand text-white hover:bg-brand-hover",
   ghost: "text-ink-muted hover:text-ink hover:bg-surface-2",
   // Filtre sekmeleri: secili olan aria-pressed ile isaretlenir, stil oradan gelir.
   pill: "rounded-full border border-line text-ink-muted hover:text-ink aria-pressed:border-brand aria-pressed:bg-brand aria-pressed:text-white",

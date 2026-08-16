@@ -56,7 +56,7 @@ export function Sidebar({ monthly, profileHref }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed top-16 bottom-0 left-0 z-30 hidden w-[190px] flex-col justify-between border-r border-line bg-surface md:flex">
+    <aside className="fixed top-16 bottom-0 left-0 z-30 hidden w-[190px] flex-col justify-between border-r border-line bg-shell md:flex">
       <nav className="flex flex-col gap-1 overflow-y-auto px-3 py-4">
         {NAV_GROUPS.map((group, groupIndex) => (
           <div key={groupIndex} className="flex flex-col gap-1">
