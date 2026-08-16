@@ -149,7 +149,7 @@ Migration dosyaları `backend/src/main/resources/db/migration/` altına `V1__aci
 
 ## Frontend
 
-Next.js (App Router) + TypeScript. Tailwind CSS, TanStack Query ve next-intl kurulu; şu an yalnızca **ana sayfa** yazıldı, diğer ekranlar "Yakında" yer tutucusu.
+Next.js (App Router) + TypeScript. Tailwind CSS, TanStack Query ve next-intl kurulu; şu an **ana sayfa** ile **Filmler** sekmesi yazıldı, diğer ekranlar "Yakında" yer tutucusu.
 
 ```bash
 cd frontend
@@ -178,7 +178,7 @@ frontend/src/
 └── messages/tr.json  # arayüzdeki her metin buradan gelir
 ```
 
-> **Ana sayfa şu an mock veriyle çiziliyor.** Backend'de henüz controller yok; veri `features/home/mock/` altında duruyor ve tek giriş noktası `features/home/api/home-api.ts`. Endpoint'ler açıldığında bu dosyadaki fonksiyonların gövdesi `apiFetch`'e çevrilir, bileşenler değişmez.
+> **Yazılan ekranlar şu an mock veriyle çiziliyor.** Backend'de henüz controller yok; veri `features/<alan>/mock/` altında duruyor ve tek giriş noktası `features/<alan>/api/*-api.ts` (`home-api.ts`, `films-api.ts`). Endpoint'ler açıldığında bu dosyalardaki fonksiyonların gövdesi `apiFetch`'e çevrilir, bileşenler değişmez. Filmler sekmesinde filtreleme/sıralama/sayfalama da bilerek `films-api.ts` içinde: gerçekte bu iş sorgu parametreleriyle sunucuda yapılacak.
 
 ### Konteynerde çalıştırma
 
