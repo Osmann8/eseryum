@@ -65,6 +65,108 @@
       "seeSummary": "Özetini Gör"
     }
   },
+  "films": {
+    "title": "Filmler",
+    "subtitle": "İzlediklerin, puanladığın ve hakkında yazdığın filmler.",
+    "addFilm": "Film Ekle",
+    "counts": {
+      "watched": "İzlediğin",
+      "rated": "Puanladığın",
+      "watchlist": "İzleme Listesinde",
+      "reviews": "İncelemen"
+    },
+    "collection": {
+      "label": "Koleksiyon",
+      "ALL": "Tümü",
+      "WATCHED": "İzlediklerim",
+      "WATCHLIST": "İzleme Listem",
+      "FAVORITES": "Favorilerim"
+    },
+    "sort": {
+      "label": "Sıralama",
+      "prefix": "Sıralama:",
+      "NEWEST": "En Yeniler",
+      "OLDEST": "En Eskiler",
+      "RATING": "En Yüksek Puan",
+      "TITLE": "A'dan Z'ye"
+    },
+    "year": {
+      "label": "Yıl",
+      "options": {
+        "y2020": "2020'ler",
+        "y2010": "2010'lar",
+        "y2000": "2000'ler",
+        "y1990": "1990'lar",
+        "older": "1990 öncesi"
+      }
+    },
+    "rating": {
+      "label": "Puan",
+      "min": "{value} ve üzeri"
+    },
+    "genre": {
+      "label": "Tür"
+    },
+    "filters": {
+      "reset": "Filtreleri temizle"
+    },
+    "runtime": {
+      "hoursMinutes": "{hours}sa {minutes}dk",
+      "minutes": "{minutes}dk"
+    },
+    "card": {
+      "rating": "eseryum puanı",
+      "ratingCount": "({count, number} değerlendirme)"
+    },
+    "recommendations": {
+      "title": "Sana Özel Öneriler",
+      "description": "Zevk örtüşmesi yüksek olan kullanıcılara ve puan geçmişine göre hazırlandı.",
+      "seeAll": "Tümünü Gör",
+      "match": "%{score} Örtüşme",
+      "view": {
+        "label": "Görünüm",
+        "GRID": "Izgara görünümü",
+        "LIST": "Liste görünümü"
+      },
+      "scroll": {
+        "left": "Sola kaydır",
+        "right": "Sağa kaydır"
+      },
+      "empty": "Öneri çıkarmak için yeterli puan geçmişin yok. Birkaç film puanla."
+    },
+    "catalog": {
+      "title": "Tüm Filmler",
+      "loadMore": "Daha Fazlasını Gör",
+      "loading": "Yükleniyor...",
+      "empty": "Bu filtrelerle eşleşen film yok.",
+      "error": "Liste yüklenemedi. Sayfayı yenilemeyi deneyin."
+    },
+    "genres": {
+      "title": "Türler",
+      "seeAll": "Tümünü Gör"
+    },
+    "activity": {
+      "title": "İzleme Aktiviten",
+      "subtitle": "Bu ayın özeti",
+      "ratingOutOf": "{value}/5",
+      "changeUp": "%{value}",
+      "changeDown": "-%{value}",
+      "label": {
+        "watched": "İzleme",
+        "totalTime": "Toplam Süre",
+        "averageRating": "Ortalama Puan",
+        "change": "Geçen aya göre"
+      }
+    },
+    "ratingDistribution": {
+      "title": "Puan Dağılımın",
+      "subtitle": "Tüm zamanların",
+      "chartLabel": "Puanlarının yıldıza göre dağılımı",
+      "stars": "{count} Yıldız",
+      "percent": "%{value}",
+      "seeAll": "Tüm İstatistiklerini Gör"
+    }
+  },
   "work": {
     "ratingCount": "{count, number} değerlendirme",
     "noCover": "Kapak veya dosya ara",

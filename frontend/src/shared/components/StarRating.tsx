@@ -25,7 +25,8 @@ export function StarRating({
       className={cn("inline-flex items-center gap-1 text-xs", className)}
       aria-label={formatted}
     >
-      <Star className="size-3 fill-brand-strong text-brand-strong" />
+      {/* Notr ton: bu ikon her kartta gorunuyor, marka rengi burada harcanmaz. */}
+      <Star className="size-3 fill-star text-star" />
       <span aria-hidden="true">{formatted}</span>
     </span>
   );

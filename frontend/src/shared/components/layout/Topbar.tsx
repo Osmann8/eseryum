@@ -9,7 +9,7 @@ export async function Topbar({ user }: { user: UserSummary }) {
   const tApp = await getTranslations("app");
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center border-b border-line bg-surface">
+    <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center border-b border-line bg-shell">
       <div className="flex w-[190px] shrink-0 items-center px-6">
         <Link
           href="/"
