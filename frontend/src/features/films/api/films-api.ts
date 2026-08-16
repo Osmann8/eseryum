@@ -30,6 +30,16 @@ import {
 /** Sayfa boyutu tasarimdan: genis ekranda alti sutunluk iki sira. */
 export const FILM_PAGE_SIZE = 12;
 
+/**
+ * Sayfa acildiginda gecerli olan sorgu. Sunucudaki prefetch ile istemcideki
+ * ilk durum ayni olmali, yoksa hidrasyondan sonra bos yere ikinci bir istek
+ * atilir - bu yuzden tek bir sabit.
+ */
+export const DEFAULT_FILM_QUERY: FilmQuery = {
+  collection: "ALL",
+  sort: "NEWEST",
+};
+
 /** GET /api/v1/users/{username}/films/counts */
 export async function fetchFilmCounts(): Promise<FilmCounts> {
   return MOCK_FILM_COUNTS;

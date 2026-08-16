@@ -11,10 +11,13 @@ export function WorkCover({
   coverUrl,
   title,
   className,
+  compact = false,
 }: {
   coverUrl?: string;
   title: string;
   className?: string;
+  /** Kucuk kucuk resimlerde (liste satiri) bos durumun yazisi sigmaz, kalkar. */
+  compact?: boolean;
 }) {
   const t = useTranslations("work");
 
@@ -25,11 +28,16 @@ export function WorkCover({
           "flex aspect-[2/3] flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-line-strong bg-surface-2/40 px-3 text-center",
           className,
         )}
+        title={compact ? t("noCover") : undefined}
       >
         <ImageIcon className="size-6 text-ink-faint" strokeWidth={1.5} />
-        <span className="text-xs leading-tight text-ink-faint">
-          {t("noCover")}
-        </span>
+        {compact ? (
+          <span className="sr-only">{t("noCover")}</span>
+        ) : (
+          <span className="text-xs leading-tight text-ink-faint">
+            {t("noCover")}
+          </span>
+        )}
       </div>
     );
   }
