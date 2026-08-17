@@ -5,11 +5,11 @@ import { useTranslations } from "next-intl";
  * cevirmen hook'u; sunucu bilesenlerinde de calisir (next-intl'in senkron
  * API'si).
  *
- * Bir saatin altindaki filmler icin saat kismi hic yazilmaz: "0sa 47dk" degil
+ * Bir saatin altindaki sureler icin saat kismi hic yazilmaz: "0sa 47dk" degil
  * "47dk".
  */
 export function useRuntimeLabel() {
-  const t = useTranslations("films.runtime");
+  const t = useTranslations("media.runtime");
 
   return (totalMinutes: number): string => {
     const hours = Math.floor(totalMinutes / 60);

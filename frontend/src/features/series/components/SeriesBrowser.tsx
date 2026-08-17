@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { DEFAULT_FILM_QUERY } from "@/features/films/api/films-api";
-import { FilmCatalog } from "@/features/films/components/FilmCatalog";
-import { FilmToolbar } from "@/features/films/components/FilmToolbar";
+import { DEFAULT_SERIES_QUERY } from "@/features/series/api/series-api";
+import { SeriesCatalog } from "@/features/series/components/SeriesCatalog";
+import { SeriesToolbar } from "@/features/series/components/SeriesToolbar";
 import type { GenreSummary } from "@/features/works/types";
-import type { FilmQuery } from "@/features/films/types";
+import type { SeriesQuery } from "@/features/series/types";
 
-interface FilmBrowserProps {
+interface SeriesBrowserProps {
   genres: GenreSummary[];
   /**
    * Oneri satiri. Filtrelere bagli olmadigi icin durumun icine girmiyor;
@@ -18,14 +18,14 @@ interface FilmBrowserProps {
 }
 
 /**
- * Filtre durumunun tek sahibi. Ust cubuktaki haplarla "Tum Filmler"
- * sekmeleri tasarimda iki ayri satir ama tek bir secim: ikisi de buradaki
- * `query`yi yazar, boylece birbirinden habersiz iki liste olusmaz.
+ * Filtre durumunun tek sahibi. Ust cubuktaki haplarla "Tum Diziler"
+ * sekmeleri iki ayri satir ama tek bir secim: ikisi de buradaki `query`yi
+ * yazar, boylece birbirinden habersiz iki liste olusmaz.
  */
-export function FilmBrowser({ genres, children }: FilmBrowserProps) {
-  const [query, setQuery] = useState<FilmQuery>(DEFAULT_FILM_QUERY);
+export function SeriesBrowser({ genres, children }: SeriesBrowserProps) {
+  const [query, setQuery] = useState<SeriesQuery>(DEFAULT_SERIES_QUERY);
 
-  function updateQuery(patch: Partial<FilmQuery>) {
+  function updateQuery(patch: Partial<SeriesQuery>) {
     setQuery((previous) => ({ ...previous, ...patch }));
   }
 
@@ -40,7 +40,7 @@ export function FilmBrowser({ genres, children }: FilmBrowserProps) {
 
   return (
     <>
-      <FilmToolbar
+      <SeriesToolbar
         query={query}
         genres={genres}
         onChange={updateQuery}
@@ -49,7 +49,7 @@ export function FilmBrowser({ genres, children }: FilmBrowserProps) {
 
       {children}
 
-      <FilmCatalog
+      <SeriesCatalog
         query={query}
         onCollectionChange={(collection) => updateQuery({ collection })}
       />

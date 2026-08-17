@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import type { GenreSummary } from "@/features/films/types";
+import type { GenreSummary } from "@/features/works/types";
 
 /**
  * Tur ikonlari veriye degil arayuze ait, o yuzden mock'ta degil burada.
@@ -31,7 +31,7 @@ const GENRE_ICONS: Record<string, LucideIcon> = {
 };
 
 export function GenreList({ genres }: { genres: GenreSummary[] }) {
-  const t = useTranslations("films.genres");
+  const t = useTranslations("media.genres");
 
   return (
     <section className="rounded-xl border border-line bg-surface p-4">
