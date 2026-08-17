@@ -149,9 +149,17 @@ Migration dosyaları `backend/src/main/resources/db/migration/` altına `V1__aci
 
 ## Frontend
 
-Next.js (App Router) + TypeScript. Tailwind CSS, TanStack Query ve next-intl kurulu; şu an **ana sayfa**, **Filmler** ve **Diziler** sekmeleri yazıldı, diğer ekranlar "Yakında" yer tutucusu.
+Next.js (App Router) + TypeScript. Tailwind CSS, TanStack Query ve next-intl kurulu; şu an **ana sayfa**, **Filmler**, **Diziler** ve **Kitaplar** sekmeleri yazıldı, diğer ekranlar "Yakında" yer tutucusu.
 
-Filmler ve Diziler aynı ekranın iki örneği (sayaçlar, filtre çubuğu, öneri satırı, katalog, sağ sütun). Ortak parçalar `features/works/` altında; `features/films/` ve `features/series/` yalnızca kendi verilerini ve türe özel farkları taşır — kartın alt satırı (film: süre, dizi: sezon/bölüm), koleksiyon sekmeleri ve dizilerdeki ilerleme çubuğu. Kitaplar sekmesi de aynı yerden beslenecek.
+Üç koleksiyon sekmesi aynı ekranın üç örneği (sayaçlar, filtre çubuğu, öneri satırı, katalog, sağ sütun). Ortak parçalar `features/works/` altında; `features/films/`, `features/series/` ve `features/books/` yalnızca kendi verilerini ve türe özel farkları taşır:
+
+| | Kartın alt satırı | Ara durum | Aylık özetin ikinci kutusu |
+| --- | --- | --- | --- |
+| Filmler | süre | — | Toplam Süre |
+| Diziler | sezon + bölüm | İzliyorum (bölüm ilerlemesi) | Toplam Süre |
+| Kitaplar | sayfa | Okuyorum (sayfa ilerlemesi) | Toplam Sayfa |
+
+Koleksiyon durumları tek sözlükte: `isCompleted`, `isPlanned`, `isInProgress`, `isFavorite`. Hangi kelimeyle görüneceği (İzlediklerim / Bitirdiklerim / Okuduklarım) her sekmenin kendi çevirisinde.
 
 ```bash
 cd frontend
@@ -180,7 +188,7 @@ frontend/src/
 └── messages/tr.json  # arayüzdeki her metin buradan gelir
 ```
 
-> **Yazılan ekranlar şu an mock veriyle çiziliyor.** Backend'de henüz controller yok; veri `features/<alan>/mock/` altında duruyor ve tek giriş noktası `features/<alan>/api/*-api.ts` (`home-api.ts`, `films-api.ts`, `series-api.ts`). Endpoint'ler açıldığında bu dosyalardaki fonksiyonların gövdesi `apiFetch`'e çevrilir, bileşenler değişmez. Filtreleme/sıralama/sayfalama da bilerek api katmanında (`features/works/api/collection-query.ts`): gerçekte bu iş sorgu parametreleriyle sunucuda yapılacak.
+> **Yazılan ekranlar şu an mock veriyle çiziliyor.** Backend'de henüz controller yok; veri `features/<alan>/mock/` altında duruyor ve tek giriş noktası `features/<alan>/api/*-api.ts` (`home-api.ts`, `films-api.ts`, `series-api.ts`, `books-api.ts`). Endpoint'ler açıldığında bu dosyalardaki fonksiyonların gövdesi `apiFetch`'e çevrilir, bileşenler değişmez. Filtreleme/sıralama/sayfalama da bilerek api katmanında (`features/works/api/collection-query.ts`): gerçekte bu iş sorgu parametreleriyle sunucuda yapılacak.
 
 ### Konteynerde çalıştırma
 
