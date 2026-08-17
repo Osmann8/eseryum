@@ -175,6 +175,42 @@
       "countLabel": "İzleme"
     }
   },
+  "series": {
+    "title": "Diziler",
+    "subtitle": "İzlediğin, takip ettiğin ve hakkında yazdığın diziler.",
+    "addSeries": "Dizi Ekle",
+    "counts": {
+      "watched": "Bitirdiğin",
+      "rated": "Puanladığın",
+      "watchlist": "İzleme Listesinde",
+      "reviews": "İncelemen"
+    },
+    "collection": {
+      "ALL": "Tümü",
+      "WATCHING": "İzliyorum",
+      "WATCHED": "Bitirdiklerim",
+      "WATCHLIST": "İzleme Listem",
+      "FAVORITES": "Favorilerim"
+    },
+    "meta": {
+      "seasons": "{count, number} sezon",
+      "episodes": "{count, number} bölüm"
+    },
+    "progress": {
+      "label": "{watched, number}/{total, number} bölüm",
+      "aria": "İzleme ilerlemesi"
+    },
+    "recommendations": {
+      "empty": "Öneri çıkarmak için yeterli puan geçmişin yok. Birkaç dizi puanla."
+    },
+    "catalog": {
+      "title": "Tüm Diziler",
+      "empty": "Bu filtrelerle eşleşen dizi yok."
+    },
+    "activity": {
+      "countLabel": "Bölüm"
+    }
+  },
   "work": {
     "ratingCount": "{count, number} değerlendirme",
     "noCover": "Kapak veya dosya ara",

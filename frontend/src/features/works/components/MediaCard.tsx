@@ -51,7 +51,12 @@ export function MediaCard({ work, meta, badge, footer }: MediaCardProps) {
         </h3>
       </Link>
 
-      <p className="mt-1 truncate text-xs text-ink-muted">{meta}</p>
+      {/*
+        Kirpilmiyor: dizilerde satir "2011 • 8 sezon • 73 bölüm" oluyor ve dar
+        sutuna sigmiyor. Filmlerde zaten tek satira sigdigi icin bir sey
+        degismiyor.
+      */}
+      <p className="mt-1 text-xs text-ink-muted">{meta}</p>
 
       {/*
         Dar sutunda "4,7 (6.884 degerlendirme)" tek satira sigmiyor. Kirpmak
