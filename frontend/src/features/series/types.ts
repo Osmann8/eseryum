@@ -16,9 +16,9 @@ import type {
  */
 export const SERIES_COLLECTIONS = [
   "ALL",
-  "WATCHING",
-  "WATCHED",
-  "WATCHLIST",
+  "IN_PROGRESS",
+  "COMPLETED",
+  "PLANNED",
   "FAVORITES",
 ] as const;
 
@@ -27,8 +27,6 @@ export type SeriesCollection = (typeof SERIES_COLLECTIONS)[number];
 export type SeriesQuery = MediaQuery<SeriesCollection>;
 
 export interface SeriesSummary extends SeriesDetail, CollectionFields {
-  /** Baslanmis ama bitmemis diziler. `isWatched` ile ayni anda dogru olmaz. */
-  isWatching: boolean;
   /**
    * Izlenen bolum sayisi. Bitmis dizide `episodeCount`a esit, izleme
    * listesindekinde sifir; ilerleme cubugu bu ikisinin oranini cizer.

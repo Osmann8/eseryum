@@ -8,6 +8,7 @@ import {
   MEDIA_DECADES,
   MEDIA_MIN_RATINGS,
   MEDIA_SORTS,
+  type CollectionFilter,
   type GenreSummary,
   type MediaDecade,
   type MediaMinRating,
@@ -27,7 +28,7 @@ const DECADE_KEYS: Record<MediaDecade, string> = {
   OLDER: "older",
 };
 
-interface CollectionToolbarProps<TCollection extends string> {
+interface CollectionToolbarProps<TCollection extends CollectionFilter> {
   query: MediaQuery<TCollection>;
   genres: GenreSummary[];
   /** Koleksiyon haplari; kume ture gore degisir (dizilerde "Izliyorum" var). */
@@ -37,7 +38,7 @@ interface CollectionToolbarProps<TCollection extends string> {
   onReset: () => void;
 }
 
-export function CollectionToolbar<TCollection extends string>({
+export function CollectionToolbar<TCollection extends CollectionFilter>({
   query,
   genres,
   collections,

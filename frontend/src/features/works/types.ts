@@ -53,10 +53,28 @@ export const MEDIA_MIN_RATINGS = [4.5, 4, 3.5, 3] as const;
 export type MediaMinRating = (typeof MEDIA_MIN_RATINGS)[number];
 
 /**
- * Katalog listesinin tum filtreleri; URL sorgu parametreleriyle birebir.
- * Koleksiyon kumesi ture gore degistigi icin tip parametresi var.
+ * Koleksiyon sekmeleri. Adlar ture gore degil duruma gore: ayni durum filmde
+ * "İzlediklerim", dizide "Bitirdiklerim", kitapta "Okuduklarım" diye
+ * yaziliyor - ceviri her sekmenin kendi dosyasinda, mantik tek yerde.
  */
-export interface MediaQuery<TCollection extends string = string> {
+export const COLLECTION_FILTERS = [
+  "ALL",
+  "IN_PROGRESS",
+  "COMPLETED",
+  "PLANNED",
+  "FAVORITES",
+] as const;
+
+export type CollectionFilter = (typeof COLLECTION_FILTERS)[number];
+
+/**
+ * Katalog listesinin tum filtreleri; URL sorgu parametreleriyle birebir.
+ * Koleksiyon kumesi ture gore degistigi icin tip parametresi var (filmde
+ * "devam eden" diye bir durum yok).
+ */
+export interface MediaQuery<
+  TCollection extends CollectionFilter = CollectionFilter,
+> {
   collection: TCollection;
   sort: MediaSort;
   decade?: MediaDecade;
@@ -79,9 +97,16 @@ export interface CollectionFields {
    * yazsin diye. Eser detayi ve inceleme formu bu alani kullanacak.
    */
   userRating?: number;
-  isWatched: boolean;
-  inWatchlist: boolean;
+  /** Bitirilmis: film izlendi, dizi bitti, kitap okundu. */
+  isCompleted: boolean;
+  /** Listeye alinmis ama henuz baslanmamis. */
+  isPlanned: boolean;
   isFavorite: boolean;
+  /**
+   * Baslanmis ama bitmemis. Filmde boyle bir ara durum yok, o yuzden istege
+   * bagli: alan yoksa "devam etmiyor" demek.
+   */
+  isInProgress?: boolean;
 }
 
 /** Sayfa basligindaki dort sayac. */
@@ -100,15 +125,23 @@ export interface GenreSummary {
   count: number;
 }
 
-/** "Izleme Aktiviten" karti - bu ayin ozeti. */
-export interface WatchActivity {
-  /** Filmlerde izlenen film, dizilerde izlenen bolum sayisi. */
+/**
+ * "Aktiviten" kartinin ortak alanlari - bu ayin ozeti. Kartin ikinci kutusu
+ * ture gore degistigi icin (film/dizide sure, kitapta sayfa) burada degil,
+ * sayfanin kendi tipinde.
+ */
+export interface ActivitySummary {
+  /** Filmlerde izlenen film, dizilerde bolum, kitaplarda kitap sayisi. */
   itemCount: number;
-  totalMinutes: number;
   /** 5 uzerinden, yarim yildiz hassasiyetinde. */
   averageRating: number;
   /** Gecen aya gore degisim; negatif olabilir. */
   changePercent: number;
+}
+
+/** Film ve dizi: bu ay ekranda gecen sure. */
+export interface WatchActivity extends ActivitySummary {
+  totalMinutes: number;
 }
 
 /** Puan dagilimi halkasinin bir dilimi. */

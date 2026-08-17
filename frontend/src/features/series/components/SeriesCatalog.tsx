@@ -47,7 +47,7 @@ export function SeriesCatalog({ query, onCollectionChange }: SeriesCatalogProps)
       // Cubuk sadece devam edenlerde: bitmis dizide %100 dolu bir cubuk
       // bilgi tasimiyor, izleme listesindekinde de bos cubuk.
       footer={(series) =>
-        series.isWatching ? (
+        series.isInProgress ? (
           <EpisodeProgress
             watched={series.watchedEpisodes}
             total={series.episodeCount}

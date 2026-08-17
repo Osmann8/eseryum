@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/shared/components/Button";
 import { MediaCard } from "@/features/works/components/MediaCard";
 import { RatingBadge } from "@/features/works/components/RatingBadge";
-import type { Work } from "@/features/works/types";
+import type { CollectionFilter, Work } from "@/features/works/types";
 
 /**
  * Genis ekranda alti sutun: sayfa boyutu 12, yani izgara tam iki sira olarak
@@ -29,7 +29,7 @@ export interface CatalogResult<T> {
   fetchNextPage: () => void;
 }
 
-interface MediaCatalogProps<TItem extends Work, TCollection extends string> {
+interface MediaCatalogProps<TItem extends Work, TCollection extends CollectionFilter> {
   title: string;
   /** "Bu filtrelerle eşleşen film yok." gibi, ture ozel cumle. */
   emptyLabel: string;
@@ -44,7 +44,7 @@ interface MediaCatalogProps<TItem extends Work, TCollection extends string> {
   footer?: (item: TItem) => ReactNode;
 }
 
-export function MediaCatalog<TItem extends Work, TCollection extends string>({
+export function MediaCatalog<TItem extends Work, TCollection extends CollectionFilter>({
   title,
   emptyLabel,
   collections,

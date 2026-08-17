@@ -1,31 +1,38 @@
 import {
-  CalendarDays,
   Play,
   Star,
   TrendingDown,
   TrendingUp,
+  type LucideIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/cn";
-import { useRuntimeLabel } from "@/features/works/hooks/use-runtime-label";
-import type { WatchActivity } from "@/features/works/types";
+import type { ActivitySummary } from "@/features/works/types";
 
 interface ActivityCardProps {
-  activity: WatchActivity;
-  /**
-   * Ilk kutunun etiketi: filmlerde "Izleme", dizilerde "Bolum". Sayilan sey
-   * ture gore degistigi icin disaridan geliyor.
-   */
+  /** "İzleme Aktiviten" / "Okuma Aktiviten". */
+  title: string;
+  activity: ActivitySummary;
+  /** Ilk kutunun etiketi: "İzleme", "Bölüm", "Kitap". */
   countLabel: string;
+  /**
+   * Ikinci kutu. Film ve dizide sure ("Toplam Süre" / "18sa 42dk"), kitapta
+   * sayfa ("Toplam Sayfa" / "1.240") oldugu icin hazir bicimlenmis geliyor.
+   */
+  total: { label: string; value: string; icon: LucideIcon };
 }
 
 /**
- * "Izleme Aktiviten" karti: bu ayin dort sayisi. Grafik yok, cunku dort sayi
- * icin eksen cizmek okumayi kolaylastirmiyor.
+ * Bu ayin dort sayisi. Grafik yok, cunku dort sayi icin eksen cizmek okumayi
+ * kolaylastirmiyor.
  */
-export function ActivityCard({ activity, countLabel }: ActivityCardProps) {
+export function ActivityCard({
+  title,
+  activity,
+  countLabel,
+  total,
+}: ActivityCardProps) {
   const t = useTranslations("media.activity");
-  const runtimeLabel = useRuntimeLabel();
 
   const isUp = activity.changePercent >= 0;
 
@@ -38,11 +45,11 @@ export function ActivityCard({ activity, countLabel }: ActivityCardProps) {
       value: activity.itemCount.toLocaleString("tr-TR"),
     },
     {
-      key: "totalTime",
-      icon: CalendarDays,
+      key: "total",
+      icon: total.icon,
       tone: "text-brand-strong",
-      label: t("label.totalTime"),
-      value: runtimeLabel(activity.totalMinutes),
+      label: total.label,
+      value: total.value,
     },
     {
       key: "averageRating",
@@ -72,7 +79,7 @@ export function ActivityCard({ activity, countLabel }: ActivityCardProps) {
 
   return (
     <section className="rounded-xl border border-line bg-surface p-4">
-      <h2 className="text-sm font-semibold text-ink">{t("title")}</h2>
+      <h2 className="text-sm font-semibold text-ink">{title}</h2>
       <p className="mt-0.5 text-[11px] text-ink-faint">{t("subtitle")}</p>
 
       <dl className="mt-3 grid grid-cols-2 gap-2">

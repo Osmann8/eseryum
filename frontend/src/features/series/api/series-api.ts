@@ -8,7 +8,6 @@ import type {
 } from "@/features/works/types";
 import type {
   RecommendedSeries,
-  SeriesCollection,
   SeriesQuery,
   SeriesSummary,
 } from "@/features/series/types";
@@ -67,21 +66,6 @@ export async function fetchRecommendedSeries(): Promise<RecommendedSeries[]> {
   return MOCK_RECOMMENDED_SERIES;
 }
 
-function matchesCollection(series: SeriesSummary, collection: string): boolean {
-  switch (collection as SeriesCollection) {
-    case "WATCHING":
-      return series.isWatching;
-    case "WATCHED":
-      return series.isWatched;
-    case "WATCHLIST":
-      return series.inWatchlist;
-    case "FAVORITES":
-      return series.isFavorite;
-    case "ALL":
-      return true;
-  }
-}
-
 /**
  * GET /api/v1/users/{username}/series
  *   ?collection=WATCHING&sort=NEWEST&decade=2010&minRating=4&genre=drama
@@ -94,8 +78,5 @@ export async function fetchSeries(
   query: SeriesQuery,
   page = 0,
 ): Promise<Page<SeriesSummary>> {
-  return queryCollection(MOCK_SERIES, query, matchesCollection, {
-    page,
-    size: SERIES_PAGE_SIZE,
-  });
+  return queryCollection(MOCK_SERIES, query, { page, size: SERIES_PAGE_SIZE });
 }
