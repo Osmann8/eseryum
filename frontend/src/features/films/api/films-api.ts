@@ -7,7 +7,6 @@ import type {
   WatchActivity,
 } from "@/features/works/types";
 import type {
-  FilmCollection,
   FilmQuery,
   FilmSummary,
   RecommendedFilm,
@@ -68,19 +67,6 @@ export async function fetchRecommendedFilms(): Promise<RecommendedFilm[]> {
   return MOCK_RECOMMENDED_FILMS;
 }
 
-function matchesCollection(film: FilmSummary, collection: string): boolean {
-  switch (collection as FilmCollection) {
-    case "WATCHED":
-      return film.isWatched;
-    case "WATCHLIST":
-      return film.inWatchlist;
-    case "FAVORITES":
-      return film.isFavorite;
-    case "ALL":
-      return true;
-  }
-}
-
 /**
  * GET /api/v1/users/{username}/films
  *   ?collection=WATCHED&sort=NEWEST&decade=2010&minRating=4&genre=drama
@@ -93,8 +79,5 @@ export async function fetchFilms(
   query: FilmQuery,
   page = 0,
 ): Promise<Page<FilmSummary>> {
-  return queryCollection(MOCK_FILMS, query, matchesCollection, {
-    page,
-    size: FILM_PAGE_SIZE,
-  });
+  return queryCollection(MOCK_FILMS, query, { page, size: FILM_PAGE_SIZE });
 }

@@ -1,13 +1,18 @@
 import {
   Atom,
-  Clapperboard,
+  BookOpen,
   Drama,
+  Feather,
   Fingerprint,
   Ghost,
   Heart,
+  Landmark,
   Laugh,
+  Library,
+  PenLine,
   Sparkles,
   Swords,
+  Tag,
   type LucideIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -28,6 +33,13 @@ const GENRE_ICONS: Record<string, LucideIcon> = {
   suc: Fingerprint,
   fantastik: Sparkles,
   romantik: Heart,
+  // Kitap turleri
+  roman: BookOpen,
+  klasik: Library,
+  polisiye: Fingerprint,
+  tarih: Landmark,
+  felsefe: PenLine,
+  siir: Feather,
 };
 
 export function GenreList({ genres }: { genres: GenreSummary[] }) {
@@ -47,7 +59,9 @@ export function GenreList({ genres }: { genres: GenreSummary[] }) {
 
       <ul className="flex flex-col gap-2.5">
         {genres.map((genre) => {
-          const Icon = GENRE_ICONS[genre.slug] ?? Clapperboard;
+          // Notr yedek ikon: saglayici yeni bir tur ekledigin de sayfa
+          // bozulmasin, ama filme ait bir ikon kitabin yanina dusmesin.
+          const Icon = GENRE_ICONS[genre.slug] ?? Tag;
 
           return (
             <li key={genre.slug} className="flex items-center gap-2 text-xs">

@@ -128,13 +128,11 @@
       "seeAll": "Tümünü Gör"
     },
     "activity": {
-      "title": "İzleme Aktiviten",
       "subtitle": "Bu ayın özeti",
       "ratingOutOf": "{value}/5",
       "changeUp": "%{value}",
       "changeDown": "-%{value}",
       "label": {
-        "totalTime": "Toplam Süre",
         "averageRating": "Ortalama Puan",
         "change": "Geçen aya göre"
       }
@@ -160,8 +158,8 @@
     },
     "collection": {
       "ALL": "Tümü",
-      "WATCHED": "İzlediklerim",
-      "WATCHLIST": "İzleme Listem",
+      "COMPLETED": "İzlediklerim",
+      "PLANNED": "İzleme Listem",
       "FAVORITES": "Favorilerim"
     },
     "recommendations": {
@@ -172,7 +170,9 @@
       "empty": "Bu filtrelerle eşleşen film yok."
     },
     "activity": {
-      "countLabel": "İzleme"
+      "title": "İzleme Aktiviten",
+      "countLabel": "İzleme",
+      "totalLabel": "Toplam Süre"
     }
   },
   "series": {
@@ -187,9 +187,9 @@
     },
     "collection": {
       "ALL": "Tümü",
-      "WATCHING": "İzliyorum",
-      "WATCHED": "Bitirdiklerim",
-      "WATCHLIST": "İzleme Listem",
+      "IN_PROGRESS": "İzliyorum",
+      "COMPLETED": "Bitirdiklerim",
+      "PLANNED": "İzleme Listem",
       "FAVORITES": "Favorilerim"
     },
     "meta": {
@@ -208,7 +208,47 @@
       "empty": "Bu filtrelerle eşleşen dizi yok."
     },
     "activity": {
-      "countLabel": "Bölüm"
+      "title": "İzleme Aktiviten",
+      "countLabel": "Bölüm",
+      "totalLabel": "Toplam Süre"
+    }
+  },
+  "books": {
+    "title": "Kitaplar",
+    "subtitle": "Okuduğun, puanladığın ve hakkında yazdığın kitaplar.",
+    "addBook": "Kitap Ekle",
+    "counts": {
+      "read": "Okuduğun",
+      "rated": "Puanladığın",
+      "readingList": "Okuma Listesinde",
+      "reviews": "İncelemen"
+    },
+    "collection": {
+      "ALL": "Tümü",
+      "IN_PROGRESS": "Okuyorum",
+      "COMPLETED": "Okuduklarım",
+      "PLANNED": "Okuma Listem",
+      "FAVORITES": "Favorilerim"
+    },
+    "meta": {
+      "pages": "{count, number} sayfa",
+      "translator": "çev. {name}"
+    },
+    "progress": {
+      "label": "{read, number}/{total, number} sayfa",
+      "aria": "Okuma ilerlemesi"
+    },
+    "recommendations": {
+      "empty": "Öneri çıkarmak için yeterli puan geçmişin yok. Birkaç kitap puanla."
+    },
+    "catalog": {
+      "title": "Tüm Kitaplar",
+      "empty": "Bu filtrelerle eşleşen kitap yok."
+    },
+    "activity": {
+      "title": "Okuma Aktiviten",
+      "countLabel": "Kitap",
+      "totalLabel": "Toplam Sayfa"
     }
   },
   "work": {

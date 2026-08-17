@@ -1,6 +1,7 @@
 import type { Page } from "@/shared/api/api-client";
 import type {
   CollectionFields,
+  CollectionFilter,
   MediaDecade,
   MediaQuery,
   MediaSort,
@@ -25,7 +26,30 @@ const DECADE_RANGES: Record<MediaDecade, { from: number; to: number }> = {
   OLDER: { from: Number.NEGATIVE_INFINITY, to: 1990 },
 };
 
-type CollectionItem = Work & Pick<CollectionFields, "genres">;
+type CollectionItem = Work & CollectionFields;
+
+/**
+ * Koleksiyon sekmesi yuklemi. Durum adlari uc sayfada da ayni oldugu icin tek
+ * yerde: "devam edenler" dizide bolum, kitapta sayfa demek ama secim ayni
+ * alana bakiyor.
+ */
+function matchesCollection(
+  item: CollectionItem,
+  collection: CollectionFilter,
+): boolean {
+  switch (collection) {
+    case "IN_PROGRESS":
+      return item.isInProgress === true;
+    case "COMPLETED":
+      return item.isCompleted;
+    case "PLANNED":
+      return item.isPlanned;
+    case "FAVORITES":
+      return item.isFavorite;
+    case "ALL":
+      return true;
+  }
+}
 
 function matchesFilters(item: CollectionItem, query: MediaQuery): boolean {
   if (query.genre !== undefined && !item.genres.includes(query.genre)) {
@@ -60,17 +84,10 @@ function compare(a: CollectionItem, b: CollectionItem, sort: MediaSort): number 
   }
 }
 
-/**
- * Verilen listeyi sorguya gore suzup Spring `Page` seklinde dondurur.
- *
- * Koleksiyon sekmesi (izlediklerim, favorilerim...) ture gore degistigi icin
- * disaridan bir yuklem olarak geliyor: dizilerde "izliyorum" var, filmlerde
- * yok.
- */
+/** Verilen listeyi sorguya gore suzup Spring `Page` seklinde dondurur. */
 export function queryCollection<T extends CollectionItem>(
   items: T[],
   query: MediaQuery,
-  matchesCollection: (item: T, collection: string) => boolean,
   { page, size }: { page: number; size: number },
 ): Page<T> {
   const matched = items

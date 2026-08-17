@@ -13,11 +13,13 @@ import type {
 /**
  * Ust filtre haplari ve "Tum Filmler" sekmeleri ayni kumeyi kullanir; tasarimda
  * iki yerde duruyorlar ama tek bir secim var.
+ *
+ * "Devam eden" yok: bir film ya izlenmis ya izlenmemistir.
  */
 export const FILM_COLLECTIONS = [
   "ALL",
-  "WATCHED",
-  "WATCHLIST",
+  "COMPLETED",
+  "PLANNED",
   "FAVORITES",
 ] as const;
 

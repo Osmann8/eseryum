@@ -1,5 +1,5 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import {
   DEFAULT_SERIES_QUERY,
   fetchRatingDistribution,
@@ -12,10 +12,10 @@ import {
 import { seriesKeys } from "@/features/series/api/query-keys";
 import { fetchCurrentUser } from "@/features/home/api/home-api";
 import { getQueryClient } from "@/shared/providers/query-client";
-import { ActivityCard } from "@/features/works/components/ActivityCard";
 import { GenreList } from "@/features/works/components/GenreList";
 import { RatingDistributionCard } from "@/features/works/components/RatingDistributionCard";
 import { RecommendedSeries } from "@/features/series/components/RecommendedSeries";
+import { SeriesActivityCard } from "@/features/series/components/SeriesActivityCard";
 import { SeriesBrowser } from "@/features/series/components/SeriesBrowser";
 import { SeriesPageHeader } from "@/features/series/components/SeriesPageHeader";
 
@@ -36,7 +36,6 @@ export default async function SeriesPage({
   setRequestLocale(locale);
 
   const queryClient = getQueryClient();
-  const tActivity = await getTranslations("series.activity");
 
   const [user, counts, genres, recommended, activity, distribution] =
     await Promise.all([
@@ -69,7 +68,7 @@ export default async function SeriesPage({
 
       <aside className="flex flex-col gap-4">
         <GenreList genres={genres} />
-        <ActivityCard activity={activity} countLabel={tActivity("countLabel")} />
+        <SeriesActivityCard activity={activity} />
         <RatingDistributionCard
           buckets={distribution}
           statsHref={`/profile/${user.username}`}
