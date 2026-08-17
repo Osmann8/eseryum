@@ -7,36 +7,48 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/cn";
-import { useRuntimeLabel } from "@/features/films/hooks/use-runtime-label";
-import type { WatchActivity } from "@/features/films/types";
+import { useRuntimeLabel } from "@/features/works/hooks/use-runtime-label";
+import type { WatchActivity } from "@/features/works/types";
+
+interface ActivityCardProps {
+  activity: WatchActivity;
+  /**
+   * Ilk kutunun etiketi: filmlerde "Izleme", dizilerde "Bolum". Sayilan sey
+   * ture gore degistigi icin disaridan geliyor.
+   */
+  countLabel: string;
+}
 
 /**
  * "Izleme Aktiviten" karti: bu ayin dort sayisi. Grafik yok, cunku dort sayi
  * icin eksen cizmek okumayi kolaylastirmiyor.
  */
-export function WatchActivityCard({ activity }: { activity: WatchActivity }) {
-  const t = useTranslations("films.activity");
+export function ActivityCard({ activity, countLabel }: ActivityCardProps) {
+  const t = useTranslations("media.activity");
   const runtimeLabel = useRuntimeLabel();
 
   const isUp = activity.changePercent >= 0;
 
   const tiles = [
     {
-      key: "watched",
+      key: "count",
       icon: Play,
       tone: "text-brand-strong",
-      value: activity.filmCount.toLocaleString("tr-TR"),
+      label: countLabel,
+      value: activity.itemCount.toLocaleString("tr-TR"),
     },
     {
       key: "totalTime",
       icon: CalendarDays,
       tone: "text-brand-strong",
+      label: t("label.totalTime"),
       value: runtimeLabel(activity.totalMinutes),
     },
     {
       key: "averageRating",
       icon: Star,
       tone: "text-brand-strong",
+      label: t("label.averageRating"),
       value: t("ratingOutOf", {
         value: activity.averageRating.toLocaleString("tr-TR", {
           minimumFractionDigits: 1,
@@ -50,6 +62,7 @@ export function WatchActivityCard({ activity }: { activity: WatchActivity }) {
       // Tek yon bilgisi tasiyan kutu: artis/azalis renkten de okunsun. Ok
       // isareti tek basina birakilmadi, renk tek tasiyici degil.
       tone: isUp ? "text-success" : "text-danger",
+      label: t("label.change"),
       // Isaret ceviriye birakiliyor: Turkce'de yuzde isareti sayinin onunde.
       value: t(isUp ? "changeUp" : "changeDown", {
         value: Math.abs(activity.changePercent),
@@ -63,7 +76,7 @@ export function WatchActivityCard({ activity }: { activity: WatchActivity }) {
       <p className="mt-0.5 text-[11px] text-ink-faint">{t("subtitle")}</p>
 
       <dl className="mt-3 grid grid-cols-2 gap-2">
-        {tiles.map(({ key, icon: Icon, tone, value }) => (
+        {tiles.map(({ key, icon: Icon, tone, label, value }) => (
           <div
             key={key}
             className="rounded-lg border border-line bg-surface-2/60 px-3 py-3"
@@ -75,7 +88,7 @@ export function WatchActivityCard({ activity }: { activity: WatchActivity }) {
             />
             <dd className="mt-2 text-sm font-semibold text-ink">{value}</dd>
             <dt className="mt-0.5 text-[11px] leading-tight text-ink-muted">
-              {t(`label.${key}`)}
+              {label}
             </dt>
           </div>
         ))}

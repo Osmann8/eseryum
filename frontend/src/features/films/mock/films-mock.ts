@@ -10,15 +10,14 @@
  * TMDB'den gelecek. Kapagi olmayan bir kayit (Ahlat Agaci) bilerek listede.
  */
 import type {
-  FilmCounts,
-  FilmSummary,
+  CollectionCounts,
   GenreSummary,
   RatingBucket,
-  RecommendedFilm,
   WatchActivity,
-} from "@/features/films/types";
+} from "@/features/works/types";
+import type { FilmSummary, RecommendedFilm } from "@/features/films/types";
 
-export const MOCK_FILM_COUNTS: FilmCounts = {
+export const MOCK_FILM_COUNTS: CollectionCounts = {
   watchedCount: 193,
   ratedCount: 48,
   watchlistCount: 27,
@@ -41,7 +40,7 @@ export const MOCK_GENRES: GenreSummary[] = [
 ];
 
 export const MOCK_WATCH_ACTIVITY: WatchActivity = {
-  filmCount: 7,
+  itemCount: 7,
   totalMinutes: 1122,
   averageRating: 4.3,
   changePercent: 12,

@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import type { RatingBucket } from "@/features/films/types";
+import type { RatingBucket } from "@/features/works/types";
 
 /**
  * Puan dagilimi halkasi. Kutuphanesiz, cunku cizilen sey bes sayidan ibaret:
@@ -24,7 +24,7 @@ export function RatingDistributionCard({
   buckets: RatingBucket[];
   statsHref: string;
 }) {
-  const t = useTranslations("films.ratingDistribution");
+  const t = useTranslations("media.ratingDistribution");
 
   let cumulative = 0;
   const segments = buckets.map((bucket) => {

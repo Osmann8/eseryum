@@ -1,5 +1,5 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   DEFAULT_FILM_QUERY,
   fetchFilmCounts,
@@ -12,12 +12,12 @@ import {
 import { filmKeys } from "@/features/films/api/query-keys";
 import { fetchCurrentUser } from "@/features/home/api/home-api";
 import { getQueryClient } from "@/shared/providers/query-client";
+import { ActivityCard } from "@/features/works/components/ActivityCard";
+import { GenreList } from "@/features/works/components/GenreList";
+import { RatingDistributionCard } from "@/features/works/components/RatingDistributionCard";
 import { FilmBrowser } from "@/features/films/components/FilmBrowser";
 import { FilmsPageHeader } from "@/features/films/components/FilmsPageHeader";
-import { GenreList } from "@/features/films/components/GenreList";
-import { RatingDistributionCard } from "@/features/films/components/RatingDistributionCard";
 import { RecommendedFilms } from "@/features/films/components/RecommendedFilms";
-import { WatchActivityCard } from "@/features/films/components/WatchActivityCard";
 
 /**
  * Filmler sekmesi. Sunucuda cizilir; istemcide kalan tek sey filtre durumu
@@ -35,6 +35,7 @@ export default async function FilmsPage({
   setRequestLocale(locale);
 
   const queryClient = getQueryClient();
+  const tActivity = await getTranslations("films.activity");
 
   const [user, counts, genres, recommended, activity, distribution] =
     await Promise.all([
@@ -67,7 +68,7 @@ export default async function FilmsPage({
 
       <aside className="flex flex-col gap-4">
         <GenreList genres={genres} />
-        <WatchActivityCard activity={activity} />
+        <ActivityCard activity={activity} countLabel={tActivity("countLabel")} />
         <RatingDistributionCard
           buckets={distribution}
           statsHref={`/profile/${user.username}`}

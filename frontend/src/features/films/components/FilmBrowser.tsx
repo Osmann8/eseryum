@@ -4,7 +4,8 @@ import { useState, type ReactNode } from "react";
 import { DEFAULT_FILM_QUERY } from "@/features/films/api/films-api";
 import { FilmCatalog } from "@/features/films/components/FilmCatalog";
 import { FilmToolbar } from "@/features/films/components/FilmToolbar";
-import type { FilmQuery, GenreSummary } from "@/features/films/types";
+import type { GenreSummary } from "@/features/works/types";
+import type { FilmQuery } from "@/features/films/types";
 
 interface FilmBrowserProps {
   genres: GenreSummary[];

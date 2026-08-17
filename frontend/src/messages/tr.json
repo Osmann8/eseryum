@@ -65,23 +65,8 @@
       "seeSummary": "Özetini Gör"
     }
   },
-  "films": {
-    "title": "Filmler",
-    "subtitle": "İzlediklerin, puanladığın ve hakkında yazdığın filmler.",
-    "addFilm": "Film Ekle",
-    "counts": {
-      "watched": "İzlediğin",
-      "rated": "Puanladığın",
-      "watchlist": "İzleme Listesinde",
-      "reviews": "İncelemen"
-    },
-    "collection": {
-      "label": "Koleksiyon",
-      "ALL": "Tümü",
-      "WATCHED": "İzlediklerim",
-      "WATCHLIST": "İzleme Listem",
-      "FAVORITES": "Favorilerim"
-    },
+  "media": {
+    "collectionLabel": "Koleksiyon",
     "sort": {
       "label": "Sıralama",
       "prefix": "Sıralama:",
@@ -131,14 +116,11 @@
       "scroll": {
         "left": "Sola kaydır",
         "right": "Sağa kaydır"
-      },
-      "empty": "Öneri çıkarmak için yeterli puan geçmişin yok. Birkaç film puanla."
+      }
     },
     "catalog": {
-      "title": "Tüm Filmler",
       "loadMore": "Daha Fazlasını Gör",
       "loading": "Yükleniyor...",
-      "empty": "Bu filtrelerle eşleşen film yok.",
       "error": "Liste yüklenemedi. Sayfayı yenilemeyi deneyin."
     },
     "genres": {
@@ -152,7 +134,6 @@
       "changeUp": "%{value}",
       "changeDown": "-%{value}",
       "label": {
-        "watched": "İzleme",
         "totalTime": "Toplam Süre",
         "averageRating": "Ortalama Puan",
         "change": "Geçen aya göre"
@@ -165,6 +146,33 @@
       "stars": "{count} Yıldız",
       "percent": "%{value}",
       "seeAll": "Tüm İstatistiklerini Gör"
+    }
+  },
+  "films": {
+    "title": "Filmler",
+    "subtitle": "İzlediklerin, puanladığın ve hakkında yazdığın filmler.",
+    "addFilm": "Film Ekle",
+    "counts": {
+      "watched": "İzlediğin",
+      "rated": "Puanladığın",
+      "watchlist": "İzleme Listesinde",
+      "reviews": "İncelemen"
+    },
+    "collection": {
+      "ALL": "Tümü",
+      "WATCHED": "İzlediklerim",
+      "WATCHLIST": "İzleme Listem",
+      "FAVORITES": "Favorilerim"
+    },
+    "recommendations": {
+      "empty": "Öneri çıkarmak için yeterli puan geçmişin yok. Birkaç film puanla."
+    },
+    "catalog": {
+      "title": "Tüm Filmler",
+      "empty": "Bu filtrelerle eşleşen film yok."
+    },
+    "activity": {
+      "countLabel": "İzleme"
     }
   },
   "work": {
