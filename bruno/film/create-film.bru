@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{baseUrl}}/api/v1/works
+  url: {{baseUrl}}/api/v1/films
   body: json
   auth: inherit
 }
@@ -16,10 +16,10 @@ headers {
 
 body:json {
   {
-    "type": "FILM",
     "title": "Inception",
     "year": 2010,
-    "overview": "Ruya icinde ruya kurgusuyla ilerleyen bilim kurgu."
+    "overview": "Ruya icinde ruya kurgusuyla ilerleyen bilim kurgu.",
+    "runtimeMinutes": 148
   }
 }
 
@@ -33,6 +33,10 @@ script:post-response {
 docs {
   Korumali istek: once `auth/Giris yap` kosulmali, yoksa
   `401 YETKISIZ_ERISIM` doner.
+
+  Tur govdede tasinmiyor; `/films` kaynagi zaten yalnizca film yaratir.
+  `runtimeMinutes` filme ozel alandir: kartin alt satirindaki sure ve
+  aylik ozetteki "Toplam Sure" bundan hesaplanir.
 
   Basarili yanittaki id `filmId` ortam degiskenine yazilir.
 }

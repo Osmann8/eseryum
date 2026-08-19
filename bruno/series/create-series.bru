@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: {{baseUrl}}/api/v1/works
+  url: {{baseUrl}}/api/v1/series
   body: json
   auth: inherit
 }
@@ -16,7 +16,6 @@ headers {
 
 body:json {
   {
-    "type": "SERIES",
     "title": "Breaking Bad",
     "year": 2008,
     "seasonCount": 5,

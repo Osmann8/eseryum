@@ -13,12 +13,16 @@ göndermez.
 
 ## Klasörler
 
-| Klasör    | İçerik                                                     |
-| --------- | ---------------------------------------------------------- |
-| `auth/`   | Kayıt, giriş, token yenileme, oturumdaki kullanıcı, çıkış  |
-| `film/`   | `type=FILM` eserler: liste, arama, detay, ekleme            |
-| `series/` | `type=SERIES` eserler                                       |
-| `book/`   | `type=BOOK` eserler                                         |
+| Klasör    | Kaynak            | İçerik                                            |
+| --------- | ----------------- | ------------------------------------------------- |
+| `auth/`   | `/api/v1/auth`    | Kayıt, giriş, token yenileme, oturumdaki kullanıcı, çıkış |
+| `film/`   | `/api/v1/films`   | Liste, arama, detay, ekleme                       |
+| `series/` | `/api/v1/series`  | Aynısı; ek olarak sezon/bölüm alanları            |
+| `book/`   | `/api/v1/books`   | Aynısı; ek olarak yazar/sayfa alanları            |
+
+Her medya tipi kendi ucuna sahip — backend'de de her biri kendi dikey dilimi
+(`media/film/`, `media/series/`, `media/book/`). Tür ne sorgu parametresinde
+ne de gövdede taşınır; yol zaten söyler.
 
 ## Token akışı
 
@@ -36,10 +40,13 @@ yazılmaz, dolayısıyla yanlışlıkla commit'lenmez.
 | -------------- | ----------------------- | ----------------------------------- |
 | `baseUrl`      | `http://localhost:8080` | Backend adresi                      |
 | `filmId`       | `1`                     | Detay isteklerinde kullanılan id    |
-| `seriesId`     | `2`                     | —                                   |
-| `bookId`       | `3`                     | —                                   |
+| `seriesId`     | `1`                     | —                                   |
+| `bookId`       | `1`                     | —                                   |
 | `accessToken`  | (secret, boş)           | Girişte otomatik dolar              |
 | `refreshToken` | (secret, boş)           | Girişte otomatik dolar              |
+
+Üç id de `1` — her tür kendi tablosunda olduğu için id dizileri bağımsız
+ilerler, `1` numaralı film ile `1` numaralı kitap ayrı eserlerdir.
 
 `.env` içinde `BACKEND_PORT` değiştirdiyseniz `baseUrl`'ü de güncelleyin.
 
