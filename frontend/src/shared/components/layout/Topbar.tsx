@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Bell, ChevronDown, Mail, Search } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -13,9 +14,23 @@ export async function Topbar({ user }: { user: UserSummary }) {
       <div className="flex w-[190px] shrink-0 items-center px-6">
         <Link
           href="/"
-          className="text-lg font-semibold tracking-tight text-ink hover:text-brand-strong"
+          className="flex items-center gap-2 text-ink transition-colors hover:text-brand-strong"
         >
-          {tApp("name")}
+          {/*
+            Ikon public/logo-icon.png. alt bos: marka adi hemen yanindaki
+            metinde zaten geciyor, ikisini birden okutmak tekrar olurdu.
+          */}
+          <Image
+            src="/logo-icon.png"
+            alt=""
+            width={28}
+            height={28}
+            priority
+            className="size-7 shrink-0"
+          />
+          <span className="text-lg font-semibold tracking-tight">
+            {tApp("name")}
+          </span>
         </Link>
       </div>
 
