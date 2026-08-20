@@ -12,6 +12,9 @@ import com.eseryum.media.dto.MediaResponse;
 import com.eseryum.media.dto.UpdateMediaRequest;
 import com.eseryum.media.entity.Media;
 import com.eseryum.media.entity.MediaType;
+import com.eseryum.media.identity.MediaIdentity;
+import com.eseryum.media.identity.MediaDeduplicationService;
+import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.mapper.MediaMapper;
 import com.eseryum.media.repository.MediaRepository;
 import com.eseryum.media.service.MediaService;
@@ -35,6 +38,7 @@ class MediaServiceTest {
 
     @Mock private MediaRepository mediaRepository;
     @Mock private MediaMapper mediaMapper;
+    @Mock private MediaDeduplicationService mediaDeduplicationService;
 
     @InjectMocks private MediaService mediaService;
 
@@ -49,6 +53,7 @@ class MediaServiceTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
+                        new MediaIdentity(MediaProvider.GOOGLE_BOOKS, "dune-volume-id"),
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null);
@@ -60,6 +65,8 @@ class MediaServiceTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
+                        MediaProvider.GOOGLE_BOOKS,
+                        "dune-volume-id",
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null,
@@ -75,6 +82,8 @@ class MediaServiceTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
+                        MediaProvider.GOOGLE_BOOKS,
+                        "dune-volume-id",
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null);
@@ -86,6 +95,7 @@ class MediaServiceTest {
         MediaResponse result = mediaService.create(request);
 
         assertSame(response, result);
+        verify(mediaDeduplicationService).ensureUnique(media.getIdentity());
         verify(mediaRepository).save(media);
     }
 

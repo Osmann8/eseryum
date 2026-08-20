@@ -4,7 +4,9 @@ import com.eseryum.media.dto.CreateMediaRequest;
 import com.eseryum.media.dto.MediaResponse;
 import com.eseryum.media.dto.UpdateMediaRequest;
 import com.eseryum.media.entity.Media;
+import com.eseryum.media.identity.MediaIdentity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
@@ -16,12 +18,15 @@ public interface MediaMapper {
                 request.originalTitle(),
                 request.description(),
                 request.type(),
+                new MediaIdentity(request.provider(), request.externalId()),
                 request.releaseDate(),
                 request.posterUrl(),
                 request.backdropUrl()
         );
     }
 
+    @Mapping(target = "provider", source = "identity.provider")
+    @Mapping(target = "externalId", source = "identity.externalId")
     MediaResponse toResponse(Media media);
 
     default void updateEntity(UpdateMediaRequest request, Media media) {

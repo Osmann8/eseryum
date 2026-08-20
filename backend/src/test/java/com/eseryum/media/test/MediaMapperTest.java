@@ -7,6 +7,8 @@ import com.eseryum.media.dto.MediaResponse;
 import com.eseryum.media.dto.UpdateMediaRequest;
 import com.eseryum.media.entity.Media;
 import com.eseryum.media.entity.MediaType;
+import com.eseryum.media.identity.MediaIdentity;
+import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.mapper.MediaMapper;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,8 @@ class MediaMapperTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
+                        MediaProvider.GOOGLE_BOOKS,
+                        "dune-volume-id",
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null);
@@ -34,6 +38,8 @@ class MediaMapperTest {
         assertThat(media.getOriginalTitle()).isEqualTo(request.originalTitle());
         assertThat(media.getDescription()).isEqualTo(request.description());
         assertThat(media.getType()).isEqualTo(request.type());
+        assertThat(media.getIdentity().getProvider()).isEqualTo(request.provider());
+        assertThat(media.getIdentity().getExternalId()).isEqualTo(request.externalId());
         assertThat(media.getReleaseDate()).isEqualTo(request.releaseDate());
         assertThat(media.getPosterUrl()).isEqualTo(request.posterUrl());
         assertThat(media.getBackdropUrl()).isEqualTo(request.backdropUrl());
@@ -47,6 +53,7 @@ class MediaMapperTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
+                        new MediaIdentity(MediaProvider.GOOGLE_BOOKS, "dune-volume-id"),
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null);
@@ -57,6 +64,8 @@ class MediaMapperTest {
         assertThat(response.originalTitle()).isEqualTo(media.getOriginalTitle());
         assertThat(response.description()).isEqualTo(media.getDescription());
         assertThat(response.type()).isEqualTo(media.getType());
+        assertThat(response.provider()).isEqualTo(media.getIdentity().getProvider());
+        assertThat(response.externalId()).isEqualTo(media.getIdentity().getExternalId());
         assertThat(response.releaseDate()).isEqualTo(media.getReleaseDate());
         assertThat(response.posterUrl()).isEqualTo(media.getPosterUrl());
         assertThat(response.backdropUrl()).isEqualTo(media.getBackdropUrl());
@@ -70,6 +79,7 @@ class MediaMapperTest {
                         null,
                         null,
                         MediaType.FILM,
+                        new MediaIdentity(MediaProvider.TMDB, "100"),
                         null,
                         null,
                         null);
@@ -89,6 +99,8 @@ class MediaMapperTest {
         assertThat(media.getOriginalTitle()).isEqualTo(request.originalTitle());
         assertThat(media.getDescription()).isEqualTo(request.description());
         assertThat(media.getType()).isEqualTo(request.type());
+        assertThat(media.getIdentity())
+                .isEqualTo(new MediaIdentity(MediaProvider.TMDB, "100"));
         assertThat(media.getReleaseDate()).isEqualTo(request.releaseDate());
         assertThat(media.getPosterUrl()).isEqualTo(request.posterUrl());
         assertThat(media.getBackdropUrl()).isEqualTo(request.backdropUrl());

@@ -7,6 +7,7 @@ import com.eseryum.media.dto.UpdateMediaRequest;
 import com.eseryum.media.entity.Media;
 import com.eseryum.media.entity.MediaType;
 import com.eseryum.media.mapper.MediaMapper;
+import com.eseryum.media.identity.MediaDeduplicationService;
 import com.eseryum.media.repository.MediaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,18 +19,22 @@ public class MediaService {
 
     private final MediaRepository mediaRepository;
     private final MediaMapper mediaMapper;
+    private final MediaDeduplicationService mediaDeduplicationService;
 
     public MediaService(
             MediaRepository mediaRepository,
-            MediaMapper mediaMapper
+            MediaMapper mediaMapper,
+            MediaDeduplicationService mediaDeduplicationService
     ) {
         this.mediaRepository = mediaRepository;
         this.mediaMapper = mediaMapper;
+        this.mediaDeduplicationService = mediaDeduplicationService;
     }
 
     @Transactional
     public MediaResponse create(CreateMediaRequest request) {
         Media media = mediaMapper.toEntity(request);
+        mediaDeduplicationService.ensureUnique(media.getIdentity());
         Media savedMedia = mediaRepository.save(media);
 
         return mediaMapper.toResponse(savedMedia);

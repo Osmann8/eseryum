@@ -17,6 +17,7 @@ import com.eseryum.media.dto.CreateMediaRequest;
 import com.eseryum.media.dto.MediaResponse;
 import com.eseryum.media.dto.UpdateMediaRequest;
 import com.eseryum.media.entity.MediaType;
+import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.service.MediaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -67,6 +68,8 @@ class MediaControllerTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
+                        MediaProvider.GOOGLE_BOOKS,
+                        "dune-volume-id",
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null,
@@ -82,6 +85,8 @@ class MediaControllerTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
+                        MediaProvider.GOOGLE_BOOKS,
+                        "dune-volume-id",
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null);
@@ -149,6 +154,8 @@ class MediaControllerTest {
                         request.originalTitle(),
                         request.description(),
                         request.type(),
+                        response.provider(),
+                        response.externalId(),
                         request.releaseDate(),
                         request.posterUrl(),
                         request.backdropUrl(),

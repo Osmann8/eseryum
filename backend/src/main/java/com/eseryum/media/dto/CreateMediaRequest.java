@@ -1,6 +1,7 @@
 package com.eseryum.media.dto;
 
 import com.eseryum.media.entity.MediaType;
+import com.eseryum.media.identity.MediaProvider;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,6 +20,13 @@ public record CreateMediaRequest(
 
         @NotNull
         MediaType type,
+
+        @NotNull
+        MediaProvider provider,
+
+        @NotBlank
+        @Size(max = 255)
+        String externalId,
 
         LocalDate releaseDate,
 
