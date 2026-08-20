@@ -125,7 +125,10 @@ eseryum/
 ├── backend/                 # Spring Boot uygulaması
 │   ├── src/main/java/com/eseryum/
 │   │   ├── common/          # Ortak entity temeli, merkezi hata yönetimi
-│   │   ├── media/           # Eser (film/dizi/kitap) alanı
+│   │   ├── media/           # Eser alanı; her medya tipi kendi dikey dilimi
+│   │   │   ├── film/        #   controller, service, dto, entity, mapper, repository
+│   │   │   ├── series/      #   ""
+│   │   │   └── book/        #   ""
 │   │   ├── user/            # Üyelik, auth, tamamlama takibi
 │   │   └── provider/        # TMDB, Google Books, OpenLibrary entegrasyonları
 │   └── src/main/resources/db/migration/   # Flyway migration'ları
