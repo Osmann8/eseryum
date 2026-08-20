@@ -195,11 +195,18 @@ Veritabanı zincirin tek adımda bitmesini garanti etmez — birleştirilmiş bi
 kaydın tekrar birleştirilmesi mümkün, uygulama zinciri çözmeli (ya da
 birleştirme sırasında hedefi canonical'a normalize etmeli).
 
-Taşıma sırasında dikkat: `user_media_status` ve `series_progress` PK'leri
-`(user_id, media_id, ...)` içerdiği için, aynı kullanıcının hem mükerrer
-hem canonical kayıtta satırı varsa düz bir `UPDATE ... SET media_id` PK
-çakışmasına düşer. Taşıma mantığı bu çakışmayı çözmeli (birleştirme veya
-atlama). `media_genre` için de aynı durum geçerli.
+**Taşıma sırasında PK çakışması.** Dört tabloda `media_id` bileşik PK'nin
+parçası: `user_media_status` ve `series_progress` `(user_id, media_id, …)`,
+`media_genre` `(media_id, genre_id)`, `list_item` `(list_id, media_id)`.
+Bunların hepsinde, aynı kullanıcı/liste hem mükerrer hem canonical kayda
+sahipse düz bir `UPDATE … SET media_id = <canonical>` PK çakışmasına düşer.
+
+Çözüm: satırları `INSERT INTO … SELECT … ON CONFLICT DO NOTHING` ile
+canonical'a kopyalayıp mükerrer `media_id`'ye ait satırları silmek — ya da
+`UPDATE` öncesi canonical'da zaten karşılığı olan satırları elemek.
+
+Kalan `media` bağımlıları güvenli: `log_entry` ve `review` surrogate `id`
+taşır, `media_id` orada yalnızca FK — çakışma olmaz.
 
 ### `taste_overlap` yazımı
 
