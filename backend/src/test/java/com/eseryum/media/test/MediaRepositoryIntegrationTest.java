@@ -51,7 +51,7 @@ class MediaRepositoryIntegrationTest {
     @Test
     void findAllByType_shouldReturnOnlyRequestedType() {
         mediaRepository.save(createMedia("Dune", MediaType.BOOK));
-        mediaRepository.save(createMedia("Arrival", MediaType.MOVIE));
+        mediaRepository.save(createMedia("Arrival", MediaType.FILM));
         mediaRepository.flush();
 
         Page<Media> result =

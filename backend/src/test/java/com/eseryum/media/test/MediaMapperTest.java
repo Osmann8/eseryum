@@ -69,7 +69,7 @@ class MediaMapperTest {
                         "Eski başlık",
                         null,
                         null,
-                        MediaType.MOVIE,
+                        MediaType.FILM,
                         null,
                         null,
                         null);
