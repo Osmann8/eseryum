@@ -36,8 +36,23 @@ Roadmap tabloları (`import_job` V1.1, `community` / `community_member` /
 Enum değerleri diyagramda yazmadığı için burada belirlendi:
 
 - `media_type`: `film`, `series`, `book`
-- `series_status`: `ongoing`, `ended`, `cancelled`
-- `track_status`: `planned`, `in_progress`, `completed`, `dropped`
+- `series_status`: `upcoming`, `ongoing`, `ended`, `cancelled`
+- `track_status`: `planned`, `in_progress`, `on_hold`, `completed`, `dropped`
+
+`upcoming`, TMDB import'u için gerekli: sağlayıcının "Planned" ve
+"In Production" durumlarının map edilecek bir karşılığı olmazsa henüz
+yayınlanmamış dizi yanlışlıkla `ongoing` görünür. `on_hold` ile `dropped`
+ayrı tutuldu; "yarıda bıraktım ama vazgeçmedim" ile "bıraktım" farklı
+niyetler, tek değerde birleştirilirse kullanıcının verdiği bilgi geri
+döndürülemez şekilde kaybolur.
+
+## Sürüm gereksinimi
+
+**Minimum PostgreSQL 15.** Bu bir tercih değil, zorunluluk: `review` tablosundaki
+`fk_review_log_entry` kısıtı `ON DELETE SET NULL (log_entry_id)` kolon listeli
+sözdizimini kullanıyor ve bu sözdizimi PostgreSQL 15 ile geldi. Daha eski bir
+sunucuda `V003__core_constraints.sql` sözdizimi hatası verir. Hedef sürüm 16;
+docker-compose `postgres:16-alpine` kullanıyor.
 
 ## Alınan kararlar
 
@@ -71,14 +86,33 @@ Diyagramdaki tipler bu skalayı taşıyamıyordu, genişletildi:
 - **`ON DELETE CASCADE`**: kullanıcıya bağlı türev veri (`log_entry`,
   `review`, `list`, `user_media_status`, `series_progress`, `follow`,
   `taste_overlap`), listeye bağlı `list_item`, türe bağlı `media_genre`,
-  ve `media`'nın ayrılmaz parçası olan üç detail tablosu
-- **`ON DELETE RESTRICT`**: `media`'yı referans eden diğer her şey —
-  bir medya kaydı hard delete edilmemeli, mükerrer kayıtlar
+  ve `media`'nın metadata uzantıları: üç detail tablosu + `media_genre`
+- **`ON DELETE RESTRICT`**: `media`'yı referans eden **kullanıcı verisi** —
+  `log_entry`, `list_item`, `user_media_status`, `series_progress`.
+  Bir medya kaydı hard delete edilmemeli, mükerrer kayıtlar
   `merged_into_id` ile birleştirilir
 
-Detail tabloları `media`'yı referans ettiği hâlde CASCADE: 1:1 uzantı satırının
-parent'ı olmadan bir anlamı yok. Bu, "media'yı referans eden her şey RESTRICT"
-kuralının bilinçli tek istisnası.
+`media`'yı referans ettiği hâlde CASCADE olanların ölçütü şu: satırın
+parent'ı olmadan bir anlamı yok ve içinde kullanıcı verisi taşımıyor.
+1:1 detail satırları ile `media_genre` (tür ataması = sınıflandırma
+metadata'sı) bu tanıma giriyor. `media_genre` RESTRICT olsaydı ayrıca
+pratik bir sorun çıkardı: neredeyse her medya satırının bir tür ataması
+olacağından hiç loglanmamış çöp bir kayıt bile silinemez, dolayısıyla
+detail tablolarındaki CASCADE hiçbir zaman ateşlenemezdi.
+
+### `app_user` CASCADE'leri pratikte ölü kurallardır
+
+`app_user` soft delete edildiği için ondan çıkan `ON DELETE CASCADE`
+zincirleri (`log_entry`, `review`, `list`, `user_media_status`,
+`series_progress`, `follow`, `taste_overlap`) **normal işleyişte hiç
+çalışmaz** — uygulama `DELETE FROM app_user` çağırmaz, `deleted_at` yazar.
+
+Bu kurallar bilinçli olarak savunma katmanı: KVKK silme talebi, test
+temizliği veya elle müdahale ile gerçek bir satır silinirse arkada yetim
+veri kalmasın diye duruyorlar. **Bunlara güvenerek "kullanıcı silinince
+verisi de gider" varsayımı yapmayın** — kullanıcı soft delete edildiğinde
+ona ait `review` ve `list` satırlarını gizlemek/işaretlemek servis
+katmanının işi (aşağıya bkz.).
 
 ### 4. `review` ↔ `log_entry` tutarlılığı
 
@@ -104,6 +138,13 @@ PostgreSQL FK kolonlarına otomatik index açmaz; hepsi elle eklendi.
 Soft delete edilen tablolarda ayrıca `WHERE deleted_at IS NULL` partial
 index'leri var. FK index'leri bilerek partial **değil**: CASCADE/RESTRICT
 kontrolü silinmiş satırları da taramak zorunda, partial index onları görmez.
+
+`ix_series_progress_media_id` ayrı bir gerekçeyle var: silme değil, medya
+birleştirme (`merged_into_id`). Mükerrer kayıt canonical'a taşınırken tüm
+bağımlı satırlar `media_id` ile bulunur ve `media_id` bu tablonun PK'sinde
+ilk kolon değil. `series_progress` doğası gereği en hızlı büyüyen
+tablolardan biri (kullanıcı × dizi × sezon × bölüm), bu yüzden orada
+tam tarama en pahalıya patlayan yer.
 
 ---
 
@@ -154,6 +195,12 @@ Veritabanı zincirin tek adımda bitmesini garanti etmez — birleştirilmiş bi
 kaydın tekrar birleştirilmesi mümkün, uygulama zinciri çözmeli (ya da
 birleştirme sırasında hedefi canonical'a normalize etmeli).
 
+Taşıma sırasında dikkat: `user_media_status` ve `series_progress` PK'leri
+`(user_id, media_id, ...)` içerdiği için, aynı kullanıcının hem mükerrer
+hem canonical kayıtta satırı varsa düz bir `UPDATE ... SET media_id` PK
+çakışmasına düşer. Taşıma mantığı bu çakışmayı çözmeli (birleştirme veya
+atlama). `media_genre` için de aynı durum geçerli.
+
 ### `taste_overlap` yazımı
 
 `user_a_id < user_b_id` kısıtı var; batch iş çifti yazmadan önce sıralamak
@@ -163,11 +210,15 @@ zorunda. Ters sırada insert denemesi `ck_taste_overlap_user_order` ile patlar.
 
 ## Roadmap tabloları eklenirken
 
-- **`media_type` benzeri ayrımcı kolonlar.** Dördüncü bir ortam (örn. oyun,
+- **Enum'a değer eklemek iki migration ister.** Dördüncü bir ortam (örn. oyun,
   podcast) eklemek şema değişikliği değil, `ALTER TYPE media_type ADD VALUE` +
-  yeni bir detail tablosudur. `ADD VALUE` PostgreSQL 12+ ile transaction içinde
-  çalışır, ama eklenen değer aynı transaction'da kullanılamaz — enum ekleme
-  ile veri yazımı ayrı migration'lara bölünmeli.
+  yeni bir detail tablosudur. Ama dikkat: `ADD VALUE` PostgreSQL 12+ ile
+  transaction içinde çalışır, **eklenen değer aynı transaction'da
+  kullanılamaz**. Flyway her migration dosyasını varsayılan olarak tek bir
+  transaction içinde koştuğu için "değeri ekle + mevcut satırları güncelle"
+  işi tek dosyada yapılamaz; `ALTER TYPE ... ADD VALUE` bir dosyaya,
+  o değeri kullanan `UPDATE`/`INSERT` bir sonraki dosyaya konmalı.
+  Bu, `series_status` ve `track_status` için de geçerlidir.
 - **`import_job` (V1.1).** `import_source` ve `job_status` enum'ları o
   migration'da oluşturulacak. `user_id` FK'si CASCADE olmalı (kullanıcıya ait
   türev veri).

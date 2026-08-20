@@ -7,9 +7,10 @@
 -- Silme stratejisi (karma):
 --   * app_user, review, list  -> soft delete (deleted_at), hard delete beklenmez.
 --   * app_user hard delete edilirse ona bagli tureyen veri CASCADE ile gider.
---   * media -> hicbir zaman hard delete edilmemeli; onu referans eden her FK
---     RESTRICT. Tek istisna 1:1 detail tablolari: onlar media satirinin
---     ayrilmaz parcasi oldugu icin CASCADE (bkz. supertype butunlugu).
+--   * media -> hicbir zaman hard delete edilmemeli; onu referans eden
+--     kullanici verisi (log_entry, list_item, user_media_status,
+--     series_progress) RESTRICT. Istisna, parent'i olmadan anlami olmayan
+--     metadata satirlari: 1:1 detail tablolari ve media_genre CASCADE.
 
 
 -- ---------------------------------------------------------------------------
@@ -79,9 +80,14 @@ ALTER TABLE book_detail
     FOREIGN KEY (media_id, media_type) REFERENCES media (id, media_type)
     ON DELETE CASCADE;
 
+-- Tur atamasi kullanici verisi degil, siniflandirma metadata'si: parent
+-- satiri olmadan anlami yok, bu yuzden detail tablolari gibi CASCADE.
+-- RESTRICT olsaydi neredeyse her media satirinin bir tur atamasi
+-- olacagindan hic loglanmamis cop bir kayit bile silinemez, dolayisiyla
+-- detail tablolarindaki CASCADE hicbir zaman ateslenemezdi.
 ALTER TABLE media_genre
     ADD CONSTRAINT fk_media_genre_media
-    FOREIGN KEY (media_id) REFERENCES media (id) ON DELETE RESTRICT;
+    FOREIGN KEY (media_id) REFERENCES media (id) ON DELETE CASCADE;
 -- Tur sozlugunden bir kayit silinirse eserlerdeki etiket de gider;
 -- baglanti satirinin tek basina anlami yok.
 ALTER TABLE media_genre

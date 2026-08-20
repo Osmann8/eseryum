@@ -25,6 +25,13 @@ CREATE INDEX ix_list_item_media_id ON list_item (media_id);
 
 CREATE INDEX ix_media_genre_genre_id ON media_genre (genre_id);
 
+-- Gerekce silme degil, medya birlestirme (media.merged_into_id): mukerrer
+-- kayit canonical'a tasinirken tum bagimli satirlar media_id ile bulunur.
+-- media_id PK'nin basinda olmadigi icin bu index olmadan tarama tum tabloyu
+-- dolasir; series_progress dogasi geregi en hizli buyuyen tablolardan biri
+-- (kullanici x dizi x sezon x bolum).
+CREATE INDEX ix_series_progress_media_id ON series_progress (media_id);
+
 -- "Beni kim takip ediyor" sorgusu. follower_id PK'nin basinda oldugu icin
 -- yalnizca ters yon eksikti.
 CREATE INDEX ix_follow_followee_id ON follow (followee_id);

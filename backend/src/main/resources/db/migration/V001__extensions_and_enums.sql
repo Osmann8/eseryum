@@ -20,8 +20,15 @@ CREATE TYPE media_type AS ENUM ('film', 'series', 'book');
 
 -- Dizinin yayin durumu. Serbest metin yerine enum: 'Devam ediyor' /
 -- 'devam ediyor' gibi varyasyonlar veriye sizmasin.
-CREATE TYPE series_status AS ENUM ('ongoing', 'ended', 'cancelled');
+-- 'upcoming' TMDB import'u icin gerekli: saglayicinin "Planned" ve
+-- "In Production" durumlarinin map edilecek bir karsiligi olmali,
+-- yoksa henuz yayinlanmamis dizi yanlislikla 'ongoing' gorunur.
+-- Siralama yayin hayatinin dogal sirasi: upcoming < ongoing < ended.
+CREATE TYPE series_status AS ENUM ('upcoming', 'ongoing', 'ended', 'cancelled');
 
 -- Kullanicinin bir eser ile mevcut iliskisi (user_media_status).
 -- Gecmis kayitlari log_entry tutar; burasi yalnizca "su anki durum".
-CREATE TYPE track_status AS ENUM ('planned', 'in_progress', 'completed', 'dropped');
+-- 'on_hold' ile 'dropped' ayri: "yarida biraktim ama vazgecmedim" ile
+-- "biraktim" farkli niyetler. Tek degerde birlestirilirse kullanicinin
+-- verdigi bilgi geri dondurulemez sekilde kaybolur.
+CREATE TYPE track_status AS ENUM ('planned', 'in_progress', 'on_hold', 'completed', 'dropped');
