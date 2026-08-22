@@ -53,7 +53,6 @@ export const MOCK_FRIEND_ACTIVITY: FriendActivity[] = [
 export const MOCK_TRENDING: Work[] = [
   {
     id: 1,
-    slug: "the-godfather",
     type: "FILM",
     title: "The Godfather",
     year: 1972,
@@ -64,7 +63,6 @@ export const MOCK_TRENDING: Work[] = [
   },
   {
     id: 2,
-    slug: "forrest-gump",
     type: "FILM",
     title: "Forrest Gump",
     year: 1994,
@@ -75,7 +73,6 @@ export const MOCK_TRENDING: Work[] = [
   },
   {
     id: 3,
-    slug: "the-prestige",
     type: "FILM",
     title: "The Prestige",
     year: 2006,
@@ -86,7 +83,6 @@ export const MOCK_TRENDING: Work[] = [
   },
   {
     id: 4,
-    slug: "youve-got-mail",
     type: "FILM",
     title: "You've Got Mail",
     year: 1998,
@@ -97,7 +93,6 @@ export const MOCK_TRENDING: Work[] = [
   },
   {
     id: 5,
-    slug: "se7en",
     type: "FILM",
     title: "Se7en",
     year: 1995,
@@ -110,7 +105,6 @@ export const MOCK_TRENDING: Work[] = [
     // Kapagi olmayan kayit bilerek burada: saglayicida gorseli bulunmayan
     // eserin nasil gorunecegi tasarimin parcasi, istisna degil.
     id: 6,
-    slug: "bir-sonbahar-hikayesi",
     type: "SERIES",
     title: "Bir Sonbahar Hikâyesi",
     year: 2024,
@@ -120,7 +114,6 @@ export const MOCK_TRENDING: Work[] = [
   },
   {
     id: 7,
-    slug: "severance",
     type: "SERIES",
     title: "Severance",
     year: 2022,
@@ -131,7 +124,6 @@ export const MOCK_TRENDING: Work[] = [
   },
   {
     id: 8,
-    slug: "tutunamayanlar",
     type: "BOOK",
     title: "Tutunamayanlar",
     year: 1972,
@@ -141,7 +133,6 @@ export const MOCK_TRENDING: Work[] = [
   },
   {
     id: 9,
-    slug: "kurk-mantolu-madonna",
     type: "BOOK",
     title: "Kürk Mantolu Madonna",
     year: 1943,
@@ -151,7 +142,6 @@ export const MOCK_TRENDING: Work[] = [
   },
   {
     id: 10,
-    slug: "dune",
     type: "BOOK",
     title: "Dune",
     originalTitle: "Dune",

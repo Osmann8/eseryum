@@ -12,8 +12,13 @@ export const WORK_TYPES = ["FILM", "SERIES", "BOOK"] as const;
 export type WorkType = (typeof WORK_TYPES)[number];
 
 export interface Work {
+  /**
+   * Adresleme anahtari; `media.id` ile birebir. Slug yok: baslik benzersiz
+   * degil (`Dune` hem 1965 kitabi hem 2021 filmi) ve tum turler tek id
+   * uzayini paylastigi icin (`film_detail.media_id` hem PK hem FK) bir
+   * slug'i tek bir esere baglamak ek cakisma stratejisi isterdi.
+   */
   id: number;
-  slug: string;
   type: WorkType;
   title: string;
   /** Ozgun baslik; Turkce baslikla farkliysa detayda gosterilir. */

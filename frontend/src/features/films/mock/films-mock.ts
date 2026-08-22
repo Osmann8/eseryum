@@ -65,7 +65,6 @@ export const MOCK_RATING_DISTRIBUTION: RatingBucket[] = [
 export const MOCK_RECOMMENDED_FILMS: RecommendedFilm[] = [
   {
     id: 101,
-    slug: "the-shawshank-redemption",
     type: "FILM",
     title: "The Shawshank Redemption",
     year: 1994,
@@ -84,7 +83,6 @@ export const MOCK_RECOMMENDED_FILMS: RecommendedFilm[] = [
   },
   {
     id: 102,
-    slug: "the-godfather-part-ii",
     type: "FILM",
     title: "The Godfather Part II",
     year: 1974,
@@ -103,7 +101,6 @@ export const MOCK_RECOMMENDED_FILMS: RecommendedFilm[] = [
   },
   {
     id: 103,
-    slug: "spirited-away",
     type: "FILM",
     title: "Spirited Away",
     originalTitle: "千と千尋の神隠し",
@@ -123,7 +120,6 @@ export const MOCK_RECOMMENDED_FILMS: RecommendedFilm[] = [
   },
   {
     id: 104,
-    slug: "inception",
     type: "FILM",
     title: "Inception",
     year: 2010,
@@ -142,7 +138,6 @@ export const MOCK_RECOMMENDED_FILMS: RecommendedFilm[] = [
   },
   {
     id: 105,
-    slug: "the-dark-knight",
     type: "FILM",
     title: "The Dark Knight",
     year: 2008,
@@ -161,7 +156,6 @@ export const MOCK_RECOMMENDED_FILMS: RecommendedFilm[] = [
   },
   {
     id: 106,
-    slug: "interstellar",
     type: "FILM",
     title: "Interstellar",
     year: 2014,
@@ -192,7 +186,6 @@ export const MOCK_RECOMMENDED_FILMS: RecommendedFilm[] = [
 export const MOCK_FILMS: FilmSummary[] = [
   {
     id: 1,
-    slug: "the-godfather",
     type: "FILM",
     title: "The Godfather",
     year: 1972,
@@ -211,7 +204,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 2,
-    slug: "forrest-gump",
     type: "FILM",
     title: "Forrest Gump",
     year: 1994,
@@ -230,7 +222,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 3,
-    slug: "the-prestige",
     type: "FILM",
     title: "The Prestige",
     year: 2006,
@@ -249,7 +240,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 4,
-    slug: "se7en",
     type: "FILM",
     title: "Se7en",
     year: 1995,
@@ -268,7 +258,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 5,
-    slug: "inception",
     type: "FILM",
     title: "Inception",
     year: 2010,
@@ -287,7 +276,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 6,
-    slug: "the-dark-knight",
     type: "FILM",
     title: "The Dark Knight",
     year: 2008,
@@ -306,7 +294,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 7,
-    slug: "interstellar",
     type: "FILM",
     title: "Interstellar",
     year: 2014,
@@ -325,7 +312,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 8,
-    slug: "parasite",
     type: "FILM",
     title: "Parasite",
     originalTitle: "기생충",
@@ -345,7 +331,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 9,
-    slug: "whiplash",
     type: "FILM",
     title: "Whiplash",
     year: 2014,
@@ -364,7 +349,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 10,
-    slug: "the-matrix",
     type: "FILM",
     title: "The Matrix",
     year: 1999,
@@ -383,7 +367,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 11,
-    slug: "pulp-fiction",
     type: "FILM",
     title: "Pulp Fiction",
     year: 1994,
@@ -402,7 +385,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 12,
-    slug: "fight-club",
     type: "FILM",
     title: "Fight Club",
     year: 1999,
@@ -421,7 +403,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 13,
-    slug: "her",
     type: "FILM",
     title: "Her",
     year: 2013,
@@ -440,7 +421,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 14,
-    slug: "youve-got-mail",
     type: "FILM",
     title: "You've Got Mail",
     year: 1998,
@@ -459,7 +439,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 15,
-    slug: "ahlat-agaci",
     type: "FILM",
     title: "Ahlat Ağacı",
     year: 2018,
@@ -477,7 +456,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 16,
-    slug: "arrival",
     type: "FILM",
     title: "Arrival",
     year: 2016,
@@ -495,7 +473,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 17,
-    slug: "the-social-network",
     type: "FILM",
     title: "The Social Network",
     year: 2010,
@@ -513,7 +490,6 @@ export const MOCK_FILMS: FilmSummary[] = [
   },
   {
     id: 18,
-    slug: "the-grand-budapest-hotel",
     type: "FILM",
     title: "The Grand Budapest Hotel",
     year: 2014,

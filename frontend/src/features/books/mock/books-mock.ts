@@ -63,7 +63,6 @@ export const MOCK_RATING_DISTRIBUTION: RatingBucket[] = [
 export const MOCK_RECOMMENDED_BOOKS: RecommendedBook[] = [
   {
     id: 301,
-    slug: "yuzyillik-yalnizlik",
     type: "BOOK",
     title: "Yüzyıllık Yalnızlık",
     originalTitle: "Cien años de soledad",
@@ -83,7 +82,6 @@ export const MOCK_RECOMMENDED_BOOKS: RecommendedBook[] = [
   },
   {
     id: 302,
-    slug: "kar",
     type: "BOOK",
     title: "Kar",
     year: 2002,
@@ -101,7 +99,6 @@ export const MOCK_RECOMMENDED_BOOKS: RecommendedBook[] = [
   },
   {
     id: 303,
-    slug: "donusum",
     type: "BOOK",
     title: "Dönüşüm",
     originalTitle: "Die Verwandlung",
@@ -121,7 +118,6 @@ export const MOCK_RECOMMENDED_BOOKS: RecommendedBook[] = [
   },
   {
     id: 304,
-    slug: "satranc",
     type: "BOOK",
     title: "Satranç",
     originalTitle: "Schachnovelle",
@@ -141,7 +137,6 @@ export const MOCK_RECOMMENDED_BOOKS: RecommendedBook[] = [
   },
   {
     id: 305,
-    slug: "cemile",
     type: "BOOK",
     title: "Cemile",
     year: 1958,
@@ -160,7 +155,6 @@ export const MOCK_RECOMMENDED_BOOKS: RecommendedBook[] = [
   },
   {
     id: 306,
-    slug: "sineklerin-tanrisi",
     type: "BOOK",
     title: "Sineklerin Tanrısı",
     originalTitle: "Lord of the Flies",
@@ -189,7 +183,6 @@ export const MOCK_RECOMMENDED_BOOKS: RecommendedBook[] = [
 export const MOCK_BOOKS: BookSummary[] = [
   {
     id: 1,
-    slug: "sapiens",
     type: "BOOK",
     title: "Sapiens: Hayvanlardan Tanrılara",
     originalTitle: "Sapiens: A Brief History of Humankind",
@@ -209,7 +202,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 2,
-    slug: "serenad",
     type: "BOOK",
     title: "Serenad",
     year: 2011,
@@ -227,7 +219,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 3,
-    slug: "puslu-kitalar-atlasi",
     type: "BOOK",
     // Kapagi olmayan kayit bilerek listede: Turkce baskilarda kapak cogu zaman
     // eksik, bos durum kartin bozulmus hali degil tasarlanmis hali.
@@ -246,7 +237,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 4,
-    slug: "simyaci",
     type: "BOOK",
     title: "Simyacı",
     originalTitle: "O Alquimista",
@@ -266,7 +256,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 5,
-    slug: "tutunamayanlar",
     type: "BOOK",
     title: "Tutunamayanlar",
     year: 1972,
@@ -284,7 +273,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 6,
-    slug: "dune",
     type: "BOOK",
     title: "Dune",
     originalTitle: "Dune",
@@ -304,7 +292,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 7,
-    slug: "otomatik-portakal",
     type: "BOOK",
     title: "Otomatik Portakal",
     originalTitle: "A Clockwork Orange",
@@ -323,7 +310,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 8,
-    slug: "saatleri-ayarlama-enstitusu",
     type: "BOOK",
     title: "Saatleri Ayarlama Enstitüsü",
     year: 1961,
@@ -341,7 +327,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 9,
-    slug: "ince-memed",
     type: "BOOK",
     title: "İnce Memed",
     year: 1955,
@@ -359,7 +344,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 10,
-    slug: "fahrenheit-451",
     type: "BOOK",
     title: "Fahrenheit 451",
     year: 1953,
@@ -377,7 +361,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 11,
-    slug: "1984",
     type: "BOOK",
     title: "1984",
     year: 1949,
@@ -396,7 +379,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 12,
-    slug: "hayvan-ciftligi",
     type: "BOOK",
     title: "Hayvan Çiftliği",
     originalTitle: "Animal Farm",
@@ -416,7 +398,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 13,
-    slug: "kurk-mantolu-madonna",
     type: "BOOK",
     title: "Kürk Mantolu Madonna",
     year: 1943,
@@ -434,7 +415,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 14,
-    slug: "yabanci",
     type: "BOOK",
     title: "Yabancı",
     originalTitle: "L'Étranger",
@@ -454,7 +434,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 15,
-    slug: "dogu-ekspresinde-cinayet",
     type: "BOOK",
     title: "Doğu Ekspresinde Cinayet",
     originalTitle: "Murder on the Orient Express",
@@ -473,7 +452,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 16,
-    slug: "bilinmeyen-bir-kadinin-mektubu",
     type: "BOOK",
     title: "Bilinmeyen Bir Kadının Mektubu",
     originalTitle: "Brief einer Unbekannten",
@@ -493,7 +471,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 17,
-    slug: "suc-ve-ceza",
     type: "BOOK",
     title: "Suç ve Ceza",
     originalTitle: "Преступление и наказание",
@@ -513,7 +490,6 @@ export const MOCK_BOOKS: BookSummary[] = [
   },
   {
     id: 18,
-    slug: "sefiller",
     type: "BOOK",
     title: "Sefiller",
     originalTitle: "Les Misérables",

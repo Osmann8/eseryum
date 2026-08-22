@@ -63,7 +63,6 @@ export const MOCK_RATING_DISTRIBUTION: RatingBucket[] = [
 export const MOCK_RECOMMENDED_SERIES: RecommendedSeries[] = [
   {
     id: 201,
-    slug: "the-wire",
     type: "SERIES",
     title: "The Wire",
     year: 2002,
@@ -86,7 +85,6 @@ export const MOCK_RECOMMENDED_SERIES: RecommendedSeries[] = [
   },
   {
     id: 202,
-    slug: "chernobyl",
     type: "SERIES",
     title: "Chernobyl",
     year: 2019,
@@ -109,7 +107,6 @@ export const MOCK_RECOMMENDED_SERIES: RecommendedSeries[] = [
   },
   {
     id: 203,
-    slug: "dark",
     type: "SERIES",
     title: "Dark",
     year: 2017,
@@ -132,7 +129,6 @@ export const MOCK_RECOMMENDED_SERIES: RecommendedSeries[] = [
   },
   {
     id: 204,
-    slug: "fleabag",
     type: "SERIES",
     title: "Fleabag",
     year: 2016,
@@ -155,7 +151,6 @@ export const MOCK_RECOMMENDED_SERIES: RecommendedSeries[] = [
   },
   {
     id: 205,
-    slug: "true-detective",
     type: "SERIES",
     title: "True Detective",
     year: 2014,
@@ -178,7 +173,6 @@ export const MOCK_RECOMMENDED_SERIES: RecommendedSeries[] = [
   },
   {
     id: 206,
-    slug: "arcane",
     type: "SERIES",
     title: "Arcane",
     year: 2021,
@@ -208,7 +202,6 @@ export const MOCK_RECOMMENDED_SERIES: RecommendedSeries[] = [
 export const MOCK_SERIES: SeriesSummary[] = [
   {
     id: 1,
-    slug: "bir-sonbahar-hikayesi",
     type: "SERIES",
     // Kapagi olmayan kayit bilerek listede: saglayicida gorseli bulunmayan
     // eserin nasil gorunecegi tasarimin parcasi, istisna degil.
@@ -231,7 +224,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 2,
-    slug: "the-last-of-us",
     type: "SERIES",
     title: "The Last of Us",
     year: 2023,
@@ -253,7 +245,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 3,
-    slug: "severance",
     type: "SERIES",
     title: "Severance",
     year: 2022,
@@ -276,7 +267,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 4,
-    slug: "the-bear",
     type: "SERIES",
     title: "The Bear",
     year: 2022,
@@ -299,7 +289,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 5,
-    slug: "bir-baskadir",
     type: "SERIES",
     title: "Bir Başkadır",
     year: 2020,
@@ -322,7 +311,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 6,
-    slug: "stranger-things",
     type: "SERIES",
     title: "Stranger Things",
     year: 2016,
@@ -344,7 +332,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 7,
-    slug: "the-crown",
     type: "SERIES",
     title: "The Crown",
     year: 2016,
@@ -366,7 +353,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 8,
-    slug: "better-call-saul",
     type: "SERIES",
     title: "Better Call Saul",
     year: 2015,
@@ -389,7 +375,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 9,
-    slug: "peaky-blinders",
     type: "SERIES",
     title: "Peaky Blinders",
     year: 2013,
@@ -412,7 +397,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 10,
-    slug: "black-mirror",
     type: "SERIES",
     title: "Black Mirror",
     year: 2011,
@@ -435,7 +419,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 11,
-    slug: "game-of-thrones",
     type: "SERIES",
     title: "Game of Thrones",
     year: 2011,
@@ -458,7 +441,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 12,
-    slug: "leyla-ile-mecnun",
     type: "SERIES",
     title: "Leyla ile Mecnun",
     year: 2011,
@@ -481,7 +463,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 13,
-    slug: "sherlock",
     type: "SERIES",
     title: "Sherlock",
     year: 2010,
@@ -504,7 +485,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 14,
-    slug: "breaking-bad",
     type: "SERIES",
     title: "Breaking Bad",
     year: 2008,
@@ -527,7 +507,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 15,
-    slug: "mad-men",
     type: "SERIES",
     title: "Mad Men",
     year: 2007,
@@ -549,7 +528,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 16,
-    slug: "the-office",
     type: "SERIES",
     title: "The Office",
     year: 2005,
@@ -572,7 +550,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 17,
-    slug: "the-sopranos",
     type: "SERIES",
     title: "The Sopranos",
     year: 1999,
@@ -595,7 +572,6 @@ export const MOCK_SERIES: SeriesSummary[] = [
   },
   {
     id: 18,
-    slug: "friends",
     type: "SERIES",
     title: "Friends",
     year: 1994,
