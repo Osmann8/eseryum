@@ -2,9 +2,9 @@
  * Eser tipleri. Kapsam belgesindeki "uc medya, tek tablo" karari burada da
  * gecerli: ortak alanlar `Work` uzerinde, ture ozel alanlar ayri arayuzlerde.
  *
- * Alan adlari Bruno koleksiyonundaki sozlesmeyi takip eder
- * (`/api/v1/works`); controller'lar yazildiginda burasi degil, mock katmani
- * degisecek.
+ * Alan adlari docs/api-endpoints.md'deki sozlesmeyi takip eder; tur
+ * bagimsiz kaynagin adi orada `media` (`/api/media`), arayuzde `Work`.
+ * Controller'lar yazildiginda burasi degil, mock katmani degisecek.
  */
 
 export const WORK_TYPES = ["FILM", "SERIES", "BOOK"] as const;

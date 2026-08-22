@@ -13,7 +13,7 @@ const FILTERS: TrendingFilter[] = ["ALL", "FILM", "SERIES", "BOOK"];
 /**
  * Tek istemci adasi. Sayfanin geri kalani sunucuda cizilir; burada sekme
  * durumu ve TanStack Query onbellegi var, cunku tur degistikce liste
- * yeniden cekilecek (endpoint gelince: /api/v1/works/trending?type=...).
+ * yeniden cekilecek (endpoint gelince: /api/media/trending?type=...).
  */
 export function TrendingSection() {
   const t = useTranslations("home.trending");
