@@ -42,33 +42,33 @@ export const DEFAULT_BOOK_QUERY: BookQuery = {
   sort: "NEWEST",
 };
 
-/** GET /api/v1/users/{username}/books/counts */
+/** GET /api/users/{id}/books/counts */
 export async function fetchBookCounts(): Promise<CollectionCounts> {
   return MOCK_BOOK_COUNTS;
 }
 
-/** GET /api/v1/books/genres?scope=me */
+/** GET /api/books/genres?scope=me */
 export async function fetchBookGenres(): Promise<GenreSummary[]> {
   return MOCK_GENRES;
 }
 
-/** GET /api/v1/users/{username}/books/activity?period=month */
+/** GET /api/users/{id}/books/activity?period=month */
 export async function fetchReadingActivity(): Promise<ReadingActivity> {
   return MOCK_READING_ACTIVITY;
 }
 
-/** GET /api/v1/users/{username}/books/rating-distribution */
+/** GET /api/users/{id}/books/rating-distribution */
 export async function fetchRatingDistribution(): Promise<RatingBucket[]> {
   return MOCK_RATING_DISTRIBUTION;
 }
 
-/** GET /api/v1/users/{username}/books/recommendations */
+/** GET /api/users/{id}/books/recommendations */
 export async function fetchRecommendedBooks(): Promise<RecommendedBook[]> {
   return MOCK_RECOMMENDED_BOOKS;
 }
 
 /**
- * GET /api/v1/users/{username}/books
+ * GET /api/users/{id}/books
  *   ?collection=IN_PROGRESS&sort=NEWEST&decade=2010&minRating=4&genre=roman
  *   &page=0&size=12
  *

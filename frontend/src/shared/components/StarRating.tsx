@@ -2,9 +2,9 @@ import { Star } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 
 /**
- * Puan rozeti. Puanlar yarim yildiz hassasiyetinde tutuluyor (4.5 gibi), o
- * yuzden bes yildiz cizmek yerine sayiyi yaziyoruz: kartlarda hem daha
- * okunakli hem daha az yer kapliyor.
+ * Puan rozeti. Skala 0-10 ve 0.5 adimli (9.5 gibi) - veritabaniyla ayni.
+ * Yildiz dizisi cizilmiyor, tek ikon + sayi yaziliyor: yirmi bir kademeyi
+ * yildizla gostermek okunaksiz olurdu, sayi hem net hem daha az yer kapliyor.
  */
 export function StarRating({
   value,
@@ -13,7 +13,7 @@ export function StarRating({
   value: number;
   className?: string;
 }) {
-  // 5 -> "5,0": sutunlar kayar, ondalik hep yazilir. Bicimleme sunucu ve
+  // 9 -> "9,0": sutunlar kaymasin diye ondalik hep yazilir. Bicimleme sunucu ve
   // istemcide ayni sonucu versin diye locale acikca veriliyor.
   const formatted = value.toLocaleString("tr-TR", {
     minimumFractionDigits: 1,

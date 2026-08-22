@@ -2,9 +2,9 @@
  * Eser tipleri. Kapsam belgesindeki "uc medya, tek tablo" karari burada da
  * gecerli: ortak alanlar `Work` uzerinde, ture ozel alanlar ayri arayuzlerde.
  *
- * Alan adlari Bruno koleksiyonundaki sozlesmeyi takip eder
- * (`/api/v1/works`); controller'lar yazildiginda burasi degil, mock katmani
- * degisecek.
+ * Alan adlari docs/api-endpoints.md'deki sozlesmeyi takip eder; tur
+ * bagimsiz kaynagin adi orada `media` (`/api/media`), arayuzde `Work`.
+ * Controller'lar yazildiginda burasi degil, mock katmani degisecek.
  */
 
 export const WORK_TYPES = ["FILM", "SERIES", "BOOK"] as const;
@@ -12,18 +12,31 @@ export const WORK_TYPES = ["FILM", "SERIES", "BOOK"] as const;
 export type WorkType = (typeof WORK_TYPES)[number];
 
 export interface Work {
+  /**
+   * Adresleme anahtari; `media.id` ile birebir. Slug yok: baslik benzersiz
+   * degil (`Dune` hem 1965 kitabi hem 2021 filmi) ve tum turler tek id
+   * uzayini paylastigi icin (`film_detail.media_id` hem PK hem FK) bir
+   * slug'i tek bir esere baglamak ek cakisma stratejisi isterdi.
+   */
   id: number;
-  slug: string;
   type: WorkType;
   title: string;
   /** Ozgun baslik; Turkce baslikla farkliysa detayda gosterilir. */
   originalTitle?: string;
   year: number;
   coverUrl?: string;
-  /** eseryum ortalamasi, 5 uzerinden yarim yildiz hassasiyetinde. */
+  /**
+   * eseryum ortalamasi, 0-10. Skala veritabaniyla ayni: tekil puanlar 0.5
+   * adimli (`ck_log_entry_rating_scale`), ortalama ara deger alabilir
+   * (`media.rating_avg` uzerinde adim kisiti yok).
+   */
   rating: number;
   ratingCount: number;
-  /** Dis kaynak puani; yoksa rozet cizilmez. */
+  /**
+   * Dis kaynak puani; yoksa rozet cizilmez. IMDb de 0-10 kullaniyor, yani
+   * `rating` ile ayni skala - ikisi kartta ayri rozetlerle gosteriliyor,
+   * cunku ayni olcekte olmalari ayni sey olduklari anlamina gelmiyor.
+   */
   imdbRating?: number;
 }
 
@@ -48,7 +61,7 @@ export const MEDIA_DECADES = ["2020", "2010", "2000", "1990", "OLDER"] as const;
 export type MediaDecade = (typeof MEDIA_DECADES)[number];
 
 /** Puan filtresi: secilen degerin altindakiler elenir. */
-export const MEDIA_MIN_RATINGS = [4.5, 4, 3.5, 3] as const;
+export const MEDIA_MIN_RATINGS = [9, 8, 7, 6] as const;
 
 export type MediaMinRating = (typeof MEDIA_MIN_RATINGS)[number];
 
@@ -91,7 +104,8 @@ export interface CollectionFields {
   /** Tur slug'lari; filtre bunlarla eslesir. */
   genres: string[];
   /**
-   * Kullanicinin kendi puani. Puanlamadiysa yok - sifir degil.
+   * Kullanicinin kendi puani, 0-10 ve 0.5 adimli. Puanlamadiysa yok - sifir
+   * degil; 0 gecerli bir puan (`ck_log_entry_rating_scale` 0'a izin veriyor).
    *
    * Kartta gosterilmiyor: rozet her kartta ayni seyi (eseryum ortalamasi)
    * yazsin diye. Eser detayi ve inceleme formu bu alani kullanacak.
@@ -133,7 +147,7 @@ export interface GenreSummary {
 export interface ActivitySummary {
   /** Filmlerde izlenen film, dizilerde bolum, kitaplarda kitap sayisi. */
   itemCount: number;
-  /** 5 uzerinden, yarim yildiz hassasiyetinde. */
+  /** 0-10; ortalama oldugu icin 0.5 adimina uymak zorunda degil. */
   averageRating: number;
   /** Gecen aya gore degisim; negatif olabilir. */
   changePercent: number;
@@ -146,8 +160,15 @@ export interface WatchActivity extends ActivitySummary {
 
 /** Puan dagilimi halkasinin bir dilimi. */
 export interface RatingBucket {
-  /** 1-5 arasi yildiz sayisi. */
-  stars: number;
+  /**
+   * Puan bandi, 1-5. Skala 0-10 ve 0.5 adimli oldugu icin 21 olasi deger
+   * var; halkaya 21 dilim cizilmez, ikiser puanlik bes banda toplaniyor:
+   * 5 = 8.5-10, 4 = 6.5-8, 3 = 4.5-6, 2 = 2.5-4, 1 = 0-2.
+   *
+   * Band sayisi bes kalmali: `--color-rating-1..5` (globals.css) tek hue'nun
+   * bes adimi ve halka bu adimlarla ciziliyor.
+   */
+  band: number;
   /** Yuzde; dilimlerin toplami 100. */
   percent: number;
 }

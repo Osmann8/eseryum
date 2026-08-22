@@ -19,7 +19,7 @@ export function WeeklyLists({ lists }: { lists: CuratedList[] }) {
         {lists.map((list) => (
           <li key={list.id}>
             <Link
-              href={`/lists/${list.slug}`}
+              href={`/lists/${list.id}`}
               className="flex h-full items-center gap-4 overflow-hidden rounded-xl border border-line bg-surface pr-4 transition-colors hover:border-line-strong hover:bg-surface-2"
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- Liste

@@ -129,7 +129,7 @@
     },
     "activity": {
       "subtitle": "Bu ayın özeti",
-      "ratingOutOf": "{value}/5",
+      "ratingOutOf": "{value}/10",
       "changeUp": "%{value}",
       "changeDown": "-%{value}",
       "label": {
@@ -140,8 +140,8 @@
     "ratingDistribution": {
       "title": "Puan Dağılımın",
       "subtitle": "Tüm zamanların",
-      "chartLabel": "Puanlarının yıldıza göre dağılımı",
-      "stars": "{count} Yıldız",
+      "chartLabel": "Puanlarının puan bandına göre dağılımı",
+      "band": "{min, number} – {max, number} puan",
       "percent": "%{value}",
       "seeAll": "Tüm İstatistiklerini Gör"
     }

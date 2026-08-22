@@ -13,16 +13,31 @@ göndermez.
 
 ## Klasörler
 
-| Klasör    | Kaynak            | İçerik                                            |
-| --------- | ----------------- | ------------------------------------------------- |
-| `auth/`   | `/api/v1/auth`    | Kayıt, giriş, token yenileme, oturumdaki kullanıcı, çıkış |
-| `film/`   | `/api/v1/films`   | Liste, arama, detay, ekleme                       |
-| `series/` | `/api/v1/series`  | Aynısı; ek olarak sezon/bölüm alanları            |
-| `book/`   | `/api/v1/books`   | Aynısı; ek olarak yazar/sayfa alanları            |
+Klasör sırası [docs/api-endpoints.md](../docs/api-endpoints.md) başlıklarıyla aynı.
 
-Her medya tipi kendi ucuna sahip — backend'de de her biri kendi dikey dilimi
-(`media/film/`, `media/series/`, `media/book/`). Tür ne sorgu parametresinde
-ne de gövdede taşınır; yol zaten söyler.
+| Klasör    | Kaynak         | İçerik                                              |
+| --------- | -------------- | --------------------------------------------------- |
+| `auth/`   | `/api/auth`    | Kayıt, giriş, token yenileme, çıkış                 |
+| `user/`   | `/api/users`   | Oturumdaki kullanıcı                                |
+| `media/`  | `/api/media`   | Tür bağımsız arama                                  |
+| `film/`   | `/api/films`   | Liste, detay, güncelleme                            |
+| `series/` | `/api/series`  | Aynısı; ek olarak sezon/bölüm alanları              |
+| `book/`   | `/api/books`   | Aynısı; ek olarak ekleme (yazar/sayfa alanları)     |
+
+Listeleme, detay ve güncellemede tür yolun kendisinde taşınır — ne sorgu
+parametresinde ne de gövdede. Backend'de de her biri kendi dikey dilimi
+(`media/film/`, `media/series/`, `media/book/`).
+
+**İki istisna var, ikisi de dökümandan geliyor:**
+
+- **Arama tür bağımsız.** Dökümanda tek bir arama ucu var
+  (`GET /api/media/search?q=`) ve film/dizi/kitabı karışık döndürüyor;
+  kullanıcı arama kutusuna yazarken türü önceden seçmiyor. Bu yüzden tür
+  başına ayrı arama isteği yok.
+- **Film ve dizi yaratılamaz.** Dökümanda bu iki tür için yalnızca
+  `PUT /api/{kaynak}/{id}` (Admin) var — katalog sağlayıcıdan (TMDB)
+  doluyor. Elle eklenebilen tek tür kitap: `POST /api/books`, Türkçe baskı
+  verisi için.
 
 ## Token akışı
 
@@ -40,22 +55,27 @@ yazılmaz, dolayısıyla yanlışlıkla commit'lenmez.
 | -------------- | ----------------------- | ----------------------------------- |
 | `baseUrl`      | `http://localhost:8080` | Backend adresi                      |
 | `filmId`       | `1`                     | Detay isteklerinde kullanılan id    |
-| `seriesId`     | `1`                     | —                                   |
-| `bookId`       | `1`                     | —                                   |
+| `seriesId`     | `2`                     | —                                   |
+| `bookId`       | `3`                     | —                                   |
 | `accessToken`  | (secret, boş)           | Girişte otomatik dolar              |
 | `refreshToken` | (secret, boş)           | Girişte otomatik dolar              |
 
-Üç id de `1` — her tür kendi tablosunda olduğu için id dizileri bağımsız
-ilerler, `1` numaralı film ile `1` numaralı kitap ayrı eserlerdir.
+Üç id **farklı**, çünkü tek bir id uzayı var: `film_detail.media_id` hem
+birincil hem yabancı anahtar (bkz. `V002`/`V003`). Yani `1` numaralı film
+varsa `1` numaralı kitap yoktur — o id zaten filme ait. Değerler yer
+tutucu; seed verisi geldiğinde gerçek id'lerle güncellenir.
 
 `.env` içinde `BACKEND_PORT` değiştirdiyseniz `baseUrl`'ü de güncelleyin.
 
 ## Endpoint'ler henüz yazılmadı
 
 Controller'lar boş; bu koleksiyon **planlanan** sözleşmeyi taşıyor. Şu an
-istekleri koşarsanız 401/404 alırsınız, beklenen durum. Endpoint listesi
-SAN-18'de kesinleştikçe ve controller'lar yazıldıkça buradaki yol, gövde ve alan
-adları güncellenir.
+istekleri koşarsanız 401/404 alırsınız, beklenen durum. Yollar
+[docs/api-endpoints.md](../docs/api-endpoints.md) ile hizalıdır; o belge tek
+doğru kaynaktır, çeliştiğinde belge kazanır.
+
+Koleksiyon dökümandaki her ucu taşımıyor — `library/`, `diary/`, `review/`,
+`list/` ve social uçları henüz yazılmadı. Var olanlar dökümanla birebir.
 
 Kural: **endpoint'i değiştiren PR, bu koleksiyonu da aynı PR'da günceller.**
 Gerçekle bağı kopan bir koleksiyon, hiç olmamasından daha kötüdür — insanlar bir

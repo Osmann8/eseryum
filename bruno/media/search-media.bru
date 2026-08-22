@@ -1,0 +1,24 @@
+meta {
+  name: Eser ara
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/media/search?q=inception
+  body: none
+  auth: none
+}
+
+params:query {
+  q: inception
+}
+
+docs {
+  Yerel veritabani + dis saglayici aramasi; sonuc film, dizi ve kitap
+  karisik gelir, her kayit kendi `mediaType` alanini tasir.
+
+  Saglayici entegrasyonu geldiginde bu istek yerel kayitlarla saglayici
+  sonuclarini birlikte donecek - film/dizi icin TMDB, kitap icin
+  Google Books / OpenLibrary.
+}

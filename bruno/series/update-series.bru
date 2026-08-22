@@ -1,0 +1,30 @@
+meta {
+  name: Dizi guncelle
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/api/series/{{seriesId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Breaking Bad",
+    "year": 2008,
+    "seasonCount": 5,
+    "episodeCount": 62
+  }
+}
+
+docs {
+  Admin istegi (`PUT /api/series/{id}`): var olan bir dizinin bilgilerini
+  gunceller. Sezon/bolum sayilari ilerleme yuzdesini hesaplarken
+  kullanildigi icin diziye ozel alanlardir.
+}

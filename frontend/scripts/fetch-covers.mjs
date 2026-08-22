@@ -308,7 +308,9 @@ async function main() {
   const withIds = targets.filter((entry) => entry.tmdbId);
   if (withIds.length > 0) {
     console.log("\nTMDB id'leri (ileride backend seed'i icin):");
-    for (const entry of withIds) console.log(`  ${entry.slug} = ${entry.tmdbId}`);
+    for (const entry of withIds) {
+      console.log(`  ${entry.title} (${entry.year}) = ${entry.tmdbId}`);
+    }
   }
 
   if (dryRun) {

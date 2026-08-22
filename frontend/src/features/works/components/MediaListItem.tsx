@@ -22,7 +22,7 @@ export function MediaListItem({ work, meta, trailing }: MediaListItemProps) {
 
   return (
     <Link
-      href={`/works/${work.slug}`}
+      href={`/works/${work.id}`}
       className="flex items-center gap-4 rounded-xl border border-line bg-surface p-3 transition-colors hover:border-line-strong hover:bg-surface-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
     >
       <WorkCover

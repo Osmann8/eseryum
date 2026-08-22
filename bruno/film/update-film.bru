@@ -1,0 +1,36 @@
+meta {
+  name: Film guncelle
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/api/films/{{filmId}}
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "title": "Inception",
+    "year": 2010,
+    "overview": "Ruya icinde ruya kurgusuyla ilerleyen bilim kurgu.",
+    "runtimeMinutes": 148
+  }
+}
+
+
+docs {
+  Admin istegi (dokumanda `PUT /api/films/{id}` boyle isaretli): var olan bir
+  filmin bilgilerini gunceller, yeni kayit yaratmaz. Dokumanda film ve dizi
+  icin yaratma ucu yok - katalog saglayicidan (TMDB) doluyor, elle eklenen
+  tek tur kitap.
+
+  `filmId` ortam degiskeninden gelir. `runtimeMinutes` filme ozel alandir:
+  kartin alt satirindaki sure ve aylik ozetteki "Toplam Sure" bundan
+  hesaplanir.
+}
