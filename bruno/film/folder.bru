@@ -1,9 +1,12 @@
 meta {
   name: film
-  seq: 2
+  seq: 4
 }
 
 docs {
-  Film kaynagi: `/api/v1/films`. Her medya turu kendi ucuna sahip, yani tur
-  ne sorgu parametresinde ne de govdede tasiniyor.
+  Film kaynagi: `/api/films`. Listeleme, detay ve guncellemede tur yolun
+  kendisinde: ne sorgu parametresinde ne de govdede tasiniyor.
+
+  Arama bunun disinda kaliyor - dokumandaki tek arama ucu tur bagimsiz
+  (`/api/media/search`), `media/` klasorunde.
 }
