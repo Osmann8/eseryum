@@ -25,8 +25,13 @@ export interface FriendActivity {
 }
 
 export interface CuratedList {
+  /**
+   * Adresleme anahtari; `list.id` ile birebir. Slug yok: baslik kullanicinin
+   * serbest girdisi - yeniden adlandirmada paylasilmis baglanti kirilirdi,
+   * ustelik semada liste baglantisinin kalici olmasi bilincli bir karar
+   * (`is_public` varsayilan acik, silme soft delete).
+   */
   id: number;
-  slug: string;
   title: string;
   curator: UserSummary;
   workCount: number;

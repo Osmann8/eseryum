@@ -155,7 +155,6 @@ export const MOCK_TRENDING: Work[] = [
 export const MOCK_WEEKLY_LISTS: CuratedList[] = [
   {
     id: 1,
-    slug: "2000lerin-en-iyileri",
     title: "2000'lerin En İyileri",
     curator: { username: "mert.y" },
     workCount: 45,
@@ -163,7 +162,6 @@ export const MOCK_WEEKLY_LISTS: CuratedList[] = [
   },
   {
     id: 2,
-    slug: "david-fincher-dunyasi",
     title: "David Fincher Dünyası",
     curator: { username: "zeynep.d" },
     workCount: 28,
@@ -171,7 +169,6 @@ export const MOCK_WEEKLY_LISTS: CuratedList[] = [
   },
   {
     id: 3,
-    slug: "klasik-kitaplar",
     title: "Klasik Kitaplar",
     curator: { username: "ada.k" },
     workCount: 63,
@@ -179,7 +176,6 @@ export const MOCK_WEEKLY_LISTS: CuratedList[] = [
   },
   {
     id: 4,
-    slug: "motivasyon-veren-filmler",
     title: "Motivasyon Veren Filmler",
     curator: { username: "onur" },
     workCount: 27,
