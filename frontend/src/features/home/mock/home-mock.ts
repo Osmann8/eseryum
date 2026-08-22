@@ -6,8 +6,11 @@
  * home-api.ts icindeki iki satir apiFetch'e cevrilir ve burasi silinir;
  * bilesenlerin hicbiri degismez.
  *
- * Kapaklar public/covers altindaki yer tutucu SVG'lerdir. Gercek kapaklar
- * TMDB'den gelecek (teknoloji belgesi: dosya barindirilmiyor).
+ * Kapak URL'lerini `npm run covers` yaziyor (scripts/fetch-covers.mjs):
+ * film ve diziler TMDB'den, kitaplar OpenLibrary'den. Gorseller CDN'den
+ * geliyor, dosya barindirilmiyor (teknoloji belgesindeki karar).
+ * Haftanin listeleri istisna: onlarin kapagi eser degil, public/lists
+ * altindaki kendi tasarlanmis gorselleri.
  */
 import type { Work } from "@/features/works/types";
 import type {
@@ -54,7 +57,7 @@ export const MOCK_TRENDING: Work[] = [
     type: "FILM",
     title: "The Godfather",
     year: 1972,
-    coverUrl: "/covers/the-godfather.svg",
+    coverUrl: "https://image.tmdb.org/t/p/w500/vseIVRdN4xasYwStQIi6SI7DcEu.jpg",
     rating: 4.8,
     ratingCount: 12480,
     imdbRating: 9.2,
@@ -65,7 +68,7 @@ export const MOCK_TRENDING: Work[] = [
     type: "FILM",
     title: "Forrest Gump",
     year: 1994,
-    coverUrl: "/covers/forrest-gump.svg",
+    coverUrl: "https://image.tmdb.org/t/p/w500/Cw4hIUIAmSYfK9QfaUW5igp9La.jpg",
     rating: 4.6,
     ratingCount: 9310,
     imdbRating: 8.8,
@@ -76,7 +79,7 @@ export const MOCK_TRENDING: Work[] = [
     type: "FILM",
     title: "The Prestige",
     year: 2006,
-    coverUrl: "/covers/the-prestige.svg",
+    coverUrl: "https://image.tmdb.org/t/p/w500/wiSuje8hdVuwM0pvhtSFirCHmJF.jpg",
     rating: 4.5,
     ratingCount: 7042,
     imdbRating: 8.5,
@@ -87,7 +90,7 @@ export const MOCK_TRENDING: Work[] = [
     type: "FILM",
     title: "You've Got Mail",
     year: 1998,
-    coverUrl: "/covers/youve-got-mail.svg",
+    coverUrl: "https://image.tmdb.org/t/p/w500/neNZH6xc7rvbuCoawZ9uNWbaCMT.jpg",
     rating: 4.3,
     ratingCount: 3884,
     imdbRating: 6.7,
@@ -98,7 +101,7 @@ export const MOCK_TRENDING: Work[] = [
     type: "FILM",
     title: "Se7en",
     year: 1995,
-    coverUrl: "/covers/se7en.svg",
+    coverUrl: "https://image.tmdb.org/t/p/w500/3qpOnTbxPK2HeHObBHttcvQHLGI.jpg",
     rating: 4.4,
     ratingCount: 8106,
     imdbRating: 8.6,
@@ -121,7 +124,7 @@ export const MOCK_TRENDING: Work[] = [
     type: "SERIES",
     title: "Severance",
     year: 2022,
-    coverUrl: "/covers/severance.svg",
+    coverUrl: "https://image.tmdb.org/t/p/w500/pPHpeI2X1qEd1CS1SeyrdhZ4qnT.jpg",
     rating: 4.7,
     ratingCount: 5240,
     imdbRating: 8.7,
@@ -132,7 +135,7 @@ export const MOCK_TRENDING: Work[] = [
     type: "BOOK",
     title: "Tutunamayanlar",
     year: 1972,
-    coverUrl: "/covers/tutunamayanlar.svg",
+    coverUrl: "https://covers.openlibrary.org/b/id/8730101-L.jpg",
     rating: 4.6,
     ratingCount: 3120,
   },
@@ -142,7 +145,7 @@ export const MOCK_TRENDING: Work[] = [
     type: "BOOK",
     title: "Kürk Mantolu Madonna",
     year: 1943,
-    coverUrl: "/covers/kurk-mantolu-madonna.svg",
+    coverUrl: "https://covers.openlibrary.org/b/id/10848013-L.jpg",
     rating: 4.4,
     ratingCount: 4870,
   },
@@ -153,7 +156,7 @@ export const MOCK_TRENDING: Work[] = [
     title: "Dune",
     originalTitle: "Dune",
     year: 1965,
-    coverUrl: "/covers/dune.svg",
+    coverUrl: "https://covers.openlibrary.org/b/id/11481354-L.jpg",
     rating: 4.5,
     ratingCount: 2615,
   },

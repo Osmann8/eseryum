@@ -1,6 +1,15 @@
+import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/cn";
+
+/**
+ * TMDB posterlerinin oranı 2:3 (w500 = 500x750). next/image'in yer ayirmak
+ * icin bir olcuye ihtiyaci var; CSS zaten `aspect-[2/3] w-full` ile uzerine
+ * yaziyor, bu degerler sadece oran bilgisi.
+ */
+const POSTER_WIDTH = 500;
+const POSTER_HEIGHT = 750;
 
 /**
  * Kapak alani. Gorseli olmayan eser istisna degil kural: acik katalog
@@ -43,13 +52,26 @@ export function WorkCover({
   }
 
   return (
-    // Kapaklar su an public/ altindaki yer tutucu SVG'ler. TMDB gorselleri
-    // baglanip next.config'e remotePatterns eklendiginde next/image'a gecilir.
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       src={coverUrl}
       alt={title}
-      loading="lazy"
+      width={POSTER_WIDTH}
+      height={POSTER_HEIGHT}
+      /*
+        Liste satirinda kapak 44px; izgarada sutun genisligi kadar. Dogru
+        srcset secilsin diye ikisini ayirmak gerekiyor, yoksa 44px'lik
+        kucuk resim icin 500px'lik poster iniyor.
+      */
+      sizes={
+        compact ? "44px" : "(min-width: 1280px) 220px, (min-width: 640px) 25vw, 45vw"
+      }
+      /*
+        Kapagi bulunamayan eserler public/covers altindaki yer tutucu
+        SVG'lerinde kaliyor. next/image SVG'yi varsayilan olarak optimize
+        etmeyi reddediyor (dangerouslyAllowSVG kapali); zaten vektor
+        dosyasini kucultmenin anlami yok, optimizeciyi atliyoruz.
+      */
+      unoptimized={coverUrl.endsWith(".svg")}
       className={cn(
         "aspect-[2/3] w-full rounded-lg border border-line object-cover",
         className,

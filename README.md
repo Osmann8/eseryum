@@ -114,6 +114,8 @@ Hepsinin `.env.example` içinde makul bir varsayılanı var; `.env` yoksa da com
 | `FRONTEND_PORT`            | `3000`                  | Host tarafındaki frontend portu       |
 | `NEXT_PUBLIC_API_BASE_URL` | `http://localhost:8080` | Frontend'in çağıracağı API adresi     |
 
+Frontend'in kapak script'i ayrıca `frontend/.env.local` okuyor (`TMDB_API_KEY`); örneği [`frontend/.env.example`](frontend/.env.example) içinde.
+
 `.env` **asla commit'lenmez** (`.gitignore`'da). Yeni bir değişken eklerseniz `.env.example`'a da ekleyin, yoksa diğer geliştiricinin ortamı sessizce eksik kalır.
 
 ---
@@ -176,8 +178,41 @@ npm run dev        # http://localhost:3000
 | `npm run build`     | Üretim derlemesi (`output: standalone`)|
 | `npm run lint`      | ESLint                                |
 | `npm run typecheck` | `tsc --noEmit`                        |
+| `npm run covers`    | Kapak görsellerini tazeler (aşağıda)  |
 
-Üçü de her PR'da CI'da koşuyor.
+İlk üçü her PR'da CI'da koşuyor; `covers` elle çalıştırılır.
+
+### Kapak görselleri
+
+Kapaklar repoda durmuyor, CDN'den geliyor: film ve diziler TMDB'den
+(`image.tmdb.org`), kitaplar OpenLibrary'den (`covers.openlibrary.org`).
+İzin verilen host'lar `next.config.ts` içindeki `remotePatterns`'da.
+
+URL'leri **çalışma anında değil, `npm run covers` ile** buluyoruz
+([`frontend/scripts/fetch-covers.mjs`](frontend/scripts/fetch-covers.mjs)):
+script mock dosyalarındaki her başlığı arar ve `coverUrl` alanlarını yerinde
+günceller. Böylece TMDB anahtarı tarayıcıya hiç düşmez — uygulama çalışırken
+TMDB'ye tek bir istek gitmiyor.
+
+```bash
+cd frontend
+cp .env.example .env.local     # TMDB_API_KEY satırını doldurun
+npm run covers                 # hepsi
+npm run covers -- --dry-run    # sadece rapor, dosyaya dokunmaz
+npm run covers -- --only=books # tek tür
+```
+
+Anahtar themoviedb.org → Settings → API'den ücretsiz alınıyor. Anahtarsız da
+çalışır ama sadece kitap kapaklarını bulur; OpenLibrary anahtar istemiyor.
+
+Bulunamayan kapak hata değil: o kayıt `public/covers` altındaki yer tutucu
+SVG'sinde kalır. Kapağı hiç olmayan bir kayıt (Ahlat Ağacı) mock'ta bilerek
+duruyor — `WorkCover`'ın boş durumu istisna değil, tasarlanmış hâli.
+
+> Backend'in `provider/tmdb` paketi devreye girdiğinde bu script'e gerek
+> kalmayacak: kapak `media.cover_url` kolonundan gelecek. Script TMDB
+> id'lerini de raporluyor, `film_detail.tmdb_id` / `series_detail.tmdb_id`
+> için seed hazırlarken işe yarar.
 
 ### Klasör düzeni
 
