@@ -1,8 +1,8 @@
 # Eseryum API Endpointleri
 
 > **Durum:** Taslak / V1 kapsamı
-> **Son güncelleme:** Ağustos 2026
-> **Not:** `media_id` ile `film/series/book.id` ilişkisi henüz netleşmedi (bkz. Açık Konular). Bu belge güncellenene kadar kesin şema kararı olarak alınmamalı.
+> **Son güncelleme:** 22 Ağustos 2026
+> **Kapsam:** Bu belge API sözleşmesinin tek doğru kaynağıdır. `frontend/src/features/*/api/*.ts` ve `bruno/` koleksiyonu buraya hizalanır; çeliştiğinde bu belge kazanır.
 
 ---
 
@@ -25,6 +25,7 @@
 | PUT    | `/api/users/me`               | Profil güncelle (bio, kullanıcı adı vb.)           |
 | GET    | `/api/users/{id}`             | Public profil                                      |
 | GET    | `/api/users/{id}/stats?year=` | Yıllık özet (izlenen/okunan sayısı, aylık dağılım) |
+| GET    | `/api/users/{id}/summary?period=month` | Dönemsel özet — ana sayfadaki "Bu ay" kartı |
 
 ## Media (Ortak)
 
@@ -32,6 +33,7 @@
 | ------ | ---------------------- | ---------------------------------------------------- |
 | GET    | `/api/media/search?q=` | Yerel DB + Dış API araması (film/dizi/kitap karışık) |
 | GET    | `/api/media/{id}`      | Genel medya detayı                                   |
+| GET    | `/api/media/trending?type=` | Öne çıkanlar; `type` = `FILM`/`SERIES`/`BOOK`, boşsa karışık |
 
 ## Film
 
@@ -40,6 +42,7 @@
 | GET    | `/api/films`      | Filtreli film listesi (sayfalamalı) |
 | GET    | `/api/films/{id}` | Filme özel detay                    |
 | PUT    | `/api/films/{id}` | Film bilgisi güncelle (Admin)       |
+| GET    | `/api/films/genres?scope=` | Tür sözlüğü; `scope=me` kullanıcının kendi sayaçlarını verir |
 
 ## Series
 
@@ -48,6 +51,7 @@
 | GET    | `/api/series`      | Filtreli dizi listesi (sayfalamalı) |
 | GET    | `/api/series/{id}` | Diziye özel detay                   |
 | PUT    | `/api/series/{id}` | Dizi bilgisi güncelle (Admin)       |
+| GET    | `/api/series/genres?scope=` | Tür sözlüğü; `scope=me` kullanıcının kendi sayaçlarını verir |
 
 ## Book
 
@@ -57,6 +61,35 @@
 | GET    | `/api/books/{id}` | Kitaba özel detay                                  |
 | POST   | `/api/books`      | Manuel kitap ekleme (Admin – TR baskı verisi için) |
 | PUT    | `/api/books/{id}` | Kitap bilgisi güncelle (Admin)                     |
+| GET    | `/api/books/genres?scope=` | Tür sözlüğü; `scope=me` kullanıcının kendi sayaçlarını verir |
+
+## Koleksiyon (tür başına)
+
+> Frontend'deki üç sekmenin (Filmler, Diziler, Kitaplar) beslendiği uçlar.
+> `{tür}` = `films` | `series` | `books`; üçü de aynı beş ucu taşır.
+
+| Method | Endpoint                                        | Açıklama                                        |
+| ------ | ----------------------------------------------- | ----------------------------------------------- |
+| GET    | `/api/users/{id}/{tür}`                         | Kullanıcının o türdeki koleksiyonu (aşağıdaki filtreler) |
+| GET    | `/api/users/{id}/{tür}/counts`                  | Sayfa başlığındaki dört sayaç                   |
+| GET    | `/api/users/{id}/{tür}/activity?period=month`   | "Aktiviten" kartı — adet, ortalama puan, değişim |
+| GET    | `/api/users/{id}/{tür}/rating-distribution`     | Puan dağılımı halkası (yüzdeler toplamı 100)    |
+| GET    | `/api/users/{id}/{tür}/recommendations`         | O türe özel öneri satırı                        |
+
+Liste ucunun sorgu parametreleri:
+
+| Parametre   | Değerler                                                | Not                                   |
+| ----------- | ------------------------------------------------------- | ------------------------------------- |
+| `collection`| `ALL`, `IN_PROGRESS`, `COMPLETED`, `PLANNED`, `FAVORITES`| Filmde `IN_PROGRESS` yok              |
+| `sort`      | `NEWEST`, `OLDEST`, `RATING`, `TITLE`                   | Varsayılan `NEWEST`                   |
+| `decade`    | `2020`, `2010`, `2000`, `1990`, `OLDER`                 | On yıllık dilim; `OLDER` = 1990 öncesi |
+| `minRating` | `4.5`, `4`, `3.5`, `3`                                  | Altındakiler elenir                   |
+| `genre`     | Tür slug'ı (`bilim-kurgu`)                              | `genres` ucundan gelir                |
+| `page`/`size`| Spring `Pageable`                                      | Cevap Spring `Page` şekli             |
+
+**Library ile ilişkisi:** `library/` durum kaydının kendisidir (yazma tarafı, tür bağımsız); buradaki uçlar o duruma göre filtrelenmiş **okuma görünümleridir**. Durum değişikliği yine `PUT /api/library/{mediaId}` ile yapılır.
+
+**`users/me/recommendations` ile ilişkisi:** oradaki uç tür bağımsız ve kanıtlı tavsiye (Keşfet ekranı); buradaki her sekmenin kendi öneri satırıdır.
 
 ## Library
 
@@ -104,7 +137,7 @@
 | DELETE | `/api/lists/{id}/items/{itemId}` | Listeden eser çıkar            |
 | PUT    | `/api/lists/{id}/items/reorder`  | Sırayı güncelle                |
 | GET    | `/api/lists/user/{userId}`       | Kullanıcının listeleri         |
-| GET    | `/api/lists?sort=popular`        | Keşif / herkese açık listeler  |
+| GET    | `/api/lists?sort=popular&period=` | Keşif / herkese açık listeler; `period=week` ana sayfadaki "Haftanın listeleri" |
 
 ## Social / Taste Match
 
@@ -123,6 +156,6 @@
 
 ## Açık Konular
 
-- [ ] **`media_id` ↔ `film/series/book.id` ilişkisi.** Aynı PK mı (joined table inheritance), yoksa ayrı PK + `eser_id` foreign key mi? Arama sonuçlarının ve tür-bağımsız listelerin (Library, Diary, List) nasıl render edileceğini doğrudan etkiliyor.
+- [x] **`media_id` ↔ `film/series/book.id` ilişkisi.** ~~Aynı PK mı, ayrı PK + foreign key mi?~~ **Çözüldü (PR #13, `V002`/`V003`):** paylaşılan birincil anahtar. `film_detail.media_id` hem PK hem FK; `FOREIGN KEY (media_id, media_type) REFERENCES media (id, media_type)` + `CHECK (media_type = 'film')` ile alt tip kilitli. Sonuç: **tek id uzayı var** — `/api/films/{id}` ile `/api/books/{id}` aynı sayıyı taşıyamaz, o id zaten birine ait.
 - [ ] **Review — Diary ilişkisi.** Bir kullanıcı bir esere kaç review yazabilir? Şu anki yapı (`GET /reviews/media/{mediaId}`) medya+kullanıcı bazlı tek review'ı ima ediyor; rewatch'te ayrı review yazılabilecek mi, yoksa review medyaya mı sabit?
 - [ ] **Taste-match hesaplama stratejisi.** Senkron/on-demand mı, yoksa scheduled job ile önceden hesaplanmış bir tablo mu? Kullanıcı sayısı arttıkça O(n²) korelasyon maliyeti göz önünde bulundurulmalı.
