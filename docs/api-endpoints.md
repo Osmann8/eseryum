@@ -6,6 +6,22 @@
 
 ---
 
+## Ortak kurallar
+
+**Puanlama: 0–10, 0.5 adımlarla.** Veritabanındaki skalanın aynısı — tekil
+puanlar (`log_entry.rating`) `ck_log_entry_rating_scale` ile 0.5 adımına
+kilitli, 0 geçerli bir puan. Ortalamalar (`media.rating_avg`) ara değer
+alabilir, adım kuralı onlara işlemez.
+
+Frontend bir süre 0–5 varsaydı, veritabanı 0–10 diyordu; ikisi de sessizce
+kendi skalasını doğru sanıyordu. Ölçek dönüşümü **hiçbir katmanda
+yapılmaz**: API 0–10 verir, arayüz 0–10 gösterir.
+
+`imdbRating` de 0–10 ama ayrı bir alan ve ayrı bir rozet — aynı ölçekte
+olmaları aynı şey oldukları anlamına gelmiyor.
+
+---
+
 ## Auth
 
 | Method | Endpoint                    | Açıklama                             |

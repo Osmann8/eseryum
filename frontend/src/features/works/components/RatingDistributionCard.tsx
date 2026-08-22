@@ -17,6 +17,18 @@ const RADIUS = 15.91549;
 /** Dilimler arasindaki bosluk (yuzde biriminde ~2px). */
 const SEGMENT_GAP = 0.8;
 
+/**
+ * Band numarasini puan araligina cevirir: 5 -> 8.5-10, 1 -> 0-2.
+ *
+ * Skala 0-10 ve 0.5 adimli, yani 21 olasi puan var; her band dordunu
+ * topluyor, en alttaki bes (0 da gecerli bir puan). Halka bes renkle
+ * cizildigi icin band sayisi bes sabit - bkz. RatingBucket.
+ */
+function bandRange(band: number) {
+  const max = band * 2;
+  return { min: band === 1 ? 0 : max - 1.5, max };
+}
+
 export function RatingDistributionCard({
   buckets,
   statsHref,
@@ -33,8 +45,10 @@ export function RatingDistributionCard({
     return { ...bucket, start };
   });
 
+  const bandLabel = (band: number) => t("band", bandRange(band));
+
   const label = (bucket: RatingBucket) =>
-    `${t("stars", { count: bucket.stars })} · ${t("percent", { value: bucket.percent })}`;
+    `${bandLabel(bucket.band)} · ${t("percent", { value: bucket.percent })}`;
 
   return (
     <section className="rounded-xl border border-line bg-surface p-4">
@@ -63,12 +77,12 @@ export function RatingDistributionCard({
 
             return (
               <circle
-                key={segment.stars}
+                key={segment.band}
                 cx="21"
                 cy="21"
                 r={RADIUS}
                 fill="none"
-                stroke={`var(--color-rating-${segment.stars})`}
+                stroke={`var(--color-rating-${segment.band})`}
                 strokeWidth="5.5"
                 strokeDasharray={`${length} ${100 - length}`}
                 // 25 birimlik kaydirma dilimleri saat 12'den baslatir.
@@ -83,16 +97,16 @@ export function RatingDistributionCard({
         <ul className="min-w-0 flex-1 space-y-1.5">
           {buckets.map((bucket) => (
             <li
-              key={bucket.stars}
+              key={bucket.band}
               className="flex items-center gap-2 text-[11px]"
             >
               <span
                 aria-hidden="true"
                 className="size-2 shrink-0 rounded-full"
-                style={{ backgroundColor: `var(--color-rating-${bucket.stars})` }}
+                style={{ backgroundColor: `var(--color-rating-${bucket.band})` }}
               />
               <span className="truncate text-ink-muted">
-                {t("stars", { count: bucket.stars })}
+                {bandLabel(bucket.band)}
               </span>
               <span className="ml-auto tabular-nums text-ink-faint">
                 {t("percent", { value: bucket.percent })}

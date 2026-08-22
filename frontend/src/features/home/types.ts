@@ -20,7 +20,7 @@ export interface FriendActivity {
   user: UserSummary;
   /** Puanlanan esere ait baslik ya da liste adi. */
   subject: string;
-  /** 5 uzerinden, yarim yildiz hassasiyetinde. */
+  /** 0-10, 0.5 adimli - veritabaniyla ayni skala. */
   rating: number;
 }
 
