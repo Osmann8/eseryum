@@ -9,22 +9,25 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import com.eseryum.media.identity.MediaIdentity;
 import java.time.LocalDate;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "media")
 public class Media extends BaseEntity {
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 300)
     private String title;
 
-    @Column(name = "original_title", length = 255)
+    @Column(name = "original_title", length = 300)
     private String originalTitle;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "synopsis", columnDefinition = "TEXT")
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "media_type", nullable = false, columnDefinition = "media_type")
     private MediaType type;
 
     @Embedded
@@ -33,10 +36,10 @@ public class Media extends BaseEntity {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @Column(name = "poster_url", length = 2048)
+    @Column(name = "cover_url", columnDefinition = "TEXT")
     private String posterUrl;
 
-    @Column(name = "backdrop_url", length = 2048)
+    @Column(name = "backdrop_url", columnDefinition = "TEXT")
     private String backdropUrl;
 
     protected Media() {

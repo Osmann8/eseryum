@@ -1,11 +1,11 @@
 meta {
   name: Film detayi
   type: http
-  seq: 3
+  seq: 2
 }
 
 get {
-  url: {{baseUrl}}/api/v1/works/{{filmId}}
+  url: {{baseUrl}}/api/films/{{filmId}}
   body: none
   auth: none
 }
@@ -13,4 +13,8 @@ get {
 docs {
   `filmId` ortam degiskeninden gelir; local ortamda varsayilani `1`.
   Olmayan bir id icin `404 KAYIT_BULUNAMADI` beklenir.
+
+  Id tur basina degil, tum eserler icin ortak: `film_detail.media_id` hem
+  birincil hem yabanci anahtar (V002/V003). Yani `1` numarali film varsa
+  `1` numarali kitap yoktur - o id zaten filme ait.
 }

@@ -5,17 +5,17 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/v1/works?type=SERIES&page=0&size=20
+  url: {{baseUrl}}/api/series?page=0&size=20
   body: none
   auth: none
 }
 
 params:query {
-  type: SERIES
   page: 0
   size: 20
 }
 
 docs {
-  Sayfali dizi listesi.
+  Sayfali dizi listesi. "series" tekil ve cogul ayni yazildigi icin kaynak
+  adi liste ve detayda degismez.
 }

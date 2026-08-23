@@ -41,33 +41,33 @@ export const DEFAULT_SERIES_QUERY: SeriesQuery = {
   sort: "NEWEST",
 };
 
-/** GET /api/v1/users/{username}/series/counts */
+/** GET /api/users/{id}/series/counts */
 export async function fetchSeriesCounts(): Promise<CollectionCounts> {
   return MOCK_SERIES_COUNTS;
 }
 
-/** GET /api/v1/series/genres?scope=me */
+/** GET /api/series/genres?scope=me */
 export async function fetchSeriesGenres(): Promise<GenreSummary[]> {
   return MOCK_GENRES;
 }
 
-/** GET /api/v1/users/{username}/series/activity?period=month */
+/** GET /api/users/{id}/series/activity?period=month */
 export async function fetchWatchActivity(): Promise<WatchActivity> {
   return MOCK_WATCH_ACTIVITY;
 }
 
-/** GET /api/v1/users/{username}/series/rating-distribution */
+/** GET /api/users/{id}/series/rating-distribution */
 export async function fetchRatingDistribution(): Promise<RatingBucket[]> {
   return MOCK_RATING_DISTRIBUTION;
 }
 
-/** GET /api/v1/users/{username}/series/recommendations */
+/** GET /api/users/{id}/series/recommendations */
 export async function fetchRecommendedSeries(): Promise<RecommendedSeries[]> {
   return MOCK_RECOMMENDED_SERIES;
 }
 
 /**
- * GET /api/v1/users/{username}/series
+ * GET /api/users/{id}/series
  *   ?collection=WATCHING&sort=NEWEST&decade=2010&minRating=4&genre=drama
  *   &page=0&size=12
  *

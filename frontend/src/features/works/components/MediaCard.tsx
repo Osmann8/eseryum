@@ -34,7 +34,7 @@ export function MediaCard({ work, meta, badge, footer }: MediaCardProps) {
   return (
     <article className="group">
       <Link
-        href={`/works/${work.slug}`}
+        href={`/works/${work.id}`}
         className="block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
         <div className="relative">

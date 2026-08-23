@@ -42,33 +42,33 @@ export const DEFAULT_FILM_QUERY: FilmQuery = {
   sort: "NEWEST",
 };
 
-/** GET /api/v1/users/{username}/films/counts */
+/** GET /api/users/{id}/films/counts */
 export async function fetchFilmCounts(): Promise<CollectionCounts> {
   return MOCK_FILM_COUNTS;
 }
 
-/** GET /api/v1/films/genres?scope=me */
+/** GET /api/films/genres?scope=me */
 export async function fetchFilmGenres(): Promise<GenreSummary[]> {
   return MOCK_GENRES;
 }
 
-/** GET /api/v1/users/{username}/films/activity?period=month */
+/** GET /api/users/{id}/films/activity?period=month */
 export async function fetchWatchActivity(): Promise<WatchActivity> {
   return MOCK_WATCH_ACTIVITY;
 }
 
-/** GET /api/v1/users/{username}/films/rating-distribution */
+/** GET /api/users/{id}/films/rating-distribution */
 export async function fetchRatingDistribution(): Promise<RatingBucket[]> {
   return MOCK_RATING_DISTRIBUTION;
 }
 
-/** GET /api/v1/users/{username}/films/recommendations */
+/** GET /api/users/{id}/films/recommendations */
 export async function fetchRecommendedFilms(): Promise<RecommendedFilm[]> {
   return MOCK_RECOMMENDED_FILMS;
 }
 
 /**
- * GET /api/v1/users/{username}/films
+ * GET /api/users/{id}/films
  *   ?collection=WATCHED&sort=NEWEST&decade=2010&minRating=4&genre=drama
  *   &page=0&size=12
  *

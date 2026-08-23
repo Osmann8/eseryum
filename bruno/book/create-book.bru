@@ -1,11 +1,11 @@
 meta {
   name: Kitap ekle
   type: http
-  seq: 4
+  seq: 3
 }
 
 post {
-  url: {{baseUrl}}/api/v1/works
+  url: {{baseUrl}}/api/books
   body: json
   auth: inherit
 }
@@ -16,7 +16,6 @@ headers {
 
 body:json {
   {
-    "type": "BOOK",
     "title": "Tutunamayanlar",
     "year": 1972,
     "author": "Oguz Atay",

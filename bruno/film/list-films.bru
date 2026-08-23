@@ -5,13 +5,12 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/api/v1/works?type=FILM&page=0&size=20
+  url: {{baseUrl}}/api/films?page=0&size=20
   body: none
   auth: none
 }
 
 params:query {
-  type: FILM
   page: 0
   size: 20
 }

@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 public record UpdateMediaRequest(
         @NotBlank
-        @Size(max = 255)
+        @Size(max = 300)
         String title,
 
-        @Size(max = 255)
+        @Size(max = 300)
         String originalTitle,
 
         @Size(max = 10000)

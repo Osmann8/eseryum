@@ -24,33 +24,33 @@ import {
  * degismesin, sadece govde apiFetch'e cevrilsin.
  */
 
-/** GET /api/v1/auth/me */
+/** GET /api/users/me */
 export async function fetchCurrentUser(): Promise<UserSummary> {
   return MOCK_CURRENT_USER;
 }
 
-/** GET /api/v1/users/{username}/stats */
+/** GET /api/users/{id}/stats?year= */
 export async function fetchProfileStats(): Promise<ProfileStats> {
   return MOCK_STATS;
 }
 
-/** GET /api/v1/users/{username}/summary?period=month */
+/** GET /api/users/{id}/summary?period=month */
 export async function fetchMonthlySummary(): Promise<MonthlySummary> {
   return MOCK_MONTHLY;
 }
 
-/** GET /api/v1/feed/friends */
+/** GET /api/feed */
 export async function fetchFriendActivity(): Promise<FriendActivity[]> {
   return MOCK_FRIEND_ACTIVITY;
 }
 
-/** GET /api/v1/lists/featured?period=week */
+/** GET /api/lists?sort=popular&period=week */
 export async function fetchWeeklyLists(): Promise<CuratedList[]> {
   return MOCK_WEEKLY_LISTS;
 }
 
 /**
- * GET /api/v1/works/trending?type=FILM
+ * GET /api/media/trending?type=FILM
  *
  * Sira numarasi backend'den gelmez, gelen sirayla uretilir: "ALL" listesinde
  * 06 olan bir dizi, Diziler sekmesinde 02 olur.

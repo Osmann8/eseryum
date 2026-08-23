@@ -1,9 +1,12 @@
 meta {
   name: film
-  seq: 2
+  seq: 4
 }
 
 docs {
-  Medya turu `FILM` olan eserler. Tum istekler ortak `/works` kaynagina gider,
-  turu `type` parametresi ayirir.
+  Film kaynagi: `/api/films`. Listeleme, detay ve guncellemede tur yolun
+  kendisinde: ne sorgu parametresinde ne de govdede tasiniyor.
+
+  Arama bunun disinda kaliyor - dokumandaki tek arama ucu tur bagimsiz
+  (`/api/media/search`), `media/` klasorunde.
 }
