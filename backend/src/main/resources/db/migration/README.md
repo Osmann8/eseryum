@@ -12,6 +12,7 @@ ile çalışır, yani şemayı **sadece** buradaki dosyalar değiştirir.
 | `V003__core_constraints.sql`     | `UNIQUE`, `FOREIGN KEY`, `CHECK`                   |
 | `V004__core_indexes.sql`         | FK index'leri, trigram arama, partial index'ler    |
 | `V005__updated_at_trigger.sql`   | `set_updated_at()` fonksiyonu ve trigger'ları      |
+| `V006__media_external_identity.sql` | Medya sağlayıcı kimliği, tam tarih ve backdrop alanları |
 
 Numaralandırma `V001__`, `V002__` biçimindedir ve **ürün versiyonlaması değildir**.
 ER diyagramındaki `V1` / `V2` / `V3` etiketleri kapsam (roadmap) gösterir;
