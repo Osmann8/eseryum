@@ -2,9 +2,7 @@ package com.eseryum.media.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.eseryum.media.dto.CreateMediaRequest;
 import com.eseryum.media.dto.MediaResponse;
-import com.eseryum.media.dto.UpdateMediaRequest;
 import com.eseryum.media.entity.Media;
 import com.eseryum.media.entity.MediaType;
 import com.eseryum.media.identity.MediaIdentity;
@@ -17,33 +15,6 @@ import org.mapstruct.factory.Mappers;
 class MediaMapperTest {
 
     private final MediaMapper mediaMapper = Mappers.getMapper(MediaMapper.class);
-
-    @Test
-    void toEntity_shouldMapCreateRequest() {
-        CreateMediaRequest request =
-                new CreateMediaRequest(
-                        "Dune",
-                        "Dune",
-                        "Bilim kurgu romanı",
-                        MediaType.BOOK,
-                        MediaProvider.GOOGLE_BOOKS,
-                        "dune-volume-id",
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null);
-
-        Media media = mediaMapper.toEntity(request);
-
-        assertThat(media.getTitle()).isEqualTo(request.title());
-        assertThat(media.getOriginalTitle()).isEqualTo(request.originalTitle());
-        assertThat(media.getDescription()).isEqualTo(request.description());
-        assertThat(media.getType()).isEqualTo(request.type());
-        assertThat(media.getIdentity().getProvider()).isEqualTo(request.provider());
-        assertThat(media.getIdentity().getExternalId()).isEqualTo(request.externalId());
-        assertThat(media.getReleaseDate()).isEqualTo(request.releaseDate());
-        assertThat(media.getPosterUrl()).isEqualTo(request.posterUrl());
-        assertThat(media.getBackdropUrl()).isEqualTo(request.backdropUrl());
-    }
 
     @Test
     void toResponse_shouldMapEntity() {
@@ -71,38 +42,4 @@ class MediaMapperTest {
         assertThat(response.backdropUrl()).isEqualTo(media.getBackdropUrl());
     }
 
-    @Test
-    void updateEntity_shouldApplyRequestValues() {
-        Media media =
-                new Media(
-                        "Eski başlık",
-                        null,
-                        null,
-                        MediaType.FILM,
-                        new MediaIdentity(MediaProvider.TMDB, "100"),
-                        null,
-                        null,
-                        null);
-        UpdateMediaRequest request =
-                new UpdateMediaRequest(
-                        "Yeni başlık",
-                        "Original Title",
-                        "Yeni açıklama",
-                        MediaType.SERIES,
-                        LocalDate.of(2026, 1, 1),
-                        "https://example.com/new-poster.jpg",
-                        "https://example.com/backdrop.jpg");
-
-        mediaMapper.updateEntity(request, media);
-
-        assertThat(media.getTitle()).isEqualTo(request.title());
-        assertThat(media.getOriginalTitle()).isEqualTo(request.originalTitle());
-        assertThat(media.getDescription()).isEqualTo(request.description());
-        assertThat(media.getType()).isEqualTo(request.type());
-        assertThat(media.getIdentity())
-                .isEqualTo(new MediaIdentity(MediaProvider.TMDB, "100"));
-        assertThat(media.getReleaseDate()).isEqualTo(request.releaseDate());
-        assertThat(media.getPosterUrl()).isEqualTo(request.posterUrl());
-        assertThat(media.getBackdropUrl()).isEqualTo(request.backdropUrl());
-    }
 }

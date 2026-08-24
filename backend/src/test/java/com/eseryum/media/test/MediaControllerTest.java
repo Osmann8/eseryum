@@ -4,18 +4,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.eseryum.common.exception.GlobalExceptionHandler;
 import com.eseryum.media.controller.MediaController;
-import com.eseryum.media.dto.CreateMediaRequest;
 import com.eseryum.media.dto.MediaResponse;
-import com.eseryum.media.dto.UpdateMediaRequest;
 import com.eseryum.media.entity.MediaType;
 import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.service.MediaService;
@@ -78,41 +73,6 @@ class MediaControllerTest {
     }
 
     @Test
-    void create_shouldReturnCreatedMedia() throws Exception {
-        CreateMediaRequest request =
-                new CreateMediaRequest(
-                        "Dune",
-                        "Dune",
-                        "Bilim kurgu romanı",
-                        MediaType.BOOK,
-                        MediaProvider.GOOGLE_BOOKS,
-                        "dune-volume-id",
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null);
-        when(mediaService.create(request)).thenReturn(response);
-
-        mockMvc.perform(
-                        post("/api/media")
-                                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.title").value("Dune"))
-                .andExpect(jsonPath("$.type").value("BOOK"));
-    }
-
-    @Test
-    void create_shouldRejectInvalidRequest() throws Exception {
-        mockMvc.perform(
-                        post("/api/media")
-                                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
-                                .content("{\"title\":\"\",\"type\":null}"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code").value("DOGRULAMA_HATASI"));
-    }
-
-    @Test
     void getById_shouldReturnMedia() throws Exception {
         when(mediaService.getById(1L)).thenReturn(response);
 
@@ -123,58 +83,24 @@ class MediaControllerTest {
     }
 
     @Test
-    void getAll_shouldForwardTypeAndPagination() throws Exception {
-        PageRequest pageable = PageRequest.of(0, 10);
-        when(mediaService.getAll(eq(MediaType.BOOK), any(Pageable.class)))
+    void search_shouldForwardQueryAndPagination() throws Exception {
+        PageRequest pageable = PageRequest.of(0, 20);
+        when(mediaService.search(eq("dune"), any(Pageable.class)))
                 .thenReturn(new PageImpl<>(List.of(response), pageable, 1));
 
-        mockMvc.perform(get("/api/media").param("type", "BOOK").param("page", "0").param("size", "10"))
+        mockMvc.perform(get("/api/media/search").param("q", "dune"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].title").value("Dune"))
                 .andExpect(jsonPath("$.totalElements").value(1));
 
-        verify(mediaService).getAll(eq(MediaType.BOOK), any(Pageable.class));
+        verify(mediaService).search(eq("dune"), any(Pageable.class));
     }
 
     @Test
-    void update_shouldReturnUpdatedMedia() throws Exception {
-        UpdateMediaRequest request =
-                new UpdateMediaRequest(
-                        "Dune: Çöl Gezegeni",
-                        "Dune",
-                        "Bilim kurgu romanı",
-                        MediaType.BOOK,
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null);
-        MediaResponse updatedResponse =
-                new MediaResponse(
-                        1L,
-                        request.title(),
-                        request.originalTitle(),
-                        request.description(),
-                        request.type(),
-                        response.provider(),
-                        response.externalId(),
-                        request.releaseDate(),
-                        request.posterUrl(),
-                        request.backdropUrl(),
-                        response.createdAt(),
-                        response.updatedAt());
-        when(mediaService.update(1L, request)).thenReturn(updatedResponse);
-
-        mockMvc.perform(
-                        put("/api/media/1")
-                                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Dune: Çöl Gezegeni"));
+    void search_shouldRejectMissingQuery() throws Exception {
+        mockMvc.perform(get("/api/media/search"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("GECERSIZ_ISTEK"));
     }
 
-    @Test
-    void delete_shouldReturnNoContent() throws Exception {
-        mockMvc.perform(delete("/api/media/1")).andExpect(status().isNoContent());
-
-        verify(mediaService).delete(1L);
-    }
 }

@@ -1,19 +1,15 @@
 package com.eseryum.media.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.eseryum.common.exception.ResourceNotFoundException;
-import com.eseryum.media.dto.CreateMediaRequest;
 import com.eseryum.media.dto.MediaResponse;
-import com.eseryum.media.dto.UpdateMediaRequest;
 import com.eseryum.media.entity.Media;
 import com.eseryum.media.entity.MediaType;
 import com.eseryum.media.identity.MediaIdentity;
-import com.eseryum.media.identity.MediaDeduplicationService;
 import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.mapper.MediaMapper;
 import com.eseryum.media.repository.MediaRepository;
@@ -38,7 +34,6 @@ class MediaServiceTest {
 
     @Mock private MediaRepository mediaRepository;
     @Mock private MediaMapper mediaMapper;
-    @Mock private MediaDeduplicationService mediaDeduplicationService;
 
     @InjectMocks private MediaService mediaService;
 
@@ -75,38 +70,13 @@ class MediaServiceTest {
     }
 
     @Test
-    void create_shouldSaveAndReturnMedia() {
-        CreateMediaRequest request =
-                new CreateMediaRequest(
-                        "Dune",
-                        "Dune",
-                        "Bilim kurgu romanı",
-                        MediaType.BOOK,
-                        MediaProvider.GOOGLE_BOOKS,
-                        "dune-volume-id",
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null);
-
-        when(mediaMapper.toEntity(request)).thenReturn(media);
-        when(mediaRepository.save(media)).thenReturn(media);
-        when(mediaMapper.toResponse(media)).thenReturn(response);
-
-        MediaResponse result = mediaService.create(request);
-
-        assertSame(response, result);
-        verify(mediaDeduplicationService).ensureUnique(media.getIdentity());
-        verify(mediaRepository).save(media);
-    }
-
-    @Test
     void getById_shouldReturnMedia_whenMediaExists() {
         when(mediaRepository.findById(1L)).thenReturn(Optional.of(media));
         when(mediaMapper.toResponse(media)).thenReturn(response);
 
         MediaResponse result = mediaService.getById(1L);
 
-        assertSame(response, result);
+        assertEquals(response, result);
     }
 
     @Test
@@ -117,61 +87,18 @@ class MediaServiceTest {
     }
 
     @Test
-    void getAll_shouldReturnAllMedia_whenTypeIsNull() {
+    void search_shouldTrimQueryAndMapResults() {
         Pageable pageable = PageRequest.of(0, 20);
         Page<Media> mediaPage = new PageImpl<>(List.of(media), pageable, 1);
 
-        when(mediaRepository.findAll(pageable)).thenReturn(mediaPage);
+        when(mediaRepository.searchByTitle("Dune", pageable)).thenReturn(mediaPage);
         when(mediaMapper.toResponse(media)).thenReturn(response);
 
-        Page<MediaResponse> result = mediaService.getAll(null, pageable);
+        Page<MediaResponse> result = mediaService.search("  Dune  ", pageable);
 
         assertEquals(1, result.getTotalElements());
-        assertSame(response, result.getContent().getFirst());
-        verify(mediaRepository).findAll(pageable);
+        assertEquals(response, result.getContent().getFirst());
+        verify(mediaRepository).searchByTitle("Dune", pageable);
     }
 
-    @Test
-    void getAll_shouldFilterMedia_whenTypeIsProvided() {
-        Pageable pageable = PageRequest.of(0, 20);
-        Page<Media> mediaPage = new PageImpl<>(List.of(media), pageable, 1);
-
-        when(mediaRepository.findAllByType(MediaType.BOOK, pageable)).thenReturn(mediaPage);
-        when(mediaMapper.toResponse(media)).thenReturn(response);
-
-        Page<MediaResponse> result = mediaService.getAll(MediaType.BOOK, pageable);
-
-        assertEquals(1, result.getTotalElements());
-        verify(mediaRepository).findAllByType(MediaType.BOOK, pageable);
-    }
-
-    @Test
-    void update_shouldUpdateAndReturnMedia() {
-        UpdateMediaRequest request =
-                new UpdateMediaRequest(
-                        "Dune: Çöl Gezegeni",
-                        "Dune",
-                        "Bilim kurgu romanı",
-                        MediaType.BOOK,
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null);
-
-        when(mediaRepository.findById(1L)).thenReturn(Optional.of(media));
-        when(mediaMapper.toResponse(media)).thenReturn(response);
-
-        MediaResponse result = mediaService.update(1L, request);
-
-        assertSame(response, result);
-        verify(mediaMapper).updateEntity(request, media);
-    }
-
-    @Test
-    void delete_shouldDeleteMedia() {
-        when(mediaRepository.findById(1L)).thenReturn(Optional.of(media));
-
-        mediaService.delete(1L);
-
-        verify(mediaRepository).delete(media);
-    }
 }

@@ -51,18 +51,28 @@ class MediaRepositoryIntegrationTest {
     }
 
     @Test
-    void findAllByType_shouldReturnOnlyRequestedType() {
+    void searchByTitle_shouldMatchTitleAndOriginalTitleIgnoringCase() {
         mediaRepository.save(createMedia("Dune", MediaType.BOOK));
-        mediaRepository.save(createMedia("Arrival", MediaType.FILM));
+        mediaRepository.save(
+                new Media(
+                        "Geliş",
+                        "Arrival",
+                        "Test açıklaması",
+                        MediaType.FILM,
+                        new MediaIdentity(MediaProvider.TMDB, "arrival"),
+                        LocalDate.of(2016, 1, 1),
+                        "https://example.com/arrival.jpg",
+                        null));
         mediaRepository.flush();
 
-        Page<Media> result =
-                mediaRepository.findAllByType(MediaType.BOOK, PageRequest.of(0, 20));
+        Page<Media> titleResult = mediaRepository.searchByTitle("dUn", PageRequest.of(0, 20));
+        Page<Media> originalTitleResult =
+                mediaRepository.searchByTitle("ARRIVAL", PageRequest.of(0, 20));
 
-        assertThat(result.getTotalElements()).isEqualTo(1);
-        assertThat(result.getContent())
+        assertThat(titleResult.getContent()).extracting(Media::getTitle).containsExactly("Dune");
+        assertThat(originalTitleResult.getContent())
                 .extracting(Media::getTitle)
-                .containsExactly("Dune");
+                .containsExactly("Geliş");
     }
 
     private Media createMedia(String title, MediaType type) {

@@ -64,23 +64,6 @@ public class Media extends BaseEntity {
         this.backdropUrl = backdropUrl;
     }
 
-    public void update(
-            String title,
-            String originalTitle,
-            String description,
-            MediaType type,
-            LocalDate releaseDate,
-            String posterUrl,
-            String backdropUrl) {
-        this.title = title;
-        this.originalTitle = originalTitle;
-        this.description = description;
-        this.type = type;
-        this.releaseDate = releaseDate;
-        this.posterUrl = posterUrl;
-        this.backdropUrl = backdropUrl;
-    }
-
     public String getTitle() {
         return title;
     }
