@@ -13,6 +13,7 @@ ile çalışır, yani şemayı **sadece** buradaki dosyalar değiştirir.
 | `V004__core_indexes.sql`         | FK index'leri, trigram arama, partial index'ler    |
 | `V005__updated_at_trigger.sql`   | `set_updated_at()` fonksiyonu ve trigger'ları      |
 | `V006__media_external_identity.sql` | Medya sağlayıcı kimliği, tam tarih ve backdrop alanları |
+| `V007__series_splitting_seasons.sql` | `season` / `episode` / `user_episode_progress`; `series_progress` ve `series_detail` sayaçları kaldırıldı |
 
 Numaralandırma `V001__`, `V002__` biçimindedir ve **ürün versiyonlaması değildir**.
 ER diyagramındaki `V1` / `V2` / `V3` etiketleri kapsam (roadmap) gösterir;
@@ -27,8 +28,11 @@ Flyway uygulanmış dosyanın checksum'ını tutar. Bir düzeltme gerekiyorsa
 
 Yalnızca ER diyagramında **solid** çizilen V1 entity'leri var:
 `app_user`, `media`, `film_detail`, `series_detail`, `book_detail`, `genre`,
-`media_genre`, `log_entry`, `review`, `user_media_status`, `series_progress`,
+`media_genre`, `log_entry`, `review`, `user_media_status`,
 `list`, `list_item`, `follow`, `taste_overlap`.
+
+Diyagramdaki `series_progress` V007'de kaldırıldı; yerini `season`, `episode`
+ve `user_episode_progress` üçlüsü aldı (bkz. §7).
 
 Roadmap tabloları (`import_job` V1.1, `community` / `community_member` /
 `chat_session` / `chat_message` V2, `direct_message` V3) ve onların enum'ları
@@ -68,8 +72,9 @@ Sonuç: bir `film_detail` satırı `media_type = 'film'` olmayan bir `media`
 satırına asılamaz ve bir `media` satırının türü sonradan değiştirilemez
 (detail satırı varken `media_type` UPDATE'i FK'yi ihlal eder).
 
-Aynı yöntem `series_progress` için de uygulandı: bir filme veya kitaba bölüm
-ilerlemesi yazılamaz.
+Aynı yöntem `season` için de uygulandı: bir filme veya kitaba sezon
+asılamaz. `episode` ayrıca `media_type` taşımaz, çünkü `season` üzerinden
+zaten 'series' dışına bağlanamaz.
 
 ### 2. Puanlama: 0–10, 0.5 adımlarla
 
@@ -77,6 +82,8 @@ Diyagramdaki tipler bu skalayı taşıyamıyordu, genişletildi:
 
 - `log_entry.rating`: `numeric(2,1)` → `numeric(3,1)` (eski hâli max 9.9)
 - `media.rating_avg`: `numeric(3,2)` → `numeric(4,2)` (eski hâli max 9.99)
+- `user_episode_progress.rating` (V007): diyagramda yine `numeric(2,1)`
+  yazıyordu, aynı gerekçeyle `numeric(3,1)` açıldı
 
 0.5 adım kuralı `ck_log_entry_rating_scale` içinde
 `(rating * 2) = trunc(rating * 2)` ile zorlanıyor.
@@ -85,11 +92,13 @@ Diyagramdaki tipler bu skalayı taşıyamıyordu, genişletildi:
 
 - **Soft delete** (`deleted_at`): `app_user`, `review`, `list`
 - **`ON DELETE CASCADE`**: kullanıcıya bağlı türev veri (`log_entry`,
-  `review`, `list`, `user_media_status`, `series_progress`, `follow`,
+  `review`, `list`, `user_media_status`, `user_episode_progress`, `follow`,
   `taste_overlap`), listeye bağlı `list_item`, türe bağlı `media_genre`,
   ve `media`'nın metadata uzantıları: üç detail tablosu + `media_genre`
+  + `season` → `episode`
 - **`ON DELETE RESTRICT`**: `media`'yı referans eden **kullanıcı verisi** —
-  `log_entry`, `list_item`, `user_media_status`, `series_progress`.
+  `log_entry`, `list_item`, `user_media_status`, ve dolaylı olarak
+  `user_episode_progress` (`episode` üzerinden).
   Bir medya kaydı hard delete edilmemeli, mükerrer kayıtlar
   `merged_into_id` ile birleştirilir
 
@@ -105,7 +114,7 @@ detail tablolarındaki CASCADE hiçbir zaman ateşlenemezdi.
 
 `app_user` soft delete edildiği için ondan çıkan `ON DELETE CASCADE`
 zincirleri (`log_entry`, `review`, `list`, `user_media_status`,
-`series_progress`, `follow`, `taste_overlap`) **normal işleyişte hiç
+`user_episode_progress`, `follow`, `taste_overlap`) **normal işleyişte hiç
 çalışmaz** — uygulama `DELETE FROM app_user` çağırmaz, `deleted_at` yazar.
 
 Bu kurallar bilinçli olarak savunma katmanı: KVKK silme talebi, test
@@ -140,12 +149,57 @@ Soft delete edilen tablolarda ayrıca `WHERE deleted_at IS NULL` partial
 index'leri var. FK index'leri bilerek partial **değil**: CASCADE/RESTRICT
 kontrolü silinmiş satırları da taramak zorunda, partial index onları görmez.
 
-`ix_series_progress_media_id` ayrı bir gerekçeyle var: silme değil, medya
-birleştirme (`merged_into_id`). Mükerrer kayıt canonical'a taşınırken tüm
-bağımlı satırlar `media_id` ile bulunur ve `media_id` bu tablonun PK'sinde
-ilk kolon değil. `series_progress` doğası gereği en hızlı büyüyen
-tablolardan biri (kullanıcı × dizi × sezon × bölüm), bu yüzden orada
-tam tarama en pahalıya patlayan yer.
+`ix_user_episode_progress_episode_id` (V007) aynı sebeple var: `episode_id`
+PK'nin ilk kolonu değil, dolayısıyla hem "bu bölümü kim izlemiş" sorgusu hem
+de `episode` silinirken RESTRICT kontrolü onsuz tam tarama yapardı.
+`user_episode_progress` doğası gereği en hızlı büyüyen tablo
+(kullanıcı × dizi × sezon × bölüm), bu yüzden orada tam tarama en pahalıya
+patlayan yer.
+
+V007 iki partial index daha ekliyor: `ix_user_episode_progress_watched`
+(`watched_at IS NOT NULL`) "son izlenen bölümler" akışı için — puanlanmış ama
+izlenmemiş satırların index'i şişirmemesi gerekiyor; `ix_episode_air_date`
+(`air_date IS NOT NULL`) ise "bu hafta yayınlananlar" takvimi için.
+
+`season(media_id)` ve `episode(season_id)` için ayrı index **yok**: ikisi de
+V007'deki UNIQUE kısıtlarının ilk kolonu, yani zaten index'liler.
+
+### 7. Sezon / bölüm modeli (V007)
+
+V1'de bir dizinin sezon ve bölüm bilgisi hiçbir yerde satır olarak durmuyordu:
+`series_detail` yalnızca toplam sayıları tutuyor, `series_progress` ise izlenen
+bölümü serbest bir sayı çifti (`season_no`, `episode_no`) olarak yazıyordu.
+İki sonucu vardı: bölüm adı / yayın tarihi / süre bilgilerinin yeri yoktu ve
+var olmayan bir bölüm izlenmiş işaretlenebiliyordu — hiçbir kısıt 41. sezonun
+99. bölümünü engellemiyordu.
+
+V007 üç tablo açtı ve yerini aldığı iki yapıyı kaldırdı:
+
+| Kaldırılan | Yerine | Gerekçe |
+| ---------- | ------ | ------- |
+| `series_progress` | `user_episode_progress` | Aynı bilginin FK ile doğrulanabilen hâli, üstüne bölüm bazlı puan |
+| `series_detail.season_count` / `.episode_count` | `season` / `episode` tabloları + `series_episode_stats` view'i | Aynı sayıyı üçüncü bir yerde tutmak, senkron tutulması gereken üçüncü bir kopya demekti |
+
+**Veri kaybı yok.** `series_progress` satırları silinmedi; migration önce
+mevcut ilerlemeden sezon/bölüm iskeleti üretiyor (kullanıcı o bölümü izlediyse
+o bölüm vardır), sonra ilerlemeyi bu satırlara bağlıyor. İskelette yalnızca
+numaralar dolu; `title` / `air_date` / `runtime_min` ilk TMDB import'unda
+`(season_number, episode_number)` eşleşmesiyle dolar.
+
+**`season.episode_count` neden duruyor.** `count(episode)` ile aynı şey değil:
+TMDB bir sezonu 10 bölüm diye bildirirken elimizde 6 bölüm satırı olabilir
+(import yarım kaldı ya da bölümler henüz yayınlanmadı). İki sayının farkı
+"eksik import" sinyalidir, eşitlenmeleri beklenmez.
+
+**Riski:** bu yine de bir sağlayıcı anlık görüntüsü. Devam eden bir dizide
+sezon uzarsa değer sessizce eskir, yeniden import edilmeden güncellenmez.
+Kullanıcıya "kaç bölüm var" derken tek başına güvenilmemeli; ilerleme yüzdesi
+hesabında `count(episode)` ile birlikte değerlendirilmeli. İskeletten gelen
+sezonlarda `NULL` — "sağlayıcıdan henüz bilgi gelmedi" demek.
+
+Elimizdeki gerçek sayılar için `series_episode_stats` view'i var
+(`media_id`, `season_count`, `episode_count`); düşen iki kolonu okuyan tarafın
+üç tabloyu birden bilmesi gerekmesin diye.
 
 ---
 
@@ -191,16 +245,24 @@ satırları **otomatik gizlenmez**. Bunları da işaretlemek servis katmanının
 
 Dolu olduğunda satır artık canonical değildir. Sorgular canonical kaydı takip
 etmeli; birleştirme sırasında `log_entry`, `review`, `list_item`,
-`user_media_status`, `series_progress` satırları hedef `media`'ya taşınmalı.
+`user_media_status` ve `season` satırları hedef `media`'ya taşınmalı.
 Veritabanı zincirin tek adımda bitmesini garanti etmez — birleştirilmiş bir
 kaydın tekrar birleştirilmesi mümkün, uygulama zinciri çözmeli (ya da
 birleştirme sırasında hedefi canonical'a normalize etmeli).
 
-**Taşıma sırasında PK çakışması.** Dört tabloda `media_id` bileşik PK'nin
-parçası: `user_media_status` ve `series_progress` `(user_id, media_id, …)`,
-`media_genre` `(media_id, genre_id)`, `list_item` `(list_id, media_id)`.
-Bunların hepsinde, aynı kullanıcı/liste hem mükerrer hem canonical kayda
-sahipse düz bir `UPDATE … SET media_id = <canonical>` PK çakışmasına düşer.
+**Taşıma sırasında anahtar çakışması.** Üç tabloda `media_id` bileşik PK'nin
+parçası: `user_media_status` `(user_id, media_id)`, `media_genre`
+`(media_id, genre_id)`, `list_item` `(list_id, media_id)`. Bunların hepsinde,
+aynı kullanıcı/liste hem mükerrer hem canonical kayda sahipse düz bir
+`UPDATE … SET media_id = <canonical>` PK çakışmasına düşer.
+
+`season` (V007) PK'sinde `media_id` taşımaz ama
+`UNIQUE (media_id, season_number)` yüzünden **aynı sorunu yaşar**: iki kayıtta
+da 1. sezon varsa `UPDATE` unique ihlaline düşer. Üstelik burada satırı
+atlamak yetmez — mükerrer sezonun altındaki `episode` satırlarına asılı
+`user_episode_progress` kayıtları canonical sezonun bölümlerine bağlanmalı,
+yoksa `episode` CASCADE ile silinemeyeceği (RESTRICT) için birleştirme
+tamamen tıkanır. Bu, birleştirmenin en dikkat isteyen adımı.
 
 Çözüm: satırları `INSERT INTO … SELECT … ON CONFLICT DO NOTHING` ile
 canonical'a kopyalayıp mükerrer `media_id`'ye ait satırları silmek — ya da
