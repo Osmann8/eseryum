@@ -1,4 +1,4 @@
-package com.eseryum.media.entity;
+package com.eseryum.media.common.entity;
 
 import com.eseryum.common.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -7,7 +7,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-import com.eseryum.media.identity.MediaIdentity;
+import com.eseryum.media.common.identity.MediaIdentity;
 import java.time.LocalDate;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;

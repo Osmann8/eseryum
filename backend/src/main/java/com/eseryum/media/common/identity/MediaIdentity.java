@@ -1,4 +1,4 @@
-package com.eseryum.media.identity;
+package com.eseryum.media.common.identity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

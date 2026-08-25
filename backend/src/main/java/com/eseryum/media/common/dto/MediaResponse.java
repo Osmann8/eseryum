@@ -1,7 +1,7 @@
-package com.eseryum.media.dto;
+package com.eseryum.media.common.dto;
 
-import com.eseryum.media.entity.MediaType;
-import com.eseryum.media.identity.MediaProvider;
+import com.eseryum.media.common.entity.MediaType;
+import com.eseryum.media.common.identity.MediaProvider;
 import java.time.Instant;
 import java.time.LocalDate;
 

@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.eseryum.common.exception.DuplicateResourceException;
-import com.eseryum.media.identity.MediaDeduplicationService;
-import com.eseryum.media.identity.MediaIdentity;
-import com.eseryum.media.identity.MediaProvider;
-import com.eseryum.media.repository.MediaRepository;
+import com.eseryum.media.common.identity.MediaDeduplicationService;
+import com.eseryum.media.common.identity.MediaIdentity;
+import com.eseryum.media.common.identity.MediaProvider;
+import com.eseryum.media.common.repository.MediaRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

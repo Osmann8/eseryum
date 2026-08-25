@@ -1,4 +1,4 @@
-package com.eseryum.media.identity;
+package com.eseryum.media.common.identity;
 
 public enum MediaProvider {
     TMDB,

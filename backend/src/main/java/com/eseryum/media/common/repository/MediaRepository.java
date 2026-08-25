@@ -1,7 +1,7 @@
-package com.eseryum.media.repository;
+package com.eseryum.media.common.repository;
 
-import com.eseryum.media.entity.Media;
-import com.eseryum.media.identity.MediaProvider;
+import com.eseryum.media.common.entity.Media;
+import com.eseryum.media.common.identity.MediaProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

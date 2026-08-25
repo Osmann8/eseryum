@@ -2,12 +2,12 @@ package com.eseryum.media.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.eseryum.media.dto.MediaResponse;
-import com.eseryum.media.entity.Media;
-import com.eseryum.media.entity.MediaType;
-import com.eseryum.media.identity.MediaIdentity;
-import com.eseryum.media.identity.MediaProvider;
-import com.eseryum.media.mapper.MediaMapper;
+import com.eseryum.media.common.dto.MediaResponse;
+import com.eseryum.media.common.entity.Media;
+import com.eseryum.media.common.entity.MediaType;
+import com.eseryum.media.common.identity.MediaIdentity;
+import com.eseryum.media.common.identity.MediaProvider;
+import com.eseryum.media.common.mapper.MediaMapper;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;

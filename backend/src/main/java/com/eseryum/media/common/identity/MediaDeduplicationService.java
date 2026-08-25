@@ -1,7 +1,7 @@
-package com.eseryum.media.identity;
+package com.eseryum.media.common.identity;
 
 import com.eseryum.common.exception.DuplicateResourceException;
-import com.eseryum.media.repository.MediaRepository;
+import com.eseryum.media.common.repository.MediaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
