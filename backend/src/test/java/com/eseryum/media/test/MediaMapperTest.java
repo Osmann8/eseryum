@@ -5,10 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.eseryum.media.dto.MediaResponse;
 import com.eseryum.media.entity.Media;
 import com.eseryum.media.entity.MediaType;
-import com.eseryum.media.identity.MediaIdentity;
-import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.mapper.MediaMapper;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -20,26 +18,25 @@ class MediaMapperTest {
     void toResponse_shouldMapEntity() {
         Media media =
                 new Media(
-                        "Dune",
-                        "Dune",
-                        "Bilim kurgu romanı",
                         MediaType.BOOK,
-                        new MediaIdentity(MediaProvider.GOOGLE_BOOKS, "dune-volume-id"),
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null);
+                        "Dune",
+                        "Dune",
+                        (short) 1965,
+                        "https://example.com/cover.jpg",
+                        "Bilim kurgu romanı",
+                        new BigDecimal("8.50"),
+                        42);
 
         MediaResponse response = mediaMapper.toResponse(media);
 
+        assertThat(response.mediaType()).isEqualTo(media.getMediaType());
         assertThat(response.title()).isEqualTo(media.getTitle());
         assertThat(response.originalTitle()).isEqualTo(media.getOriginalTitle());
-        assertThat(response.description()).isEqualTo(media.getDescription());
-        assertThat(response.type()).isEqualTo(media.getType());
-        assertThat(response.provider()).isEqualTo(media.getIdentity().getProvider());
-        assertThat(response.externalId()).isEqualTo(media.getIdentity().getExternalId());
-        assertThat(response.releaseDate()).isEqualTo(media.getReleaseDate());
-        assertThat(response.posterUrl()).isEqualTo(media.getPosterUrl());
-        assertThat(response.backdropUrl()).isEqualTo(media.getBackdropUrl());
+        assertThat(response.releaseYear()).isEqualTo(media.getReleaseYear());
+        assertThat(response.coverUrl()).isEqualTo(media.getCoverUrl());
+        assertThat(response.synopsis()).isEqualTo(media.getSynopsis());
+        assertThat(response.ratingAvg()).isEqualTo(media.getRatingAvg());
+        assertThat(response.ratingCount()).isEqualTo(media.getRatingCount());
     }
 
 }

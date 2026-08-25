@@ -12,13 +12,12 @@ import com.eseryum.common.exception.GlobalExceptionHandler;
 import com.eseryum.media.controller.MediaController;
 import com.eseryum.media.dto.MediaResponse;
 import com.eseryum.media.entity.MediaType;
-import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.service.MediaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,15 +58,14 @@ class MediaControllerTest {
         response =
                 new MediaResponse(
                         1L,
-                        "Dune",
-                        "Dune",
-                        "Bilim kurgu romanı",
                         MediaType.BOOK,
-                        MediaProvider.GOOGLE_BOOKS,
-                        "dune-volume-id",
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null,
+                        "Dune",
+                        "Dune",
+                        (short) 1965,
+                        "https://example.com/cover.jpg",
+                        "Bilim kurgu romanı",
+                        new BigDecimal("8.50"),
+                        42,
                         Instant.parse("2026-08-07T10:00:00Z"),
                         Instant.parse("2026-08-07T10:00:00Z"));
     }
@@ -79,6 +77,7 @@ class MediaControllerTest {
         mockMvc.perform(get("/api/media/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.mediaType").value("BOOK"))
                 .andExpect(jsonPath("$.title").value("Dune"));
     }
 

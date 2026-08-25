@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.eseryum.media.entity.Media;
 import com.eseryum.media.entity.MediaType;
-import com.eseryum.media.identity.MediaIdentity;
-import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.repository.MediaRepository;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -55,14 +53,14 @@ class MediaRepositoryIntegrationTest {
         mediaRepository.save(createMedia("Dune", MediaType.BOOK));
         mediaRepository.save(
                 new Media(
+                        MediaType.FILM,
                         "Geliş",
                         "Arrival",
-                        "Test açıklaması",
-                        MediaType.FILM,
-                        new MediaIdentity(MediaProvider.TMDB, "arrival"),
-                        LocalDate.of(2016, 1, 1),
+                        (short) 2016,
                         "https://example.com/arrival.jpg",
-                        null));
+                        "Test açıklaması",
+                        new BigDecimal("8.00"),
+                        10));
         mediaRepository.flush();
 
         Page<Media> titleResult = mediaRepository.searchByTitle("dUn", PageRequest.of(0, 20));
@@ -77,15 +75,13 @@ class MediaRepositoryIntegrationTest {
 
     private Media createMedia(String title, MediaType type) {
         return new Media(
-                title,
-                title,
-                "Test açıklaması",
                 type,
-                new MediaIdentity(
-                        MediaProvider.GOOGLE_BOOKS,
-                        title.toLowerCase().replace(" ", "-")),
-                LocalDate.of(2020, 1, 1),
-                "https://example.com/poster.jpg",
-                null);
+                title,
+                title,
+                (short) 2020,
+                "https://example.com/cover.jpg",
+                "Test açıklaması",
+                null,
+                0);
     }
 }

@@ -9,13 +9,11 @@ import com.eseryum.common.exception.ResourceNotFoundException;
 import com.eseryum.media.dto.MediaResponse;
 import com.eseryum.media.entity.Media;
 import com.eseryum.media.entity.MediaType;
-import com.eseryum.media.identity.MediaIdentity;
-import com.eseryum.media.identity.MediaProvider;
 import com.eseryum.media.mapper.MediaMapper;
 import com.eseryum.media.repository.MediaRepository;
 import com.eseryum.media.service.MediaService;
+import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,27 +42,26 @@ class MediaServiceTest {
     void setUp() {
         media =
                 new Media(
-                        "Dune",
-                        "Dune",
-                        "Bilim kurgu romanı",
                         MediaType.BOOK,
-                        new MediaIdentity(MediaProvider.GOOGLE_BOOKS, "dune-volume-id"),
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null);
+                        "Dune",
+                        "Dune",
+                        (short) 1965,
+                        "https://example.com/cover.jpg",
+                        "Bilim kurgu romanı",
+                        new BigDecimal("8.50"),
+                        42);
 
         response =
                 new MediaResponse(
                         1L,
-                        "Dune",
-                        "Dune",
-                        "Bilim kurgu romanı",
                         MediaType.BOOK,
-                        MediaProvider.GOOGLE_BOOKS,
-                        "dune-volume-id",
-                        LocalDate.of(1965, 8, 1),
-                        "https://example.com/poster.jpg",
-                        null,
+                        "Dune",
+                        "Dune",
+                        (short) 1965,
+                        "https://example.com/cover.jpg",
+                        "Bilim kurgu romanı",
+                        new BigDecimal("8.50"),
+                        42,
                         Instant.now(),
                         Instant.now());
     }
