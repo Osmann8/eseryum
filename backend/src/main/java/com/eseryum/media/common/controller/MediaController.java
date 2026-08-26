@@ -1,7 +1,8 @@
-package com.eseryum.media.controller;
+package com.eseryum.media.common.controller;
 
-import com.eseryum.media.dto.MediaResponse;
-import com.eseryum.media.service.MediaService;
+import com.eseryum.media.common.dto.MediaResponse;
+import com.eseryum.media.common.service.MediaService;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package com.eseryum.media.entity;
+package com.eseryum.media.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

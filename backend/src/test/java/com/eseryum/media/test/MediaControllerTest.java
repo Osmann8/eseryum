@@ -9,10 +9,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.eseryum.common.exception.GlobalExceptionHandler;
-import com.eseryum.media.controller.MediaController;
-import com.eseryum.media.dto.MediaResponse;
-import com.eseryum.media.entity.MediaType;
-import com.eseryum.media.service.MediaService;
+import com.eseryum.media.common.controller.MediaController;
+import com.eseryum.media.common.dto.MediaResponse;
+import com.eseryum.media.common.entity.MediaType;
+import com.eseryum.media.common.service.MediaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

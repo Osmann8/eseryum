@@ -6,12 +6,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.eseryum.common.exception.ResourceNotFoundException;
-import com.eseryum.media.dto.MediaResponse;
-import com.eseryum.media.entity.Media;
-import com.eseryum.media.entity.MediaType;
-import com.eseryum.media.mapper.MediaMapper;
-import com.eseryum.media.repository.MediaRepository;
-import com.eseryum.media.service.MediaService;
+import com.eseryum.media.common.dto.MediaResponse;
+import com.eseryum.media.common.entity.Media;
+import com.eseryum.media.common.entity.MediaType;
+import com.eseryum.media.common.mapper.MediaMapper;
+import com.eseryum.media.common.repository.MediaRepository;
+import com.eseryum.media.common.service.MediaService;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;

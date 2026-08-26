@@ -1,8 +1,9 @@
-package com.eseryum.media.dto;
+package com.eseryum.media.common.dto;
 
-import com.eseryum.media.entity.MediaType;
 import java.math.BigDecimal;
 import java.time.Instant;
+
+import com.eseryum.media.common.entity.MediaType;
 
 public record MediaResponse(
         Long id,

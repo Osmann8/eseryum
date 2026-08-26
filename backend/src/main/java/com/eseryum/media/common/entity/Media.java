@@ -1,4 +1,4 @@
-package com.eseryum.media.entity;
+package com.eseryum.media.common.entity;
 
 import com.eseryum.common.entity.BaseEntity;
 import jakarta.persistence.Column;
