@@ -12,7 +12,6 @@ import com.eseryum.common.exception.GlobalExceptionHandler;
 import com.eseryum.media.common.controller.MediaController;
 import com.eseryum.media.common.dto.MediaResponse;
 import com.eseryum.media.common.entity.MediaType;
-import com.eseryum.media.common.identity.MediaProvider;
 import com.eseryum.media.common.service.MediaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -63,8 +62,6 @@ class MediaControllerTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
-                        MediaProvider.GOOGLE_BOOKS,
-                        "dune-volume-id",
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null,

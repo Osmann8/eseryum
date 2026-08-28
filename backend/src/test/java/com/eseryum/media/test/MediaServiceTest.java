@@ -9,8 +9,6 @@ import com.eseryum.common.exception.ResourceNotFoundException;
 import com.eseryum.media.common.dto.MediaResponse;
 import com.eseryum.media.common.entity.Media;
 import com.eseryum.media.common.entity.MediaType;
-import com.eseryum.media.common.identity.MediaIdentity;
-import com.eseryum.media.common.identity.MediaProvider;
 import com.eseryum.media.common.mapper.MediaMapper;
 import com.eseryum.media.common.repository.MediaRepository;
 import com.eseryum.media.common.service.MediaService;
@@ -48,7 +46,6 @@ class MediaServiceTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
-                        new MediaIdentity(MediaProvider.GOOGLE_BOOKS, "dune-volume-id"),
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null);
@@ -60,8 +57,6 @@ class MediaServiceTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
-                        MediaProvider.GOOGLE_BOOKS,
-                        "dune-volume-id",
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null,

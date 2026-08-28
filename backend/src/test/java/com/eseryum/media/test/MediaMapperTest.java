@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.eseryum.media.common.dto.MediaResponse;
 import com.eseryum.media.common.entity.Media;
 import com.eseryum.media.common.entity.MediaType;
-import com.eseryum.media.common.identity.MediaIdentity;
-import com.eseryum.media.common.identity.MediaProvider;
 import com.eseryum.media.common.mapper.MediaMapper;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,6 @@ class MediaMapperTest {
                         "Dune",
                         "Bilim kurgu romanı",
                         MediaType.BOOK,
-                        new MediaIdentity(MediaProvider.GOOGLE_BOOKS, "dune-volume-id"),
                         LocalDate.of(1965, 8, 1),
                         "https://example.com/poster.jpg",
                         null);
@@ -35,8 +32,6 @@ class MediaMapperTest {
         assertThat(response.originalTitle()).isEqualTo(media.getOriginalTitle());
         assertThat(response.description()).isEqualTo(media.getDescription());
         assertThat(response.type()).isEqualTo(media.getType());
-        assertThat(response.provider()).isEqualTo(media.getIdentity().getProvider());
-        assertThat(response.externalId()).isEqualTo(media.getIdentity().getExternalId());
         assertThat(response.releaseDate()).isEqualTo(media.getReleaseDate());
         assertThat(response.posterUrl()).isEqualTo(media.getPosterUrl());
         assertThat(response.backdropUrl()).isEqualTo(media.getBackdropUrl());
