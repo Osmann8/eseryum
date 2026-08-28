@@ -57,8 +57,31 @@ olmaları aynı şey oldukları anlamına gelmiyor.
 | ------ | ----------------- | ----------------------------------- |
 | GET    | `/api/films`      | Filtreli film listesi (sayfalamalı) |
 | GET    | `/api/films/{id}` | Filme özel detay                    |
+| POST   | `/api/films/import` | TMDB kimliğiyle filmi kataloğa aktar (Admin) |
 | PUT    | `/api/films/{id}` | Film bilgisi güncelle (Admin)       |
 | GET    | `/api/films/genres?scope=` | Tür sözlüğü; `scope=me` kullanıcının kendi sayaçlarını verir |
+
+### TMDB'den film aktarma
+
+`POST /api/films/import`, TMDB'de bulunan bir filmi yerel kataloğa aktarır.
+Arama için ayrı bir `/api/films/search` ucu yoktur; film araması ortak
+`GET /api/media/search?q=` üzerinden yapılır. İstek yalnızca Admin rolüne
+açıktır.
+
+İstek gövdesi:
+
+```json
+{
+  "tmdbId": 27205
+}
+```
+
+Backend filmi TMDB'den `language=tr-TR` ve `append_to_response=credits` ile
+alır; ortak alanları `media`, filme özgü alanları `film_detail`, tür
+bağlantılarını ise `genre`/`media_genre` tablolarına yazar. Başarılı ilk
+aktarım `201 Created` döndürür ve `Location` başlığında yerel
+`/api/films/{id}` adresini verir. Aynı `tmdbId` daha önce aktarılmışsa yeni
+kayıt oluşturmaz ve mevcut filmi `200 OK` ile döndürür.
 
 ## Series
 

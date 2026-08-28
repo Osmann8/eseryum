@@ -177,7 +177,6 @@ export interface FilmDetail extends Work {
   type: "FILM";
   runtimeMinutes: number;
   director: string;
-  country: string;
 }
 
 export interface SeriesDetail extends Work {
