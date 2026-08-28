@@ -3,11 +3,9 @@ package com.eseryum.media.common.entity;
 import com.eseryum.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
-import com.eseryum.media.common.identity.MediaIdentity;
 import java.time.LocalDate;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -30,9 +28,6 @@ public class Media extends BaseEntity {
     @Column(name = "media_type", nullable = false, columnDefinition = "media_type")
     private MediaType type;
 
-    @Embedded
-    private MediaIdentity identity;
-
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
@@ -50,7 +45,6 @@ public class Media extends BaseEntity {
             String originalTitle,
             String description,
             MediaType type,
-            MediaIdentity identity,
             LocalDate releaseDate,
             String posterUrl,
             String backdropUrl) {
@@ -58,7 +52,6 @@ public class Media extends BaseEntity {
         this.originalTitle = originalTitle;
         this.description = description;
         this.type = type;
-        this.identity = identity;
         this.releaseDate = releaseDate;
         this.posterUrl = posterUrl;
         this.backdropUrl = backdropUrl;
@@ -78,10 +71,6 @@ public class Media extends BaseEntity {
 
     public MediaType getType() {
         return type;
-    }
-
-    public MediaIdentity getIdentity() {
-        return identity;
     }
 
     public LocalDate getReleaseDate() {

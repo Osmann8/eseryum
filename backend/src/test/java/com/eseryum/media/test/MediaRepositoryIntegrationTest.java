@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.eseryum.media.common.entity.Media;
 import com.eseryum.media.common.entity.MediaType;
-import com.eseryum.media.common.identity.MediaIdentity;
-import com.eseryum.media.common.identity.MediaProvider;
 import com.eseryum.media.common.repository.MediaRepository;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -59,7 +57,6 @@ class MediaRepositoryIntegrationTest {
                         "Arrival",
                         "Test açıklaması",
                         MediaType.FILM,
-                        new MediaIdentity(MediaProvider.TMDB, "arrival"),
                         LocalDate.of(2016, 1, 1),
                         "https://example.com/arrival.jpg",
                         null));
@@ -81,9 +78,6 @@ class MediaRepositoryIntegrationTest {
                 title,
                 "Test açıklaması",
                 type,
-                new MediaIdentity(
-                        MediaProvider.GOOGLE_BOOKS,
-                        title.toLowerCase().replace(" ", "-")),
                 LocalDate.of(2020, 1, 1),
                 "https://example.com/poster.jpg",
                 null);
